@@ -1,0 +1,104 @@
+/* This file contains the CSS styles for the website, defining the layout and appearance of the HTML elements. */
+
+body {
+    font-family: 'Nunito Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 90%;
+    margin: auto;
+    overflow: hidden;
+}
+
+header {
+    background: #35424a;
+    color: #ffffff;
+    padding: 20px 0;
+}
+
+header h1 {
+    text-align: center;
+}
+
+.features {
+    background: #ffffff;
+    padding: 20px 0;
+}
+
+.features-list {
+    list-style: none;
+    padding: 0;
+}
+
+.features-card {
+    text-align: center;
+    padding: 20px;
+}
+
+.card-icon {
+    font-size: 40px;
+    color: #35424a;
+}
+
+.reviews {
+    background: #e2e2e2;
+    padding: 20px 0;
+}
+
+.box-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.box {
+    background: #ffffff;
+    margin: 10px;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.contact {
+    background: #ffffff;
+    padding: 20px 0;
+}
+
+.contact form {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact .box {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.btn {
+    background: #35424a;
+    color: #ffffff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: #2c3e50;
+}
+
+.cta {
+    background: #35424a;
+    color: #ffffff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.cta-card {
+    margin: 20px 0;
+}

@@ -1,0 +1,92 @@
+<section class="Search" id="search-section">
+  <p class="section-subtitle">Search Bar</p>
+  <h2>Search for your desired Property</h2>
+  <form id="search-form">
+    <div class="search-container">
+      <div class="search-field">
+        <label for="property-type">Property Type:</label>
+        <select name="property_type" id="property-type">
+          <option value="">Select</option>
+          <option value="buy">Buy</option>
+          <option value="rent">Rent</option>
+        </select>
+      </div>
+      <div class="search-field">
+        <label for="location">Location:</label>
+        <input type="text" name="location" id="location" placeholder="Enter your desired location">
+      </div>
+      <div class="search-field">
+        <label for="keyword">Keyword:</label>
+        <input type="text" name="keyword" id="keyword" placeholder="Search by neighborhood, amenities etc.">
+      </div>
+      <button class="btn" id="search-btn" type="submit">Search Properties</button>
+    </div>
+  </form>
+  <div id="search-results"></div>
+</section>
+<style>
+/*SEARCH SECTION*/
+.Search {
+  padding: 50px 0;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.Search h2 {
+  margin-top: 20px;
+  font-size: 32px;
+  color: #444;
+}
+#search-form {
+  margin-top: 30px;
+}
+.search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;/* Allow fields to wrap to the next line on smaller screens */
+}
+.search-field {
+  margin-right: 20px;
+}
+.search-field label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 16px;
+  color: black;
+}
+
+.search-field input[type="text"],
+.search-field select {
+  width: 200px;/* Adjust width as needed */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #333;
+}
+#keyword {
+  width: 300px; /* Adjust width as needed */
+}
+#search-btn {
+  margin-top: 20px;
+  padding: 12px 24px;
+  background-color: none;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+#search-btn:hover {
+  background: #ccc;
+  color: #333;
+  border-color: black;
+}
+#search-results {
+  margin-top: 4rem;
+  border: 1px solid #ccc;
+  padding: 1rem;
+}
+</style>

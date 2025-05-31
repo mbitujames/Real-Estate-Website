@@ -1,0 +1,22 @@
+<section class="property" id="property">
+  <div class="container">
+    <p class="section-subtitle">Properties</p>
+    <h2 class="h2 section-title">Featured Listings</h2>
+    <ul class="property-list has-scrollbar" id="featured-properties"></ul>
+  </div>
+</section>
+
+<section class="allproperty" id="allproperty">
+  <div class="property-list">
+    <p class="section-subtitle">New Listings</p>
+    <h2 class="h2 section-title">Latest Properties Listings</h2>
+    <div class="filters">
+      <select onchange="filterFunction()" id="sortby">
+        <option value="property-type">Sort by Type</option>
+        <option value="buy">Buy</option>
+        <option value="rent">Rent</option>
+      </select>
+    </div>
+    <ul class="property-grid" id="latest-properties"></ul>
+  </div>
+</section>

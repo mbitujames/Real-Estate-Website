@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kitale Real Estate & Property Management</title>
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+  <!-- Header -->
+  <div id="header-placeholder"></div>
+
+  <main>
+    <article>
+      <div class="container">
+        <p class="section-subtitle">All Properties</p>
+        <ul class="property-grid" id="property-list">
+          <!-- Properties will be injected here -->
+        </ul>
+      </div>
+    </article>
+  </main>
+
+  <!-- Footer -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Ionicons -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <!-- Load Supabase and Header/Footer -->
+  <script type="module">
+    import { supabase } from './assets/js/supabaseClient.js';
+
+    // Load header and footer
+    async function loadPartials() {
+      document.getElementById('header-placeholder').innerHTML = await fetch('./php/components/header.html').then(res => res.text());
+      document.getElementById('footer-placeholder').innerHTML = await fetch('./php/components/footer.html').then(res => res.text());
+    }
+
+    // Load properties from Supabase
+    async function loadProperties() {
+      const { data, error } = await supabase
+        .from('properties')
+        .select('*')
+        .eq('availability', true);
+
+      if (error) {
+        console.error('Error loading properties:', error.message);
+        return;
+      }
+
+      const list = document.getElementById('property-list');
+      data.forEach(row => {
+        const html = `
+          <li>
+            <div class="property-card" data-property-type="${row.property_type}">
+              <figure class="card-banner">
+                <a href="#${row.property_type}">
+                  <img src="${row.image_url}" alt="${row.title}" class="w-100">
+                </a>
+                <div class="card-badge green">${row.status}</div>
+                <div class="banner-actions">
+                  <button class="banner-actions-btn">
+                    <ion-icon name="location"></ion-icon>
+                    <address>${row.location}</address>
+                  </button>
+                  <button class="banner-actions-btn">
+                    <ion-icon name="camera"></ion-icon>
+                    <span>1</span>
+                  </button>
+                </div>
+              </figure>
+              <div class="card-content">
+                <div class="card-price">
+                  <strong>Ksh. ${row.price}</strong>/Month
+                </div>
+                <h3 class="h3 card-title">
+                  <a href="#allproperty">${row.title}</a>
+                </h3>
+                <p class="card-text">${row.description}</p>
+                <ul class="card-list">
+                  <li class="card-item">
+                    <strong>${row.bedrooms}</strong>
+                    <ion-icon name="bed-outline"></ion-icon>
+                    <span>Bedrooms</span>
+                  </li>
+                  <li class="card-item">
+                    <strong>${row.bathrooms}</strong>
+                    <ion-icon name="man-outline"></ion-icon>
+                    <span>Bathrooms</span>
+                  </li>
+                  <li class="card-item">
+                    <strong>${row.square_ft}</strong>
+                    <ion-icon name="square-outline"></ion-icon>
+                    <span>Square Ft</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="card-footer">
+                <div class="card-author">
+                  <figure class="author-avatar">
+                    <img src="./data/uploads/admin.jpg" alt="M J" class="w-100">
+                  </figure>
+                  <div>
+                    <p class="author-name">
+                      <a href="#">M J</a>
+                    </p>
+                    <p class="author-title">KREPM Agents</p>
+                  </div>
+                </div>
+                <div class="card-footer-actions">
+                  <a href="checkout.html?property_id=${row.property_id}" class="btn">Reserve</a>
+                </div>
+              </div>
+            </div>
+          </li>`;
+        list.insertAdjacentHTML('beforeend', html);
+      });
+    }
+
+    loadPartials();
+    loadProperties();
+  </script>
+</body>
+
+</html>

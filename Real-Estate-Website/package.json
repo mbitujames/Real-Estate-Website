@@ -1,0 +1,29 @@
+{
+  "name": "real-estate-website",
+  "version": "1.0.0",
+  "description": "A real estate website using Supabase for backend services.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "webpack serve --mode development",
+    "build": "webpack --mode production"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.0.0",
+    "jquery": "^3.6.0"
+  },
+  "devDependencies": {
+    "webpack": "^5.0.0",
+    "webpack-cli": "^4.0.0",
+    "webpack-dev-server": "^3.11.0",
+    "babel-loader": "^8.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0"
+  },
+  "keywords": [
+    "real estate",
+    "supabase",
+    "website"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}

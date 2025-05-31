@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signup</title>
+  <style>
+    body {
+      font-family: 'Poppins', 'Nunito Sans', Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    .signup-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-image: url('./assets/images/hero-banner.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      position: relative;
+      overflow: hidden;
+    }
+    .signup-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.35);
+      backdrop-filter: blur(6px);
+      z-index: 1;
+    }
+    .form-container {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.25);
+      box-shadow:
+        0 8px 32px 0 rgba(31, 38, 135, 0.18),
+        8px 8px 24px #e3e9f7,
+        -8px -8px 24px #ffffff;
+      backdrop-filter: blur(18px);
+      border: 1.5px solid rgba(255,255,255,0.25);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 24px;
+      color: #22223b;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 8px rgba(31,38,135,0.08);
+    }
+    label {
+      display: block;
+      margin-bottom: 7px;
+      color: #22223b;
+      font-weight: 500;
+    }
+    input[type="text"], input[type="email"], input[type="password"], input[type="tel"], select {
+      width: 100%;
+      padding: 14px 16px;
+      margin-bottom: 22px;
+      border: none;
+      border-radius: 14px;
+      background: #f0f4ff;
+      box-shadow:
+        4px 4px 12px #e3e9f7,
+        -4px -4px 12px #ffffff,
+        inset 2px 2px 6px #e3e9f7,
+        inset -2px -2px 6px #ffffff;
+      font-size: 1rem;
+      color: #22223b;
+      outline: none;
+      transition: box-shadow 0.2s;
+    }
+    input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="tel"]:focus, select:focus {
+      box-shadow:
+        0 0 0 2px #a5b4fc,
+        4px 4px 12px #e3e9f7,
+        -4px -4px 12px #ffffff;
+    }
+    button[type="submit"], .btn {
+      width: 100%;
+      padding: 14px 0;
+      border: none;
+      border-radius: 16px;
+      background: var(--orange-soda, #fa5b3d);
+      color: var(--white, #fff);
+      font-family: var(--ff-poppins, 'Poppins', Arial, sans-serif);
+      font-size: 1.1rem;
+      font-weight: bold;
+      box-shadow:
+        0 4px 16px 0 rgba(250,91,61,0.10),
+        4px 4px 12px #e3e9f7,
+        -4px -4px 12px #ffffff;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+    button[type="submit"]:hover, .btn:hover {
+      background: var(--white, #fff);
+      color: var(--orange-soda, #fa5b3d);
+      border-color: var(--orange-soda, #fa5b3d);
+    }
+    #signup-message, .error-message, .success-message {
+      width: 100%;
+      text-align: center;
+      margin-top: 12px;
+      margin-bottom: 0;
+      padding: 10px 0;
+      border-radius: 10px;
+      font-size: 1rem;
+      background: rgba(255,255,255,0.7);
+      box-shadow:
+        2px 2px 8px #e3e9f7,
+        -2px -2px 8px #ffffff;
+    }
+    .error-message {
+      color: #d90429;
+      font-weight: bold;
+    }
+    .success-message {
+      color: #06d6a0;
+      font-weight: bold;
+    }
+    a {
+      color: #6366f1;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    a:hover {
+      color: #06d6a0;
+    }
+    @media screen and (max-width: 600px) {
+      .form-container {
+        padding: 1.2rem 0.5rem;
+        border-radius: 16px;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+</head>
+<body>
+  <!-- #HEADER -->
+  <header class="header" data-header>
+    <div class="overlay" data-overlay></div>
+    <div class="header-bottom">
+      <div class="container">
+        <a href="./index.html" class="logo">
+          <img src="./assets/images/logo1.jpg" alt="KREPM">
+        </a>
+        <nav class="navbar" data-navbar>
+          <div class="navbar-top">
+            <a href="./index.html" class="logo">
+              <img src="./assets/images/logo1.jpg" alt="KREPM">
+            </a>
+            <button class="nav-close-btn" data-nav-close-btn aria-label="Close Menu">
+              <ion-icon name="close-outline"></ion-icon>
+            </button>
+          </div>
+          <div class="navbar-bottom">
+            <ul class="navbar-list">
+              <li>
+                <a href="./index.html" class="navbar-link" data-nav-link>Home</a>
+              </li>
+              <li>
+                <a href="./login.html" class="navbar-link" data-nav-link>Log in</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="signup-section">
+      <section class="form-container">
+        <form id="signup-form" autocomplete="on">
+          <h2>Create an account!</h2>
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" required maxlength="50" placeholder="Enter your username" class="box" autocomplete="on">
+          <label for="full_name">Full name</label>
+          <input type="text" id="full_name" name="full_name" required maxlength="50" placeholder="Enter your full name" class="box">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" required maxlength="10" placeholder="Enter your phone number" class="box" autocomplete="on">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required maxlength="50" placeholder="Enter your email" class="box" autocomplete="on">
+          <label for="user_type">User Type</label>
+          <select name="user_type" id="user_type">
+            <option value="admin">Admin</option>
+            <option value="user">User</option>
+            <option value="owner">Property Owner</option>
+          </select>
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required maxlength="50" placeholder="Enter your password" class="box">
+          <label for="cpassword">Confirm Password</label>
+          <input type="password" id="cpassword" name="cpassword" required maxlength="50" placeholder="Confirm your password" class="box">
+          <div id="password-requirements" style="display: none; color: red;"></div>
+          <p>already have an account? <a href="./login.html">Login now</a></p><br>
+          <button type="submit" class="btn">Sign Up</button>
+          <div id="signup-message"></div>
+        </form>
+      </section>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="footer-brand">
+          <a href="./login.html" class="logo">
+            <img src="./assets/images/favicon.ico" alt="KREPM logo">
+            <p>Kitale Real Estate & Property Management </p>
+          </a>
+          <p class="section-text">
+            Feel free to explore our website and contact us for any inquiries or assistance.
+          </p>
+          <ul class="contact-list">
+            <li>
+              <a href="index.html" class="contact-link">
+                <ion-icon name="location-outline"></ion-icon>
+                <address>4th Floor, One Tana Towers, Kitale</address>
+              </a>
+            </li>
+            <li>
+              <a href="tel:+254716519766" class="contact-link">
+                <ion-icon name="call-outline"></ion-icon>
+                <span>+254716519766</span>
+              </a>
+            </li>
+            <li>
+              <a href="mailto:mbitumutonga@gmail.com" class="contact-link" target="_blank">
+                <ion-icon name="mail-outline"></ion-icon>
+                <span>mbitumutonga@gmail.com</span>
+              </a>
+            </li>
+          </ul>
+          <ul class="social-list">
+            <li>
+              <a href="https://www.facebook.com/MbituJames" class="social-link" target="_blank">
+                <ion-icon name="logo-facebook"></ion-icon>
+              </a>
+            </li>
+            <li>
+              <a href="https://x.com/mbituke?t=mv9XXsRlVtVuec1vDPbUbQ&s=09" class="social-link" target="_blank">
+                <ion-icon name="logo-twitter"></ion-icon>
+              </a>
+            </li>
+            <li>
+              <a href="https://www.linkedin.com/in/mbitujames/" class="social-link" target="_blank">
+                <ion-icon name="logo-linkedin"></ion-icon>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-link-box">
+          <ul class="footer-list">
+            <li>
+              <p class="footer-list-title">Company</p>
+            </li>
+            <li>
+              <a href="./index.html" class="footer-link">About Us</a>
+            </li>
+            <li>
+              <a href="./index.html" class="footer-link">Reviews</a>
+            </li>
+            <li>
+              <a href="./properties.html" class="footer-link">Properties</a>
+            </li>
+            <li>
+              <a href="./index.html" class="footer-link">Contact us</a>
+            </li>
+          </ul>
+          <ul class="footer-list">
+            <li>
+              <p class="footer-list-title">Services</p>
+            </li>
+            <li>
+              <a href="./login.html" class="footer-link">Login</a>
+            </li>
+            <li>
+              <a href="./admin_panel.html" class="footer-link">My account</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p class="copyright">
+          &copy; 2024 <a href="./index.html">Kitale Real Estate & Property Management</a>. All Rights Reserved
+        </p>
+      </div>
+    </div>
+  </footer>
+  <!-- Supabase Signup Logic -->
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+    const supabase = createClient(
+      'https://kcluzpyfsejzzznmisqd.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtjbHV6cHlmc2Vqenp6bm1pc3FkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg1NDQwMzksImV4cCI6MjA2NDEyMDAzOX0.aTrgRN-5zCgoOV6A8XcI0eUPmkoTmUlvRDPndCSW-Xk'
+    );
+
+    const signupForm = document.getElementById('signup-form');
+    const signupMessage = document.getElementById('signup-message');
+
+    signupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      signupMessage.textContent = '';
+      signupMessage.className = '';
+
+      // Get form values
+      const username = document.getElementById('username').value.trim();
+      const full_name = document.getElementById('full_name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const user_type = document.getElementById('user_type').value;
+      const password = document.getElementById('password').value;
+      const cpassword = document.getElementById('cpassword').value;
+
+      // Password validation
+      if (password !== cpassword) {
+        signupMessage.textContent = "Passwords do not match.";
+        signupMessage.className = "error-message";
+        return;
+      }
+      if (password.length < 6) {
+        signupMessage.textContent = "Password must be at least 6 characters.";
+        signupMessage.className = "error-message";
+        return;
+      }
+
+      // Supabase Auth sign up
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            username,
+            full_name,
+            phone,
+            user_type
+          }
+        }
+      });
+
+      if (error) {
+        signupMessage.textContent = error.message || "Signup failed. Please try again.";
+        signupMessage.className = "error-message";
+        return;
+      }
+
+      // Insert user profile into a 'profiles' table (optional, if you have one)
+      // await supabase.from('profiles').insert([{ id: data.user.id, username, full_name, phone, user_type }]);
+
+      signupMessage.textContent = "Sign Up Successful! Please check your email to verify your account.";
+      signupMessage.className = "success-message";
+      signupForm.reset();
+
+      // Optionally redirect after a delay
+      setTimeout(() => {
+        window.location.href = "login.html";
+      }, 2500);
+    });
+  </script>
+  <!-- ionicon link-->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

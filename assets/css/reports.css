@@ -1,0 +1,221 @@
+/* General styling for the main container */
+main {
+    padding: 20px;
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+/* General card styling */
+section {
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: box-shadow 0.3s ease;
+}
+
+section:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Header styling for sections */
+section h3 {
+    margin-top: 0;
+    font-size: 1.5em;
+    color: brown;
+    border-bottom: 2px solid #f1f1f1;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+/* Sub-section card styling */
+section div {
+    margin-bottom: 15px;
+    background-color: #f0f7ff;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    padding: 15px;
+    transition: box-shadow 0.3s ease;
+}
+
+section div:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Header styling for sub-sections */
+section div h4 {
+    margin-top: 0;
+    font-size: 1.2em;
+    text-decoration:double;
+    color: black;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+}
+
+/* Additional styling to ensure padding and spacing */
+section div p, section div ul {
+    margin: 0;
+    padding: 10px 0;
+}
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  thead {
+    background-color: #f2f2f2;
+  }
+  
+  th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  th {
+    font-weight: bold;
+  }
+  
+  H2{
+      color:#fa5b3d;
+      padding:2px;
+      text-decoration:solid;
+      text-align:center;
+  }
+  /* Table heading styling */
+  h4 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+  
+  /* Alternate row background color */
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  /* Hover effect */
+  tbody tr:hover {
+    background-color: #f2f2f2;
+  }
+  .report-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+.report-table th, .report-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+.report-table th {
+    background-color: #f2f2f2;
+}
+.totals-row {
+    font-weight: bold;
+}
+#action-buttons {
+    text-align: center;
+    margin-top: 20px;
+}
+#action-buttons button {
+    background-color: #fa5b3d; 
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 15px 32px; /* Some padding */
+    text-align: center; /* Center the text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Get the block to center */
+    font-size: 16px; /* Increase font size */
+    margin: 4px 2px; /* Add some margin */
+    cursor: pointer; /* Add a pointer cursor on hover */
+    border-radius: 8px; 
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+}
+
+#action-buttons button:hover {
+    background-color: white; /* Darker green on hover */
+    color:black;
+}
+
+#action-buttons button:active {
+    background-color: #fa5b3d; /* Even darker green when clicked */
+    box-shadow: 0 5px #666; /* Add a shadow */
+    transform: translateY(4px); /* Move the button down a bit */
+}
+
+#action-buttons button:focus {
+    outline: none; /* Remove the outline */
+}
+/* Media Queries */
+
+/* Small devices (phones, 600px and down) */
+@media (max-width: 600px) {
+    main {
+        padding: 10px;
+    }
+    
+    section {
+        padding: 15px;
+    }
+    
+    section h3 {
+        font-size: 1.2em;
+    }
+    
+    section div {
+        padding: 10px;
+    }
+    
+    section div h4 {
+        font-size: 1em;
+    }
+}
+
+/* Medium devices (tablets, 600px to 768px) */
+@media (min-width: 601px) and (max-width: 768px) {
+    main {
+        padding: 15px;
+    }
+    
+    section {
+        padding: 18px;
+    }
+    
+    section h3 {
+        font-size: 1.3em;
+    }
+    
+    section div {
+        padding: 12px;
+    }
+    
+    section div h4 {
+        font-size: 1.1em;
+    }
+}
+
+/* Large devices (desktops, 769px and up) */
+@media (min-width: 769px) {
+    main {
+        padding: 20px;
+    }
+    
+    section {
+        padding: 20px;
+    }
+    
+    section h3 {
+        font-size: 1.5em;
+    }
+    
+    section div {
+        padding: 15px;
+    }
+    
+    section div h4 {
+        font-size: 1.2em;
+    }
+}
+

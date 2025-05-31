@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kitale Real Estate & Property Management</title>
+  <link rel="stylesheet" href="./assets//css/style.css">
+  <!-- google font link-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <!-- #HEADER-->
+   <div id="header"></div>
+
+  <main>
+    <article>
+      <!-- #HERO-->
+      <div id="hero"></div>
+      <!--SEARCH BAR-->
+      <div id="search-bar"></div>
+      <!-- ABOUT US SECTION-->
+      <div id="about"></div>
+      <!-- #SERVICE-->
+      <div id="services"></div>
+      <!-- -#PROPERTY LISTING-->
+      <div id="properties"></div>
+      <!-- #FEATURES-->
+      <section class="features">
+        <div class="container">
+          <p class="section-subtitle">Our Amenities</p>
+          <h2 class="h2 section-title">Building Amenities</h2>
+          <ul class="features-list">
+            <li>
+              <div class="features-card">
+                <div class="card-icon">
+                  <ion-icon name="car-sport-outline"></ion-icon>
+                </div>
+                <h3 class="card-title">Parking Space</h3>
+              </div>
+            </li>
+
+            <li>
+              <div class="features-card">
+                <div class="card-icon">
+                  <ion-icon name="water-outline"></ion-icon>
+                </div>
+                <h3 class="card-title">Swimming Pool</h3>
+              </div>
+            </li>
+
+            <li>
+              <div class="features-card">
+                <div class="card-icon">
+                  <ion-icon name="shield-checkmark-outline"></ion-icon>
+                </div>
+                <h3 class="card-title">Private Security</h3>
+              </div>
+            </li>
+
+            <li>
+              <div class="features-card">
+                <div class="card-icon">
+                  <ion-icon name="fitness-outline"></ion-icon>
+                </div>
+                <h3 class="card-title">Medical Center</h3>
+              </div>
+            </li>
+
+            <li>
+              <div class="features-card">
+                <div class="card-icon">
+                  <ion-icon name="library-outline"></ion-icon>
+                </div>
+                <h3 class="card-title">Library Area</h3>
+              </div>
+            </li>
+
+            <li>
+              <div class="features-card">
+                <div class="card-icon">
+                  <ion-icon name="bed-outline"></ion-icon>
+                </div>
+                <h3 class="card-title">King Size Beds</h3>
+              </div>
+            </li>
+
+            <li>
+              <a href="#" class="features-card">
+                <div class="card-icon">
+                  <ion-icon name="football-outline"></ion-icon>
+                </div>
+                <h3 class="card-title">Kid’s Playland</h3>
+              </a>
+            </li>
+
+          </ul>
+
+        </div>
+      </section>
+
+      <!-- #REVIEWS-->
+      <!-- Reviews (from Supabase) -->
+      <section class="reviews" id="reviews">
+        <div class="container">
+          <p class="section-subtitle">Reviews</p>
+          <h2 class="h2 section-title">Latest Client's Reviews</h2>
+          <div class="box-container" id="reviews-container"></div>
+        </div>
+      </section>
+      
+      <!--CONTACT US-->
+      <section class="contact" id="contact">
+        <div class="container">
+          <p class="section-subtitle">Contact Us</p>
+          <div class="row">
+            <figure class="about-banner">
+              <img src="./assets/images/contactus.png" alt="About us">
+            </figure>
+            <form id="contact-form">
+              <h3>Contact us</h3>
+              <label for="name"> Name: </label>
+              <input type="text" name="name" required maxlength="50" placeholder="Enter your name" class="box" autocomplete="on">
+              <label for="email">Email:</label>
+              <input type="email" name="email" required maxlength="50" placeholder="Enter your email" class="box" autocomplete="on">
+              <label for="number">Phone Number:</label>
+              <input type="number" name="number" required maxlength="10" placeholder="Enter your number" class="box" autocomplete="on">
+              <label for="message">Message:</label>
+              <textarea name="message" placeholder="Enter your message here..." required maxlength="1000" cols="30" rows="10" class="box"></textarea>
+              <input type="submit" value="Send Message" name="send" class="btn">
+              <!-- Display success or error messages -->
+             <div id="contact-message"></div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- #CTA -->
+      <section class="cta">
+        <div class="container">
+
+          <div class="cta-card">
+            <div class="card-content">
+              <h2 class="h2 card-title">Looking for a dream home?</h2>
+
+              <p class="card-text">We can help you realize your dream of a new home</p>
+            </div>
+
+            <button class="btn cta-btn">
+              <a href="#allproperty"><span>Explore Properties</span></a>
+              <ion-icon name="arrow-forward-outline"></ion-icon>
+            </button>
+          </div>
+
+        </div>
+      </section>
+
+    </article>
+  </main>
+  <!-- #FOOTER-->
+   <div id="footer"></div>
+
+   <!-- Supabase Client -->
+  <!-- Supabase Client and App Logic -->
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+  // Supabase Setup
+  const supabase = createClient(
+    'https://kcluzpyfsejzzznmisqd.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtjbHV6cHlmc2Vqenp6bm1pc3FkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg1NDQwMzksImV4cCI6MjA2NDEyMDAzOX0.aTrgRN-5zCgoOV6A8XcI0eUPmkoTmUlvRDPndCSW-Xk'
+  );
+
+  // Intercept "All Property" navigation and Reserve buttons
+  document.addEventListener('click', async function (e) {
+    // Intercept All Properties nav link
+    const allPropsNav = e.target.closest('a[href="./properties.html"]');
+    if (allPropsNav) {
+      e.preventDefault();
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        window.location.href = './properties.html';
+      } else {
+        window.location.href = 'login.html';
+      }
+    }
+    // Reserve Now button
+    const reserveBtn = e.target.closest('a.btn, button.btn');
+    if (reserveBtn && reserveBtn.textContent.trim().toLowerCase().includes('reserve')) {
+      e.preventDefault();
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        // You can implement reservation logic here or allow navigation
+        // For now, just show an alert or proceed as needed
+        // window.location.href = reserveBtn.href; // Uncomment if you want to allow navigation
+        alert('Reservation logic goes here!');
+      } else {
+        window.location.href = 'login.html';
+      }
+    }
+  });
+
+  // Render Property Card
+  function renderPropertyCard(property) {
+    return `
+      <li>
+        <div class="property-card" data-property-type="${property.property_type}">
+          <figure class="card-banner">
+            <a href="#${property.property_type}">
+              <img src="${property.image_url}" alt="${property.title}" class="w-100">
+            </a>
+            <div class="card-badge green">${property.status}</div>
+            <div class="banner-actions">
+              <button class="banner-actions-btn">
+                <ion-icon name="location"></ion-icon>
+                <address>${property.location}</address>
+              </button>
+              <button class="banner-actions-btn">
+                <ion-icon name="camera"></ion-icon>
+                <span>1</span>
+              </button>
+            </div>
+          </figure>
+          <div class="card-content">
+            <div class="card-price">
+              <strong>Ksh. ${property.price}</strong>/Month
+            </div>
+            <h3 class="h3 card-title"><a href="#allproperty">${property.title}</a></h3>
+            <p class="card-text">${property.description}</p>
+            <ul class="card-list">
+              <li class="card-item"><strong>${property.bedrooms}</strong><ion-icon name="bed-outline"></ion-icon><span>Bedrooms</span></li>
+              <li class="card-item"><strong>${property.bathrooms}</strong><ion-icon name="man-outline"></ion-icon><span>Bathrooms</span></li>
+              <li class="card-item"><strong>${property.square_ft}</strong><ion-icon name="square-outline"></ion-icon><span>Square Ft</span></li>
+            </ul>
+          </div>
+          <div class="card-footer">
+            <div class="card-author">
+              <figure class="author-avatar">
+                <img src="./data/uploads/admin.jpg" alt="M J" class="w-100">
+              </figure>
+              <div>
+                <p class="author-name"><a href="#">M J</a></p>
+                <p class="author-title">KREPM Agents</p>
+              </div>
+            </div>
+            <div class="card-footer-actions">
+              <a href="login.html" class="btn">Reserve Now</a>
+            </div>
+          </div>
+        </div>
+      </li>
+    `;
+  }
+
+  // Load Reviews
+  async function fetchTestimonials() {
+    const { data, error } = await supabase
+      .from('testimonials')
+      .select('*')
+      .order('rating', { ascending: false })
+      .limit(6);
+
+    const container = document.getElementById('reviews-container');
+    if (error || !data) {
+      container.innerHTML = "<p>Error loading reviews.</p>";
+      return;
+    }
+
+    container.innerHTML = data.map(review => {
+      const fullStars = Math.floor(review.rating);
+      const halfStar = (review.rating - fullStars >= 0.5);
+      const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+      return `
+        <div class="box">
+          <div class="user">
+            <img src="${review.user_image_url}" alt="${review.username}">
+            <div>
+              <h3>${review.username}</h3>
+              <div class="stars">
+                ${'<ion-icon name="star-outline"></ion-icon>'.repeat(fullStars)}
+                ${halfStar ? '<ion-icon name="star-half-outline"></ion-icon>' : ''}
+                ${'<ion-icon name="star-outline"></ion-icon>'.repeat(emptyStars)}
+              </div>
+            </div>
+          </div>
+          <p>${review.review}</p>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // Contact Form Submission
+  function setupContactForm() {
+    const form = document.getElementById('contact-form');
+    const msgDiv = document.getElementById('contact-message');
+
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const { name, email, number, message } = form;
+
+        const { error } = await supabase
+          .from('contact_messages')
+          .insert([{ name: name.value, email: email.value, phone_number: number.value, message: message.value }]);
+
+        if (error) {
+          msgDiv.innerHTML = "<p style='color:red;'>Failed to send message.</p>";
+        } else {
+          msgDiv.innerHTML = "<p style='color:green;'>Message sent successfully!</p>";
+          form.reset();
+        }
+      });
+    }
+  }
+
+  // Load Featured & Latest Properties
+  async function loadProperties() {
+    const featuredContainer = document.getElementById('featured-properties');
+    const latestContainer = document.getElementById('latest-properties');
+
+    const { data: featured, error: fError } = await supabase
+      .from('properties')
+      .select('*')
+      .eq('featured', true)
+      .eq('availability', true)
+      .order('property_id', { ascending: false })
+      .limit(6);
+
+    const { data: latest, error: lError } = await supabase
+      .from('properties')
+      .select('*')
+      .eq('availability', true)
+      .order('property_id', { ascending: false })
+      .limit(6);
+
+    featuredContainer.innerHTML = fError ? '<li>Error loading featured listings.</li>' : featured.map(renderPropertyCard).join('');
+    latestContainer.innerHTML = lError ? '<li>Error loading latest listings.</li>' : latest.map(renderPropertyCard).join('');
+  }
+
+  // Filter Function
+  window.filterFunction = function () {
+    const value = document.getElementById('sortby').value.toLowerCase();
+    const cards = document.querySelectorAll('.property-card');
+    cards.forEach(card => {
+      const type = card.dataset.propertyType.toLowerCase();
+      card.closest('li').style.display = value === 'property-type' || value === type ? 'block' : 'none';
+    });
+  };
+
+  // Search Function
+  function setupSearchForm() {
+    const form = document.getElementById('search-form');
+    const resultsDiv = document.getElementById('search-results');
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        resultsDiv.innerHTML = "Searching...";
+
+        const type = document.getElementById('property-type').value;
+        const location = document.getElementById('location').value;
+        const keyword = document.getElementById('keyword').value;
+
+        let query = supabase.from('properties').select('*').eq('availability', true);
+        if (type) query = query.eq('property_type', type);
+        if (location) query = query.ilike('location', `%${location}%`);
+        if (keyword) query = query.or(`description.ilike.%${keyword}%,keyword.ilike.%${keyword}%`);
+
+        const { data, error } = await query;
+        if (error || !data || data.length === 0) {
+          resultsDiv.innerHTML = `<p>No properties found.</p>`;
+        } else {
+          resultsDiv.innerHTML = `<ul class="property-list has-scrollbar">${data.map(renderPropertyCard).join('')}</ul>`;
+        }
+      });
+    }
+  }
+
+  // Wait for sections to load before populating
+  function waitForSections() {
+    const sectionsReady =
+      document.getElementById('featured-properties') &&
+      document.getElementById('latest-properties') &&
+      document.getElementById('reviews-container') &&
+      document.getElementById('contact-form');
+
+    if (sectionsReady) {
+      fetchTestimonials();
+      setupContactForm();
+      loadProperties();
+      setupSearchForm();
+    } else {
+      setTimeout(waitForSections, 100);
+    }
+  }
+
+  waitForSections();
+</script>
+
+  <!-- Load dynamic components if needed -->
+  <script>
+    // Optional: Load header/footer/sections if broken out into separate HTML files
+    const loadSection = async (id, file, callback) => {
+  try {
+    const res = await fetch(file);
+    if (!res.ok) throw new Error(`Failed to load ${file}`);
+    const html = await res.text();
+    document.getElementById(id).innerHTML = html;
+    if (typeof callback === "function") callback();
+  } catch (err) {
+    document.getElementById(id).innerHTML = `<p style="color:red;">${err.message}</p>`;
+  }
+};
+    loadSection("header", "./php/components/header.html");
+    loadSection("footer", "./php/components/footer.html");
+    loadSection("hero", "./php/components/hero.html");
+    loadSection("about", "./php/components/about.html");
+    loadSection("services", "./php/components/services.html");
+    loadSection("properties", "./php/components/properties.html");
+    loadSection("search-bar", "./php/components/search.html");
+  </script>
+
+  <!-- jquery link-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- custom js link-->
+  <script src="./assets/js/script.js"></script>
+
+  <!-- ionicon link-->
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+</body>
+</html>
