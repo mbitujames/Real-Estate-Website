@@ -39,20 +39,6 @@
                     </li>
                 </ul>
                 <button class="header-top-btn" onclick="redirectToPropOwnerDashboard()">Add Listing</button>
-
-                <script>
-                function redirectToPropOwnerDashboard() {
-                    // Check if the user is logged in as an admin
-                    var isAdmin = true;
-                    // If the user is an admin, redirect to the admin panel page
-                    if (isAdmin) {
-                        window.location.href = 'propowner_dashboard.php'; 
-                    } else {
-                        window.location.href = 'index.php';
-                        alert("Please log in as Property Owner");
-                    }
-                }
-                </script>
                 
             </div>
             </div>
@@ -109,7 +95,7 @@
                             <a href="index.html#reviews" class="navbar-link" data-nav-link>Reviews</a>
                         </li>
                         <li>
-                            <a href="./dashboard.html" class="navbar-link" data-nav-link>Dashboard</a>
+                            <a href="dashboard.html" class="navbar-link" data-nav-link>Dashboard</a>
                         </li>
                     </ul>
                 </div>

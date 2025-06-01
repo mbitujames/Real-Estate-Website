@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/admin.css">
+    <style>
+      @media screen and (max-width: 768px) {
+        table {
+          overflow-x: auto;
+          display: block;
+          white-space: nowrap;
+        }
+      }
+      main {
+        padding: 20px;
+        font-family: 'Nunito Sans', sans-serif;
+      }
+      .navbar {
+        display: none;
+      }
+      .navbar.active {
+        display: block; /* Show the navbar when it has the 'active' class */
+      }
+
+      .overlay {
+        display: none; /* Initially hide the overlay */
+      }
+
+      .overlay.active {
+        display: block; /* Show the overlay when it has the 'active' class */
+      }
+      .navbar-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        color: black;
+        }
+
+      .navbar-link {
+        text-decoration: none;
+        color: #000;
+        padding: 10px 15px;
+        display: block;
+      }
+
+      .navbar-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .nav-close-btn {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+      }
+
+      .header-bottom-actions {
+        display: flex;
+        align-items: center;
+      }
+
+      .header-bottom-actions-btn {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+      }
+      /* General card styling */
+      section {
+        margin-bottom: 20px;
+        background-color: #f0f7ff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        transition: box-shadow 0.3s ease;
+      }
+
+      section:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Header styling for sections */
+      section h3 {
+        margin-top: 0;
+        font-size: 1.5em;
+        color: brown;
+        border-bottom: 2px solid #f1f1f1;
+        padding-bottom: 10px;
+        text-align: center;
+      }
+
+      /* Sub-section card styling */
+      section div {
+        margin-bottom: 15px;
+        background-color: #f0f7ff;
+        border-radius: 6px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        padding: 15px;
+        transition: box-shadow 0.3s ease;
+      }
+      section div:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Header styling for sub-sections */
+      section div h4 {
+        margin-top: 0;
+        font-size: 1.2em;
+        text-decoration: double;
+        color: black;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 5px;
+      }
+
+      /* Additional styling to ensure padding and spacing */
+      section div p, section div ul {
+        margin: 0;
+        padding: 10px 0;
+      }
+      /* Table styling */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+      thead {
+        background-color: #f2f2f2;
+      }
+      th, td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: left;
+      }
+      th {
+        font-weight: bold;
+      }
+      .table-image {
+        width: 50px; /* Adjust image width as desired */
+        height: auto; /* Maintain aspect ratio */
+      }
+
+      h2{
+        color:#fa5b3d;
+        padding:2px;
+        text-decoration:solid;
+        text-align:center;
+      }
+      /* Table heading styling */
+      h4 {
+        margin-top: 20px;
+        margin-bottom: 10px;
+        font-size: 18px;
+      }
+
+      /* Alternate row background color */
+      tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      /* Hover effect */
+      tbody tr:hover {
+        background-color: #f2f2f2;
+      }
+      .error, .success {
+        color: red;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      .success {
+        color: green;
+      }
+      body {
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: white;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding-inline: 15px;
+        box-sizing: border-box;
+      }
+      .actions {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+      }
+      .actions .action-icon {
+        color: white;
+        padding: 8px;
+        margin: 2px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      .actions .edit { background-color: #f39c12; }
+      .actions .view { background-color: #3498db; }
+      .actions .delete { background-color: #e74c3c; }
+      .actions .edit:hover { background-color: #e67e22; }
+      .actions .view:hover { background-color: #2980b9; }
+      .actions .delete:hover { background-color: #c0392b; }
+      
+      
+    </style>
+
+    <!-- google font link-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet">
+</head>
+<body>
+  <header class="header" data-header>
+    <div class="overlay" data-overlay></div>
+    <div class="header-top">
+      <div class="container">
+        <ul class="header-top-list">
+            <li>
+              <a href="krepmestates@gmail.com" class="header-top-link">
+                <ion-icon name="mail-outline"></ion-icon>
+                <span>krepmestates@gmail.com</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="header-top-link">
+                <ion-icon name="location-outline"></ion-icon>
+                <address>4th Floor, One Tana Towers, Kitale</address>
+              </a>
+            </li>
+        </ul>
+        <div class="wrapper">
+          <ul class="header-top-social-list">
+            <li> 
+              <a href="https://www.facebook.com/MbituJames" class="header-top-social-link" target="_blank">
+                <ion-icon name="logo-facebook"></ion-icon>
+              </a>
+            </li>
+            <li>
+              <a href="https://x.com/mbituke?t=mv9XXsRlVtVuec1vDPbUbQ&s=09" class="header-top-social-link" target="_blank">
+                <ion-icon name="logo-twitter"></ion-icon>
+              </a>
+            </li>
+            <li>
+              <a href="https://www.instagram.com/mbitu?igsh=MWs3bG53cHhwYWNpOA==" class="header-top-social-link" target="_blank">
+                <ion-icon name="logo-instagram"></ion-icon>
+              </a>
+            </li>
+            <li>
+              <a href="https://pin.it/2fseiKYde" class="header-top-social-link" target="_blank">
+                <ion-icon name="logo-pinterest"></ion-icon>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="header-bottom">
+      <div class="container">
+        <a href="#home" class="logo">
+          <img src="./assets/images/logo1.jpg" alt="KREPM">
+        </a>
+        <nav class="navbar" data-navbar>
+          <div class="navbar-top">
+            <a href="#home" class="logo">
+              <img src="./assets/images/logo1.jpg" alt="KREPM">
+            </a>
+            <button class="nav-close-btn" data-nav-close-btn aria-label="Close Menu">
+              <ion-icon name="close-outline"></ion-icon>
+            </button>
+          </div>
+
+          <div class="navbar-bottom">
+            <ul class="navbar-list">
+              <li>
+                <a href="../index.php" class="navbar-link" data-nav-link>Home</a>
+              </li>
+              <li>
+                <a href="#" class="navbar-link" data-nav-link>Users</a>
+              </li>
+              <li>
+                <a href="#" class="navbar-link" data-nav-link>Users Activities</a>
+              </li>
+              <li>
+                <a href="./properties.php" class="navbar-link" data-nav-link>Properties</a>
+              </li>
+              <li>
+                <a href="./reports.php" class="navbar-link" data-nav-link>Reports</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <div class="header-bottom-actions">
+          <div class="dropdown">
+            <button class="btn">
+              <a href="./logout.php"><span>Logout</span></a>
+            </button>
+            <button class="header-bottom-actions-btn" aria-label="admin" id="admin-btn">
+              <ion-icon name="people-outline"></ion-icon>
+              <span>Admin</span>
+            </button>
+          </div>
+          <button class="header-bottom-actions-btn" data-nav-open-btn aria-label="Open Menu">
+            <ion-icon name="menu-outline"></ion-icon>
+            <span>Menu</span>
+          </button>
+        </div>
+    </div>
+  </div>
+  </header>
+  <main>
+    <h2>KREPM ADMINISTRATION PANEL</h2>
+    <section id="dashboard">
+      <h3 id="welcome-message">Welcome, Admin!</h3>
+      <hr>
+      <p>Manage your properties, users, and reports here.</p>
+    </section>
+    <section id="total-users">
+      <h3>Total Users</h3>
+      <p id="total-users-count"></p>
+      <table class="user-table">
+        <thead>
+          <tr>
+            <th>User ID</th>
+            <th>Username</th>
+            <th>Full Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Created At</th>
+            <th>Is Active</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="users-table-body"></tbody>
+      </table>
+    </section>
+    <section id="recent-activities">
+      <h3>Recent Activities</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Activity ID</th>
+            <th>Username</th>
+            <th>Description</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody id="activities-table-body"></tbody>
+      </table>
+    </section>
+    <section id="add-properties">
+      <div class="card add-property" id="add-property">
+        <h2>Add Property</h2>
+        <form id="add-property-form" enctype="multipart/form-data">
+          <label for="title">Title:</label>
+          <input type="text" id="title" name="title" required>
+          <label for="description">Description:</label>
+          <textarea id="description" name="description" required></textarea>
+          <label for="location">Location:</label>
+          <input type="text" id="location" name="location" required>
+          <label for="status">Status:</label>
+          <select id="status" name="status" required>
+            <option value="For Sale">For Sale</option>
+            <option value="For Rent">For Rent</option>
+          </select>
+          <label for="price">Price:</label>
+          <input type="number" id="price" name="price" required>
+          <label for="bedrooms">Bedrooms:</label>
+          <input type="number" id="bedrooms" name="bedrooms" required>
+          <label for="bathrooms">Bathrooms:</label>
+          <input type="number" id="bathrooms" name="bathrooms" required>
+          <label for="square_ft">Square Ft:</label>
+          <input type="number" id="square_ft" name="square_ft" required>
+          <label for="property_type">Type:</label>
+          <select id="property_type" name="property_type" required>
+            <option value="rent">Rent</option>
+            <option value="buy">Sale</option>
+          </select>
+          <label for="image">Image:</label>
+          <input type="file" id="image" name="image" accept="image/*" required>
+          <label for="keyword">Keyword(s):</label>
+          <input type="text" id="keyword" name="keyword" required>
+          <button type="submit" name="submit">Add Property</button>
+        </form>
+      </div>
+    </section>
+    <section id="properties">
+      <h3>Properties</h3>
+      <table class="properties-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Location</th>
+            <th>Status</th>
+            <th>Price</th>
+            <th>Bedrooms</th>
+            <th>Bathrooms</th>
+            <th>Square Ft</th>
+            <th>Type</th>
+            <th>Image</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="properties-table-body"></tbody>
+      </table>
+    </section>
+  </main>
+  <!-- #FOOTER-->
+  <footer class="footer">
+      <div class="footer-top">
+        <div class="container">
+          <div class="footer-brand">
+            <a href="./index.php" class="logo">
+              <img src="./assets/images/favicon.ico" alt="KREPM logo">
+              <p >Kitale Real Estate & Property Management </p>
+            </a>
+            <p class="section-text">
+              Feel free to explore our website and contact us for any inquiries or assistance.
+            </p>
+
+            <ul class="contact-list">
+              <li>
+                <a href="./index.php" class="contact-link">
+                  <ion-icon name="location-outline"></ion-icon>
+                  <address>4th Floor, One Tana Towers, Kitale</address>
+                </a>
+              </li>
+
+              <li>
+                <a href="tel:+254716519766" class="contact-link">
+                  <ion-icon name="call-outline"></ion-icon>
+                  <span>+254716519766</span>
+                </a>
+              </li>
+
+              <li>
+                <a href="mailto:mbitumutonga@gmail.com" class="contact-link" target="_blank">
+                  <ion-icon name="mail-outline"></ion-icon>
+                  <span>mbitumutonga@gmail.com</span>
+                </a>
+              </li>
+
+            </ul>
+
+            <ul class="social-list">
+              <li>
+                <a href="https://www.facebook.com/MbituJames" class="social-link" target="_blank">
+                  <ion-icon name="logo-facebook"></ion-icon>
+                </a>
+              </li>
+
+              <li>
+                <a href="https://x.com/mbituke?t=mv9XXsRlVtVuec1vDPbUbQ&s=09" class="social-link" target="_blank">
+                  <ion-icon name="logo-twitter"></ion-icon>
+                </a>
+              </li>
+
+              <li>
+                <a href="https://www.linkedin.com/in/mbitujames/" class="social-link" target="_blank">
+                  <ion-icon name="logo-linkedin"></ion-icon>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="footer-link-box">
+            <ul class="footer-list">
+              <li>
+                <p class="footer-list-title">Company</p>
+              </li>
+
+              <li>
+                <a href="./index.php" class="footer-link">About Us</a>
+              </li>
+
+              <li>
+                <a href="./index.php" class="footer-link">Reviews</a>
+              </li>
+
+              <li>
+                <a href="./properties.php" class="footer-link">Properties</a>
+              </li>
+
+              <li>
+                <a href="./index.php" class="footer-link">Contact us</a>
+              </li>
+
+            </ul>
+
+            <ul class="footer-list">
+              <li>
+                <p class="footer-list-title">Services</p>
+              </li>
+              <li>
+                <a href="./login.php" class="footer-link">Login</a>
+              </li>
+
+              <li>
+                <a href="./admin_panel.php" class="footer-link">My account</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="container">
+          <p class="copyright">
+            &copy; 2025 <a href="./index.php">Kitale Real Estate & Property Management</a>. All Rights Reserved
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module">
+      import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+      const supabase = createClient(
+        'https://kcluzpyfsejzzznmisqd.supabase.co',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtjbHV6cHlmc2Vqenp6bm1pc3FkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg1NDQwMzksImV4cCI6MjA2NDEyMDAzOX0.aTrgRN-5zCgoOV6A8XcI0eUPmkoTmUlvRDPndCSW-Xk'
+      );
+
+      // Fetch and render users
+      export async function loadUsers() {
+        const { data: users, error } = await supabase.from('Users').select('*');
+        if (error) return alert('Error loading users: ' + error.message);
+
+        document.getElementById('total-users-count').textContent = `Total Users: ${users.length}`;
+        const tbody = document.getElementById('users-table-body');
+        tbody.innerHTML = '';
+        users.forEach(user => {
+          tbody.innerHTML += `
+            <tr>
+              <td>${user.user_id}</td>
+              <td>${user.username}</td>
+              <td>${user.full_name}</td>
+              <td>${user.phone}</td>
+              <td>${user.email}</td>
+              <td>${user.role}</td>
+              <td>${user.created_at}</td>
+              <td>${user.is_active ? 'Yes' : 'No'}</td>
+              <td>
+                <button class="action-icon edit" title="Edit" onclick="editUser('${user.user_id}')">
+                  <ion-icon name="create-outline"></ion-icon>
+                </button>
+                <button class="action-icon view" title="View" onclick="viewUser('${user.user_id}')">
+                  <ion-icon name="eye-outline"></ion-icon>
+                </button>
+                <button class="action-icon delete" title="Delete" onclick="deleteUser('${user.user_id}')">
+                  <ion-icon name="trash-outline"></ion-icon>
+                </button>
+              </td>
+            </tr>
+          `;
+        });
+      }
+
+      // Fetch and render activities
+      export async function loadActivities() {
+        const { data: activities, error } = await supabase
+          .from('activities')
+          .select('activity_id, activity_description, activity_date, user_id, users(username)')
+          .order('activity_date', { ascending: false })
+          .limit(10);
+
+        if (error) return alert('Error loading activities: ' + error.message);
+
+        const tbody = document.getElementById('activities-table-body');
+        tbody.innerHTML = '';
+        activities.forEach(a => {
+          tbody.innerHTML += `
+            <tr>
+              <td>${a.activity_id}</td>
+              <td>${a.users?.username || ''}</td>
+              <td>${a.activity_description}</td>
+              <td>${a.activity_date}</td>
+            </tr>
+          `;
+        });
+      }
+
+      // Fetch and render properties
+      export async function loadProperties() {
+        const { data: properties, error } = await supabase.from('Properties').select('*').order('property_id', { ascending: false });
+        if (error) return alert('Error loading properties: ' + error.message);
+
+        const tbody = document.getElementById('properties-table-body');
+        tbody.innerHTML = '';
+        properties.forEach(row => {
+          tbody.innerHTML += `
+            <tr>
+              <td>${row.property_id}</td>
+              <td>${row.title}</td>
+              <td>${row.location}</td>
+              <td>${row.status}</td>
+              <td>${row.price}</td>
+              <td>${row.bedrooms}</td>
+              <td>${row.bathrooms}</td>
+              <td>${row.square_ft}</td>
+              <td>${row.property_type}</td>
+              <td><img src="${row.image_url}" alt="${row.title}" class="table-image"></td>
+              <td>
+                <button class="action-icon edit" title="Edit" onclick="editProperty('${row.property_id}')">
+                  <ion-icon name="create-outline"></ion-icon>
+                </button>
+                <button class="action-icon view" title="View" onclick="viewProperty('${row.property_id}')">
+                  <ion-icon name="eye-outline"></ion-icon>
+                </button>
+                <button class="action-icon delete" title="Delete" onclick="deleteProperty('${row.property_id}')">
+                  <ion-icon name="trash-outline"></ion-icon>
+                </button>
+              </td>
+            </tr>
+          `;
+        });
+      }
+
+      // Add property (with image upload to Supabase Storage)
+      document.getElementById('add-property-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const form = e.target;
+        const formData = new FormData(form);
+
+        // Upload image to Supabase Storage
+        const imageFile = formData.get('image');
+        let image_url = '';
+        if (imageFile && imageFile.size > 0) {
+          const fileExt = imageFile.name.split('.').pop();
+          const fileName = `${Date.now()}.${fileExt}`;
+          const { data, error: uploadError } = await supabase.storage
+            .from('property-images')
+            .upload(fileName, imageFile, { cacheControl: '3600', upsert: false });
+          if (uploadError) return alert('Image upload failed: ' + uploadError.message);
+          image_url = supabase.storage.from('property-images').getPublicUrl(fileName).data.publicUrl;
+        }
+
+        // Insert property
+        const { error } = await supabase.from('Properties').insert([{
+          title: formData.get('title'),
+          description: formData.get('description'),
+          location: formData.get('location'),
+          status: formData.get('status'),
+          price: formData.get('price'),
+          bedrooms: formData.get('bedrooms'),
+          bathrooms: formData.get('bathrooms'),
+          square_ft: formData.get('square_ft'),
+          property_type: formData.get('property_type'),
+          keyword: formData.get('keyword'),
+          image_url
+        }]);
+        if (error) return alert('Error adding property: ' + error.message);
+        form.reset();
+        loadProperties();
+      });
+
+      // --- USER MODAL LOGIC ---
+
+      window.viewUser = async (id) => {
+        const { data: user, error } = await supabase.from('Users').select('*').eq('user_id', id).single();
+        if (error || !user) return alert('User not found');
+        showUserModal(user, false);
+      };
+
+      window.editUser = async (id) => {
+        const { data: user, error } = await supabase.from('Users').select('*').eq('user_id', id).single();
+        if (error || !user) return alert('User not found');
+        showUserModal(user, true);
+      };
+
+      window.deleteUser = async (id) => {
+        if (confirm('Delete user?')) {
+          const { error } = await supabase.from('Users').delete().eq('user_id', id);
+          if (error) return alert('Error deleting user: ' + error.message);
+          loadUsers();
+        }
+      };
+
+      function showUserModal(user, editable) {
+        let modal = document.getElementById('user-modal');
+        if (!modal) {
+          // Create modal if not present
+          modal = document.createElement('div');
+          modal.id = 'user-modal';
+          modal.style = 'display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:9999; align-items:center; justify-content:center;';
+          modal.innerHTML = `
+            <div style="background:#fff; padding:24px; border-radius:8px; max-width:400px; margin:auto; position:relative;">
+              <button id="close-user-modal" style="position:absolute; top:8px; right:8px;">&times;</button>
+              <h3 id="user-modal-title">User Details</h3>
+              <form id="user-edit-form">
+                <input type="hidden" name="user_id">
+                <div><label>Username: <input type="text" name="username" required></label></div>
+                <div><label>Full Name: <input type="text" name="full_name"></label></div>
+                <div><label>Phone: <input type="text" name="phone"></label></div>
+                <div><label>Email: <input type="email" name="email"></label></div>
+                <div><label>Role: <input type="text" name="role"></label></div>
+                <div><label>Is Active: <input type="checkbox" name="is_active"></label></div>
+                <button type="submit">Save</button>
+              </form>
+              <div id="user-modal-message"></div>
+            </div>
+          `;
+          document.body.appendChild(modal);
+          document.getElementById('close-user-modal').onclick = closeUserModal;
+          document.getElementById('user-edit-form').onsubmit = saveUserEdit;
+        }
+        modal.style.display = 'flex';
+        document.getElementById('user-modal-title').textContent = editable ? 'Edit User' : 'View User';
+        const form = document.getElementById('user-edit-form');
+        form.user_id.value = user.user_id;
+        form.username.value = user.username;
+        form.full_name.value = user.full_name;
+        form.phone.value = user.phone;
+        form.email.value = user.email;
+        form.role.value = user.role;
+        form.is_active.checked = !!user.is_active;
+        // Disable fields if not editable
+        [...form.elements].forEach(el => el.disabled = !editable && el.name !== 'user_id');
+        form.querySelector('button[type="submit"]').style.display = editable ? 'inline-block' : 'none';
+        document.getElementById('user-modal-message').textContent = '';
+      }
+      function closeUserModal() {
+        document.getElementById('user-modal').style.display = 'none';
+      }
+      async function saveUserEdit(e) {
+        e.preventDefault();
+        const form = e.target;
+        const user_id = form.user_id.value;
+        const updates = {
+          username: form.username.value,
+          full_name: form.full_name.value,
+          phone: form.phone.value,
+          email: form.email.value,
+          role: form.role.value,
+          is_active: form.is_active.checked
+        };
+        const { error } = await supabase.from('Users').update(updates).eq('user_id', user_id);
+        if (error) {
+          document.getElementById('user-modal-message').textContent = 'Error: ' + error.message;
+        } else {
+          document.getElementById('user-modal-message').textContent = 'User updated!';
+          loadUsers();
+          setTimeout(() => closeUserModal(), 1000);
+        }
+      }
+
+      // --- PROPERTY MODAL LOGIC ---
+
+      window.viewProperty = async (id) => {
+        const { data: prop, error } = await supabase.from('Properties').select('*').eq('property_id', id).single();
+        if (error || !prop) return alert('Property not found');
+        showPropertyModal(prop, false);
+      };
+
+      window.editProperty = async (id) => {
+        const { data: prop, error } = await supabase.from('Properties').select('*').eq('property_id', id).single();
+        if (error || !prop) return alert('Property not found');
+        showPropertyModal(prop, true);
+      };
+
+      window.deleteProperty = async (id) => {
+        if (confirm('Delete property?')) {
+          const { error } = await supabase.from('Properties').delete().eq('property_id', id);
+          if (error) return alert('Error deleting property: ' + error.message);
+          loadProperties();
+        }
+      };
+
+      function showPropertyModal(prop, editable) {
+        let modal = document.getElementById('property-modal');
+        if (!modal) {
+          // Create modal if not present
+          modal = document.createElement('div');
+          modal.id = 'property-modal';
+          modal.style = 'display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:9999; align-items:center; justify-content:center;';
+          modal.innerHTML = `
+            <div style="background:#fff; padding:24px; border-radius:8px; max-width:500px; margin:auto; position:relative;">
+              <button id="close-property-modal" style="position:absolute; top:8px; right:8px;">&times;</button>
+              <h3 id="property-modal-title">Property Details</h3>
+              <form id="property-edit-form">
+                <input type="hidden" name="property_id">
+                <div><label>Title: <input type="text" name="title" required></label></div>
+                <div><label>Description: <textarea name="description"></textarea></label></div>
+                <div><label>Location: <input type="text" name="location"></label></div>
+                <div><label>Status: <input type="text" name="status"></label></div>
+                <div><label>Price: <input type="number" name="price"></label></div>
+                <div><label>Bedrooms: <input type="number" name="bedrooms"></label></div>
+                <div><label>Bathrooms: <input type="number" name="bathrooms"></label></div>
+                <div><label>Square Ft: <input type="number" name="square_ft"></label></div>
+                <div><label>Type: <input type="text" name="property_type"></label></div>
+                <div><label>Keyword: <input type="text" name="keyword"></label></div>
+                <div><label>Image: <input type="file" name="image"></label></div>
+                <button type="submit">Save</button>
+              </form>
+              <div id="property-modal-message"></div>
+            </div>
+          `;
+          document.body.appendChild(modal);
+          document.getElementById('close-property-modal').onclick = closePropertyModal;
+          document.getElementById('property-edit-form').onsubmit = savePropertyEdit;
+        }
+        modal.style.display = 'flex';
+        document.getElementById('property-modal-title').textContent = editable ? 'Edit Property' : 'View Property';
+        const form = document.getElementById('property-edit-form');
+        form.property_id.value = prop.property_id;
+        form.title.value = prop.title;
+        form.description.value = prop.description;
+        form.location.value = prop.location;
+        form.status.value = prop.status;
+        form.price.value = prop.price;
+        form.bedrooms.value = prop.bedrooms;
+        form.bathrooms.value = prop.bathrooms;
+        form.square_ft.value = prop.square_ft;
+        form.property_type.value = prop.property_type;
+        form.keyword.value = prop.keyword || '';
+        // Disable fields if not editable
+        [...form.elements].forEach(el => el.disabled = !editable && el.name !== 'property_id');
+        form.querySelector('button[type="submit"]').style.display = editable ? 'inline-block' : 'none';
+        document.getElementById('property-modal-message').textContent = '';
+      }
+      function closePropertyModal() {
+        document.getElementById('property-modal').style.display = 'none';
+      }
+      async function savePropertyEdit(e) {
+        e.preventDefault();
+        const form = e.target;
+        const property_id = form.property_id.value;
+        const updates = {
+          title: form.title.value,
+          description: form.description.value,
+          location: form.location.value,
+          status: form.status.value,
+          price: form.price.value,
+          bedrooms: form.bedrooms.value,
+          bathrooms: form.bathrooms.value,
+          square_ft: form.square_ft.value,
+          property_type: form.property_type.value,
+          keyword: form.keyword.value
+        };
+        // Handle image upload if present
+        const imageFile = form.image.files[0];
+        if (imageFile) {
+          const fileExt = imageFile.name.split('.').pop();
+          const fileName = `admin_${Date.now()}.${fileExt}`;
+          const { error: uploadError } = await supabase.storage
+            .from('property-images')
+            .upload(fileName, imageFile, { upsert: true });
+          if (uploadError) {
+            document.getElementById('property-modal-message').textContent = 'Image upload failed: ' + uploadError.message;
+            return;
+          }
+          updates.image_url = supabase.storage.from('property-images').getPublicUrl(fileName).data.publicUrl;
+        }
+        const { error } = await supabase.from('Properties').update(updates).eq('property_id', property_id);
+        if (error) {
+          document.getElementById('property-modal-message').textContent = 'Error: ' + error.message;
+        } else {
+          document.getElementById('property-modal-message').textContent = 'Property updated!';
+          loadProperties();
+          setTimeout(() => closePropertyModal(), 1000);
+        }
+      }
+
+      // --- INITIAL LOAD ---
+      loadUsers();
+      loadActivities();
+      loadProperties();
+    </script>
+    <!-- custom js link-->
+    <script>
+    // JavaScript for handling the navigation menu
+    document.addEventListener('DOMContentLoaded', function() {
+      const navOpenBtn = document.querySelector('[data-nav-open-btn]');
+      const navCloseBtn = document.querySelector('[data-nav-close-btn]');
+      const navbar = document.querySelector('[data-navbar]');
+      const overlay = document.querySelector('[data-overlay]');
+
+      navOpenBtn.addEventListener('click', function() {
+        navbar.classList.add('active');
+        overlay.classList.add('active');
+      });
+
+      navCloseBtn.addEventListener('click', function() {
+        navbar.classList.remove('active');
+        overlay.classList.remove('active');
+      });
+
+      overlay.addEventListener('click', function() {
+        navbar.classList.remove('active');
+        overlay.classList.remove('active');
+      });
+    });
+  </script>
+    <script src="./assets/js/admin.js"></script>
+  
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  </body>
+</html>

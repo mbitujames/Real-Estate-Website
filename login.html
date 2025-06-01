@@ -342,7 +342,7 @@ button[type="submit"]:hover, .btn:hover {
     <div class="footer-bottom">
       <div class="container">
         <p class="copyright">
-          &copy; 2024 <a href="./index.html">Kitale Real Estate & Property Management</a>. All Rights Reserved
+          &copy; 2025 <a href="./index.html">Kitale Real Estate & Property Management</a>. All Rights Reserved
         </p>
       </div>
     </div>
@@ -355,6 +355,14 @@ button[type="submit"]:hover, .btn:hover {
     'https://kcluzpyfsejzzznmisqd.supabase.co',
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtjbHV6cHlmc2Vqenp6bm1pc3FkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg1NDQwMzksImV4cCI6MjA2NDEyMDAzOX0.aTrgRN-5zCgoOV6A8XcI0eUPmkoTmUlvRDPndCSW-Xk'
   );
+
+  import { initHeader } from './assets/js/header.js';
+  import { initNavbarMenu } from './assets/js/script.js';
+
+  // Initialize header/profile dropdown
+  initHeader();
+  // Initialize navbar/menu button logic
+  initNavbarMenu();
 
   const form = document.getElementById("login-form");
   const messageDiv = document.getElementById("login-message");

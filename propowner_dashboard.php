@@ -1,3 +1,4 @@
+
 <!--home owner can add properties, view all added properties, view reports on bought or rent properties,buy or rent properties-->
 <?php
 session_start();

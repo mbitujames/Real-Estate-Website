@@ -130,7 +130,7 @@
               <input type="number" name="number" required maxlength="10" placeholder="Enter your number" class="box" autocomplete="on">
               <label for="message">Message:</label>
               <textarea name="message" placeholder="Enter your message here..." required maxlength="1000" cols="30" rows="10" class="box"></textarea>
-              <input type="submit" value="Send Message" name="send" class="btn">
+              <input type="submit" value="Send Message" name="send" class="contact-main-btn">
               <!-- Display success or error messages -->
              <div id="contact-message"></div>
             </form>
@@ -149,10 +149,10 @@
               <p class="card-text">We can help you realize your dream of a new home</p>
             </div>
 
-            <button class="btn cta-btn">
-              <a href="#allproperty"><span>Explore Properties</span></a>
+            <a href="#allproperty" class="cta-main-btn">
+              <span>Explore Properties</span>
               <ion-icon name="arrow-forward-outline"></ion-icon>
-            </button>
+            </a>
           </div>
 
         </div>
@@ -397,6 +397,7 @@
   }
 
   waitForSections();
+  
 </script>
 
   <!-- Load dynamic components if needed -->
@@ -413,7 +414,13 @@
     document.getElementById(id).innerHTML = `<p style="color:red;">${err.message}</p>`;
   }
 };
-    loadSection("header", "./php/components/header.html");
+    // Load header and then initialize header logic
+    loadSection("header", "./php/components/header.html", async () => {
+  const headerModule = await import('./assets/js/header.js');
+  headerModule.initHeader();
+  const scriptModule = await import('./assets/js/script.js');
+  scriptModule.initNavbarMenu();
+});
     loadSection("footer", "./php/components/footer.html");
     loadSection("hero", "./php/components/hero.html");
     loadSection("about", "./php/components/about.html");

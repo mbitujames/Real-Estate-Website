@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <style>
+    /* Sidebar Styles */
+    section {
+        margin-bottom: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        transition: box-shadow 0.3s ease;
+    }
+
+    section:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    .sidebar {
+        height: 100%;
+        width: 250px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #fff2f0;
+        padding-top: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+    }
+    .sidebar:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+    }
+
+    .sidebar h2 {
+        color: black;
+        text-align: center;
+    }
+
+    .sidebar ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .sidebar li {
+        padding: 10px;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .sidebar li:hover {
+        background-color: #fa5b3d;
+        color: white;
+    }
+
+    .sidebar a {
+        text-decoration: none;
+        color: black;
+        display: block;
+        transition: color 0.3s;
+    }
+    .sidebar a:hover {
+    color: white;
+    }
+
+    /* Content Styles */
+    .content {
+        margin-left: 250px;
+        padding: 20px;
+    }
+
+    .card {
+        background-color:#f0f7ff;
+        margin-bottom: 20px;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .card img {
+        width: 100px;
+        height: auto;
+        display: block;
+        margin-bottom: 10px;
+        border-radius: 50%;
+    }
+    .welcome-text {
+        font-weight: bold;
+        font-size: 30px;
+        color: brown;
+        text-align: center;
+    }
+    button{
+        margin-top: 10px;
+        float: bottom;
+        width: 80%;
+        background-color:#fa5b3d;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 12px 24px;
+        font-size: 18px;
+        cursor: pointer;
+        text-align: center;
+        transition: background-color 0.3s, color 0.3s;
+    }
+    button:hover{
+        background-color: white;
+        color: #333;
+    }
+    .card button {
+        width: 100%;
+        background-color:#fa5b3d;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 12px 24px;
+        font-size: 18px;
+        cursor: pointer;
+        text-align: center;
+        transition: background-color 0.3s, color 0.3s;
+    }
+    .card button:hover {
+        background-color: white;
+        color: #333;
+    }
+    .success-message {
+        color: green; 
+        font-size: 14px;
+        margin-bottom: 5px; 
+    }
+    .error-message {
+        color: red;
+        font-size: 14px;
+        margin-bottom: 5px; 
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-group input, .form-group textarea {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+    }
+    .user-info {
+        display: flex; /* Make user info section a flexbox */
+        align-items: center; /* Align image and details horizontally */
+        margin-bottom: 10px; /* Add some spacing */
+    }
+
+    .user-info img {
+        width: 50px; /* Set image width */
+        height: 50px; /* Set image height */
+        border-radius: 50%; /* Make image circular */
+        margin-right: 10px; /* Add margin between image and details */
+    }
+
+    .user-details {
+        display: flex; /* Make user details a flexbox */
+        flex-direction: column; /* Arrange details vertically */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .username,
+    .email {
+        font-weight: bold; /* Make username and email bold */
+        margin-bottom: 5px; /* Add some spacing */
+    }
+
+    /* Media Queries for Responsive Design */
+    /* For screens smaller than 768px (tablets) */
+    @media only screen and (max-width: 768px) {
+    .sidebar {
+        width: 100%; /* Sidebar takes up full width */
+        position: relative; /* Remove fixed positioning */
+        height: auto; /* Remove fixed height */
+    }
+
+    .content {
+        margin-left: 0; /* Remove left margin */
+    }
+
+    .card button {
+        width: 100%; /* Buttons take up full width */
+    }}
+    /* For screens smaller than 576px (phones) */
+    @media only screen and (max-width: 576px) {
+    .sidebar {
+        padding-top: 10px; /* Adjust padding */
+    }
+
+    .card button {
+        font-size: 16px; /* Adjust font size for smaller screens */
+    }}
+
+</style>
+</head>
+
+<body>
+    <div class="sidebar">
+    <h2>Dashboard</h2><br>
+    <div class="user-info" id="user-info">
+      <!-- User avatar, username, email will be filled by JS -->
+    </div>
+    <ul>
+      <li><i class="fa-solid fa-house"></i><a href="./index.html"><strong>Home</strong></a></li>
+      <li><i class="fa-solid fa-building"></i><a href="#listed-properties"><strong>Listed Properties</strong></a></li> 
+      <li><i class="fa-sharp fa-solid fa-pen-to-square"></i><a href="#update-information"><strong>Update Information</strong></a></li>
+      <li><i class="fa-sharp fa-solid fa-star-sharp"></i><a href="#reviews"><strong>Write a Review</strong></a></li>
+      <li><i class="fa-regular fa-file-lines"></i><a href="./php/reports.html"><strong>Reports</strong></a></li>
+    </ul>
+    <br><br>
+    <button id="logout-btn"><span>Logout</span></button>
+  </div>
+  <div class="content">
+    <section id="welcome" class="card">
+      <p class="welcome-text" id="welcome-text">Welcome!</p>
+      <p>This is your personal dashboard where you can update your details and view your reports.</p>
+    </section>
+
+    <section id="listed-properties" class="card">
+      <h2>Listed Properties</h2>
+      <p id="rent-count">Properties for Rent: ...</p>
+      <p id="sale-count">Properties for Sale: ...</p>
+      <p id="total-count">Total Properties: ...</p>
+      <button onclick="window.location.href='./properties.html'"><span>View All Properties</span></button>
+    </section>
+
+    <section id="update-information" class="card">
+      <h2>Update Your Information</h2>
+      <div id="update-message"></div>
+      <form id="update-form" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="full_name">Full Name:</label>
+          <input type="text" id="full_name" name="full_name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" autocomplete="on">
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number:</label>
+          <input type="text" id="phone" name="phone" autocomplete="on">
+        </div>
+        <div class="form-group">
+          <label for="avatar_url">Upload Profile Picture:</label>
+          <input type="file" id="avatar_url" name="avatar_url">
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password">
+        </div>
+        <button type="submit" id="update">Update Information</button>
+      </form>
+    </section>
+
+    <section id="reviews" class="card">
+      <h2>Write a Review</h2>
+      <form id="reviewForm">
+        <div class="form-group">
+          <label for="review-username">Name:</label>
+          <input type="text" id="review-username" name="username" required>
+        </div>
+        <div class="form-group">
+          <label for="rating">Rating:</label>
+          <input type="number" id="rating" name="rating" step="0.1" min="1" max="5" required>
+        </div>
+        <div class="form-group">
+          <label for="review">Review:</label>
+          <textarea id="review" name="review" rows="4" required></textarea>
+        </div>
+        <button type="submit">Submit Review</button>
+      </form>
+    </section>
+  </div>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+    // Supabase Setup
+    const supabase = createClient(
+      'https://kcluzpyfsejzzznmisqd.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtjbHV6cHlmc2Vqenp6bm1pc3FkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg1NDQwMzksImV4cCI6MjA2NDEyMDAzOX0.aTrgRN-5zCgoOV6A8XcI0eUPmkoTmUlvRDPndCSW-Xk'
+    );
+
+    let user = null;
+
+    // --- AUTH CHECK ---
+    async function checkAuth() {
+      const { data, error } = await supabase.auth.getUser();
+      if (error || !data.user) {
+        window.location.href = 'signup.html';
+        return null;
+      }
+      user = data.user;
+      return user;
+    }
+
+    // --- LOAD USER PROFILE ---
+    async function loadUserProfile() {
+      const { data, error } = await supabase
+        .from('users')
+        .select('*')
+        .eq('id', user.id)
+        .single();
+
+      if (error || !data) {
+        document.getElementById('welcome-text').textContent = 'Welcome!';
+        return;
+      }
+
+      document.getElementById('user-info').innerHTML = `
+        <img src="${data.avatar_url || './assets/images/default-avatar.png'}" alt="User Image">
+        <div class="user-details">
+          <div class="username">${data.username || ''}</div>
+          <div class="email">${data.email || user.email}</div>
+        </div>
+      `;
+      document.getElementById('welcome-text').textContent = `Welcome, ${data.username || user.email}!`;
+
+      document.getElementById('full_name').value = data.full_name || '';
+      document.getElementById('email').value = data.email || user.email;
+      document.getElementById('phone').value = data.phone || '';
+    }
+
+    // --- LOAD PROPERTY COUNTS ---
+    async function loadPropertyCounts() {
+      // Rent
+      const { count: rent_count } = await supabase
+        .from('properties')
+        .select('*', { count: 'exact', head: true })
+        .eq('property_type', 'rent')
+        .eq('status', 'For Rent');
+      // Sale
+      const { count: sale_count } = await supabase
+        .from('properties')
+        .select('*', { count: 'exact', head: true })
+        .eq('property_type', 'buy')
+        .eq('status', 'For Sale');
+      // Total
+      const { count: total_count } = await supabase
+        .from('properties')
+        .select('*', { count: 'exact', head: true });
+
+      document.getElementById('rent-count').textContent = `Properties for Rent: ${rent_count ?? 0}`;
+      document.getElementById('sale-count').textContent = `Properties for Sale: ${sale_count ?? 0}`;
+      document.getElementById('total-count').textContent = `Total Properties: ${total_count ?? 0}`;
+    }
+
+    // --- UPDATE USER INFO ---
+    document.getElementById('update-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const formData = new FormData(form);
+
+      // Password update (optional)
+      const password = formData.get('password');
+      if (password && password.length > 0) {
+        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!passwordPattern.test(password)) {
+          showUpdateMessage('Password must contain at least 8 characters, including uppercase, lowercase, a number, and a special character.', true);
+          return;
+        }
+        const { error: pwError } = await supabase.auth.updateUser({ password });
+        if (pwError) {
+          showUpdateMessage('Failed to update password: ' + pwError.message, true);
+          return;
+        }
+      }
+
+      // Avatar upload
+      let avatar_url = null;
+      const avatarFile = formData.get('avatar_url');
+      if (avatarFile && avatarFile.size > 0) {
+        const fileExt = avatarFile.name.split('.').pop();
+        const fileName = `${user.id}_${Date.now()}.${fileExt}`;
+        const { error: uploadError } = await supabase.storage
+          .from('avatars')
+          .upload(fileName, avatarFile, { upsert: true });
+        if (uploadError) {
+          showUpdateMessage('Failed to upload avatar: ' + uploadError.message, true);
+          return;
+        }
+        avatar_url = supabase.storage.from('avatars').getPublicUrl(fileName).data.publicUrl;
+      }
+
+      // Update user profile
+      const updates = {
+        full_name: formData.get('full_name'),
+        email: formData.get('email'),
+        phone: formData.get('phone'),
+      };
+      if (avatar_url) updates.avatar_url = avatar_url;
+
+      const { error } = await supabase
+        .from('users')
+        .update(updates)
+        .eq('id', user.id);
+
+      if (error) {
+        showUpdateMessage('Failed to update profile: ' + error.message, true);
+      } else {
+        showUpdateMessage('Profile updated successfully!', false);
+        loadUserProfile();
+      }
+    });
+
+    function showUpdateMessage(msg, isError) {
+      const el = document.getElementById('update-message');
+      el.textContent = msg;
+      el.className = isError ? 'error-message' : 'success-message';
+    }
+
+    // --- LOGOUT ---
+    document.getElementById('logout-btn').addEventListener('click', async function() {
+      await supabase.auth.signOut();
+      window.location.href = 'signup.html';
+    });
+
+    // --- REVIEW FORM ---
+    document.getElementById('reviewForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const username = document.getElementById('review-username').value;
+      const rating = parseFloat(document.getElementById('rating').value);
+      const review = document.getElementById('review').value;
+
+      if (rating < 1 || rating > 5) {
+        alert('Rating must be between 1 and 5.');
+        return;
+      }
+
+      const { error } = await supabase.from('reviews').insert([{
+        username,
+        rating,
+        review,
+        user_id: user.id
+      }]);
+      if (error) {
+        alert('Failed to submit review: ' + error.message);
+      } else {
+        alert('Review submitted!');
+        e.target.reset();
+      }
+    });
+
+    // --- INIT ---
+    checkAuth().then(authUser => {
+      if (!authUser) return;
+      loadUserProfile();
+      loadPropertyCounts();
+    });
+  </script>
+
+    <!--js for validating the settings form-->
+    <script>
+        function validateSettingsForm() {
+        var email = document.getElementById("email").value;
+        var phone = document.getElementById("phone").value;
+        var password = document.getElementById("password").value;
+
+        var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        var phonePattern = /^[0-9]{10}$/;
+        var passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+        // Validate Email
+        if (!emailPattern.test(email)) {
+            alert('Please enter a valid email address.');
+            return false;
+        }
+
+        // Validate Phone Number
+        if (!phonePattern.test(phone)) {
+            alert('Phone number must be exactly 10 digits and contain only numbers.');
+            return false;
+        }
+
+        // Validate Password
+        if (!passwordPattern.test(password)) {
+            alert('Password must contain at least 8 characters, including uppercase, lowercase, a number, and a special character.');
+            return false;
+        }
+
+        // All validations passed
+        return true;
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('reviewForm');
+
+    form.addEventListener('submit', function(event) {
+        const rating = parseFloat(document.getElementById('rating').value);
+        if (rating < 1 || rating > 5) {
+            alert('Rating must be between 1 and 5.');
+            event.preventDefault();
+        }
+    });
+    });
+
+    </script>
+    <script src="https://kit.fontawesome.com/43e53da9a6.js" crossorigin="anonymous"></script>
+</body>
+</html>

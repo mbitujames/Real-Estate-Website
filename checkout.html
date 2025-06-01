@@ -1,41 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php
-session_start();
-require_once './data/db.php';
-// Include M-PESA Daraja library (download from Safaricom developer portal)
-require_once('./php/safaricom_daraja.php');
-// Retrieve property_id from the URL
-if (isset($_GET['property_id'])) {
-  $property_id = $_GET['property_id']; // Ensure it's an integer to prevent SQL injection
-  $_SESSION['property_id'] = $_GET['property_id'];
-  // Fetch property details from the database
-  $sql = "SELECT * FROM properties WHERE property_id = $property_id";
-  $result = mysqli_query($conn, $sql);
-
-  if ($result && mysqli_num_rows($result) > 0) {
-    $property = mysqli_fetch_assoc($result);
-
-    // Access property details
-    $title = $property['title'];
-    $location = $property['location'];
-    $price = $property['price'];
-    $property_type = $property['property_type'];
-  } else {
-    echo "Invalid property ID or no property found";
-    exit;
-  }
-} else {
-  echo "No property ID provided";
-  exit;
-}
-?>
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>checkout</title>
+  <title>Checkout</title>
   <style>
     body {
       font-family: sans-serif;
@@ -158,7 +127,6 @@ if (isset($_GET['property_id'])) {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
-
 <body>
   <!-- #HEADER-->
   <header class="header">
@@ -170,21 +138,17 @@ if (isset($_GET['property_id'])) {
     </div>
   </header>
 
-  <!--form codes here-->
   <main>
     <div class="payment-container">
-      <div class="property-details">
+      <div class="property-details" id="property-details">
         <h2>Property Details</h2>
-        <p><strong>Title:</strong> <?php echo $title; ?></p>
-        <p><strong>Property Type:</strong> <?php echo $property_type; ?></p>
-        <p><strong>Location:</strong> <?php echo $location; ?></p>
-        <p><strong>Price:</strong> Ksh <?php echo $price; ?></p>
+        <p>Loading...</p>
       </div>
-      <form id="payment-form" action="./php/process_payment.php" method="post">
-        <input type="hidden" name="property_id" value="<?php echo $property_id; ?>">
+      <form id="payment-form" autocomplete="off">
+        <input type="hidden" name="property_id" id="property_id">
         <div class="form-group">
           <label for="phone">Phone Number:</label>
-          <input type="tel" id="phone" name="MSISDN" placeholder="Enter phone number (e.g., 254712345678)" autocomplete="on">
+          <input type="tel" id="phone" name="MSISDN" placeholder="Enter phone number (e.g., 254712345678)" autocomplete="on" required>
         </div>
         <div class="form-group">
           <label for="payment_amount">Amount (Ksh):</label>
@@ -195,35 +159,100 @@ if (isset($_GET['property_id'])) {
       <div id="message"></div>
     </div>
   </main>
-  <!-- #FOOTER-->
-  <?php
-  require('./php/components/footer.php');
-  ?>
-  
-  <script>
-    function validateForm() {
-      const phone = document.getElementById('phone').value;
-      const paymentAmount = document.getElementById('payment_amount').value;
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+    // Supabase Setup
+    const supabase = createClient(
+      'https://kcluzpyfsejzzznmisqd.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtjbHV6cHlmc2Vqenp6bm1pc3FkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg1NDQwMzksImV4cCI6MjA2NDEyMDAzOX0.aTrgRN-5zCgoOV6A8XcI0eUPmkoTmUlvRDPndCSW-Xk'
+    );
+
+    // --- Get property_id from URL ---
+    function getPropertyId() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('property_id');
+    }
+
+    // --- Load property details ---
+    async function loadPropertyDetails(property_id) {
+      const { data, error } = await supabase
+        .from('properties')
+        .select('*')
+        .eq('property_id', property_id)
+        .single();
+
+      const detailsDiv = document.getElementById('property-details');
+      if (error || !data) {
+        detailsDiv.innerHTML = `<h2>Property Details</h2><p style="color:red;">Invalid property ID or no property found.</p>`;
+        document.getElementById('payment-form').style.display = 'none';
+        return null;
+      }
+      detailsDiv.innerHTML = `
+        <h2>Property Details</h2>
+        <p><strong>Title:</strong> ${data.title}</p>
+        <p><strong>Property Type:</strong> ${data.property_type}</p>
+        <p><strong>Location:</strong> ${data.location}</p>
+        <p><strong>Price:</strong> Ksh ${data.price}</p>
+      `;
+      document.getElementById('property_id').value = data.property_id;
+      document.getElementById('payment_amount').value = data.price;
+      return data;
+    }
+
+    // --- Payment Form Handler ---
+    document.getElementById('payment-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const property_id = document.getElementById('property_id').value;
+      const phone = document.getElementById('phone').value.trim();
+      const payment_amount = document.getElementById('payment_amount').value.trim();
+      const messageDiv = document.getElementById('message');
 
       // Basic validation
-      if (phone === '' || paymentAmount === '') {
-        alert('Please fill in all fields.');
-        return false;
-      }
-
       if (!/^\d{12}$/.test(phone)) {
-        alert('Please enter a valid phone number (1 digits, e.g., 254712345678).');
-        return false;
+        messageDiv.textContent = 'Please enter a valid phone number (12 digits, e.g., 254712345678).';
+        messageDiv.style.color = 'red';
+        return;
+      }
+      if (!payment_amount || isNaN(payment_amount) || Number(payment_amount) < 1) {
+        messageDiv.textContent = 'Please enter a valid amount.';
+        messageDiv.style.color = 'red';
+        return;
       }
 
-      return true;
+      // Store payment intent in Supabase (for record-keeping)
+      const { error } = await supabase.from('payments').insert([{
+        property_id,
+        phone,
+        amount: payment_amount,
+        status: 'pending',
+        created_at: new Date().toISOString()
+      }]);
+      if (error) {
+        messageDiv.textContent = 'Failed to record payment: ' + error.message;
+        messageDiv.style.color = 'red';
+        return;
+      }
+
+      // TODO: Integrate with your backend/serverless function to trigger M-PESA payment here.
+      // For now, just show a success message.
+      messageDiv.textContent = 'Payment request recorded! (Integrate M-PESA API for real payment.)';
+      messageDiv.style.color = 'green';
+      e.target.reset();
+    });
+
+    // --- INIT ---
+    const property_id = getPropertyId();
+    if (property_id) {
+      loadPropertyDetails(property_id);
+    } else {
+      document.getElementById('property-details').innerHTML = `<h2>Property Details</h2><p style="color:red;">No property ID provided.</p>`;
+      document.getElementById('payment-form').style.display = 'none';
     }
   </script>
-  <!-- custom js link-->
   <script src="./assets/js/script.js"></script>
-  <!-- ionicon link-->
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
-
 </html>

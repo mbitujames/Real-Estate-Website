@@ -33,6 +33,36 @@
       backdrop-filter: blur(6px);
       z-index: 1;
     }
+    /* Align navbar and header actions to the right */
+    .header-bottom .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .navbar {
+      margin-left: auto;
+    }
+
+    .header-bottom-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-left: 24px;
+    }
+    .dropdown-content {
+  display: none;
+  /* ...other styles... */
+}
+.dropdown-content.show {
+  display: block;
+}
+.navbar.active {
+  /* Show the navbar when active (add your own styles as needed) */
+  left: 0;
+  opacity: 1;
+  pointer-events: auto;
+}
     .form-container {
       position: relative;
       z-index: 2;
@@ -189,9 +219,26 @@
             </ul>
           </div>
         </nav>
+        <div class="header-bottom-actions">
+          <div class="dropdown">
+            <button class="header-bottom-actions-btn" aria-label="Profile" id="dropdown-btn">
+              <ion-icon name="person-outline"></ion-icon>
+              <span>Profile</span>
+            </button>
+            <div id="dropdown-content" class="dropdown-content">
+              <a href="login.html">Login</a>
+              <a href="signup.html">Signup</a>
+            </div>
+          </div>
+          <button class="header-bottom-actions-btn" data-nav-open-btn aria-label="Open Menu">
+            <ion-icon name="menu-outline"></ion-icon>
+            <span>Menu</span>
+          </button>
+        </div>
       </div>
     </div>
   </header>
+
   <main>
     <div class="signup-section">
       <section class="form-container">
@@ -307,7 +354,7 @@
     <div class="footer-bottom">
       <div class="container">
         <p class="copyright">
-          &copy; 2024 <a href="./index.html">Kitale Real Estate & Property Management</a>. All Rights Reserved
+          &copy; 2025 <a href="./index.html">Kitale Real Estate & Property Management</a>. All Rights Reserved
         </p>
       </div>
     </div>
@@ -320,6 +367,41 @@
       'https://kcluzpyfsejzzznmisqd.supabase.co',
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtjbHV6cHlmc2Vqenp6bm1pc3FkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg1NDQwMzksImV4cCI6MjA2NDEyMDAzOX0.aTrgRN-5zCgoOV6A8XcI0eUPmkoTmUlvRDPndCSW-Xk'
     );
+
+    import { initHeader } from './assets/js/header.js';
+  initHeader();
+
+    // Profile dropdown logic
+  document.addEventListener('DOMContentLoaded', function() {
+    const dropdownBtn = document.getElementById('dropdown-btn');
+    const dropdownContent = document.getElementById('dropdown-content');
+    if (dropdownBtn && dropdownContent) {
+      dropdownBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        dropdownContent.classList.toggle('show');
+      });
+      document.addEventListener('click', function(e) {
+        if (!dropdownContent.contains(e.target) && e.target !== dropdownBtn) {
+          dropdownContent.classList.remove('show');
+        }
+      });
+    }
+
+    // Menu button logic (if you want to open/close a nav menu)
+    const navOpenBtn = document.querySelector('[data-nav-open-btn]');
+    const navCloseBtn = document.querySelector('[data-nav-close-btn]');
+    const navbar = document.querySelector('.navbar');
+    if (navOpenBtn && navbar) {
+      navOpenBtn.addEventListener('click', function() {
+        navbar.classList.add('active');
+      });
+    }
+    if (navCloseBtn && navbar) {
+      navCloseBtn.addEventListener('click', function() {
+        navbar.classList.remove('active');
+      });
+    }
+  });
 
     const signupForm = document.getElementById('signup-form');
     const signupMessage = document.getElementById('signup-message');

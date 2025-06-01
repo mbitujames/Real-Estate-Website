@@ -21,6 +21,34 @@
     <article>
       <div class="container">
         <p class="section-subtitle">All Properties</p>
+        <!-- Add this inside <div class="container">, above <ul class="property-grid"...> -->
+        <form id="property-filter" class="property-filter">
+        <input type="text" id="filter-keyword" placeholder="Search by title, location..." />
+        <select id="filter-type">
+            <option value="">All Types</option>
+            <option value="apartment">Apartment</option>
+            <option value="house">House</option>
+            <option value="villa">Villa</option>
+            <!-- Add more types as needed -->
+        </select>
+        <select id="filter-bedrooms">
+            <option value="">Bedrooms</option>
+            <option value="1">1+</option>
+            <option value="2">2+</option>
+            <option value="3">3+</option>
+            <option value="4">4+</option>
+        </select>
+        <select id="filter-bathrooms">
+            <option value="">Bathrooms</option>
+            <option value="1">1+</option>
+            <option value="2">2+</option>
+            <option value="3">3+</option>
+            <option value="4">4+</option>
+        </select>
+        <input type="number" id="filter-min-price" placeholder="Min Price" min="0" />
+        <input type="number" id="filter-max-price" placeholder="Max Price" min="0" />
+        <button type="submit" class="btn">Filter</button>
+        </form>
         <ul class="property-grid" id="property-list">
           <!-- Properties will be injected here -->
         </ul>
@@ -39,95 +67,145 @@
   <script type="module">
     import { supabase } from './assets/js/supabaseClient.js';
 
-    // Load header and footer
-    async function loadPartials() {
-      document.getElementById('header-placeholder').innerHTML = await fetch('./php/components/header.html').then(res => res.text());
-      document.getElementById('footer-placeholder').innerHTML = await fetch('./php/components/footer.html').then(res => res.text());
-    }
+// Load header and footer
+async function loadPartials() {
+  document.getElementById('header-placeholder').innerHTML = await fetch('./php/components/header.html').then(res => res.text());
+  // Initialize header logic after header is loaded
+  const module = await import('./assets/js/header.js');
+  module.initHeader();
 
-    // Load properties from Supabase
-    async function loadProperties() {
-      const { data, error } = await supabase
-        .from('properties')
-        .select('*')
-        .eq('availability', true);
+  document.getElementById('footer-placeholder').innerHTML = await fetch('./php/components/footer.html').then(res => res.text());
+}
 
-      if (error) {
-        console.error('Error loading properties:', error.message);
-        return;
-      }
+let allProperties = [];
 
-      const list = document.getElementById('property-list');
-      data.forEach(row => {
-        const html = `
-          <li>
-            <div class="property-card" data-property-type="${row.property_type}">
-              <figure class="card-banner">
-                <a href="#${row.property_type}">
-                  <img src="${row.image_url}" alt="${row.title}" class="w-100">
-                </a>
-                <div class="card-badge green">${row.status}</div>
-                <div class="banner-actions">
-                  <button class="banner-actions-btn">
-                    <ion-icon name="location"></ion-icon>
-                    <address>${row.location}</address>
-                  </button>
-                  <button class="banner-actions-btn">
-                    <ion-icon name="camera"></ion-icon>
-                    <span>1</span>
-                  </button>
-                </div>
+async function loadProperties() {
+  const { data, error } = await supabase
+    .from('properties')
+    .select('*')
+    .eq('availability', true);
+
+  if (error) {
+    console.error('Error loading properties:', error.message);
+    return;
+  }
+
+  allProperties = data;
+  renderProperties(allProperties);
+}
+
+function renderProperties(properties) {
+  const list = document.getElementById('property-list');
+  list.innerHTML = '';
+  properties.forEach(row => {
+    const html = `
+      <li>
+        <div class="property-card" data-property-type="${row.property_type}">
+          <figure class="card-banner">
+            <a href="#${row.property_type}">
+              <img src="${row.image_url}" alt="${row.title}" class="w-100">
+            </a>
+            <div class="card-badge green">${row.status}</div>
+            <div class="banner-actions">
+              <button class="banner-actions-btn">
+                <ion-icon name="location"></ion-icon>
+                <address>${row.location}</address>
+              </button>
+              <button class="banner-actions-btn">
+                <ion-icon name="camera"></ion-icon>
+                <span>1</span>
+              </button>
+            </div>
+          </figure>
+          <div class="card-content">
+            <div class="card-price">
+              <strong>Ksh. ${row.price}</strong>/Month
+            </div>
+            <h3 class="h3 card-title">
+              <a href="#allproperty">${row.title}</a>
+            </h3>
+            <p class="card-text">${row.description}</p>
+            <ul class="card-list">
+              <li class="card-item">
+                <strong>${row.bedrooms}</strong>
+                <ion-icon name="bed-outline"></ion-icon>
+                <span>Bedrooms</span>
+              </li>
+              <li class="card-item">
+                <strong>${row.bathrooms}</strong>
+                <ion-icon name="man-outline"></ion-icon>
+                <span>Bathrooms</span>
+              </li>
+              <li class="card-item">
+                <strong>${row.square_ft}</strong>
+                <ion-icon name="square-outline"></ion-icon>
+                <span>Square Ft</span>
+              </li>
+            </ul>
+          </div>
+          <div class="card-footer">
+            <div class="card-author">
+              <figure class="author-avatar">
+                <img src="./data/uploads/admin.jpg" alt="M J" class="w-100">
               </figure>
-              <div class="card-content">
-                <div class="card-price">
-                  <strong>Ksh. ${row.price}</strong>/Month
-                </div>
-                <h3 class="h3 card-title">
-                  <a href="#allproperty">${row.title}</a>
-                </h3>
-                <p class="card-text">${row.description}</p>
-                <ul class="card-list">
-                  <li class="card-item">
-                    <strong>${row.bedrooms}</strong>
-                    <ion-icon name="bed-outline"></ion-icon>
-                    <span>Bedrooms</span>
-                  </li>
-                  <li class="card-item">
-                    <strong>${row.bathrooms}</strong>
-                    <ion-icon name="man-outline"></ion-icon>
-                    <span>Bathrooms</span>
-                  </li>
-                  <li class="card-item">
-                    <strong>${row.square_ft}</strong>
-                    <ion-icon name="square-outline"></ion-icon>
-                    <span>Square Ft</span>
-                  </li>
-                </ul>
-              </div>
-              <div class="card-footer">
-                <div class="card-author">
-                  <figure class="author-avatar">
-                    <img src="./data/uploads/admin.jpg" alt="M J" class="w-100">
-                  </figure>
-                  <div>
-                    <p class="author-name">
-                      <a href="#">M J</a>
-                    </p>
-                    <p class="author-title">KREPM Agents</p>
-                  </div>
-                </div>
-                <div class="card-footer-actions">
-                  <a href="checkout.html?property_id=${row.property_id}" class="btn">Reserve</a>
-                </div>
+              <div>
+                <p class="author-name">
+                  <a href="#">M J</a>
+                </p>
+                <p class="author-title">KREPM Agents</p>
               </div>
             </div>
-          </li>`;
-        list.insertAdjacentHTML('beforeend', html);
-      });
-    }
+            <div class="card-footer-actions">
+              <a href="checkout.html?property_id=${row.property_id}" class="btn">Reserve</a>
+            </div>
+          </div>
+        </div>
+      </li>`;
+    list.insertAdjacentHTML('beforeend', html);
+  });
+}
 
-    loadPartials();
-    loadProperties();
+// Filter logic
+document.addEventListener('submit', function(e) {
+  if (e.target && e.target.id === 'property-filter') {
+    e.preventDefault();
+    const keyword = document.getElementById('filter-keyword').value.trim().toLowerCase();
+    const type = document.getElementById('filter-type').value;
+    const bedrooms = document.getElementById('filter-bedrooms').value;
+    const bathrooms = document.getElementById('filter-bathrooms').value;
+    const minPrice = parseInt(document.getElementById('filter-min-price').value, 10) || 0;
+    const maxPrice = parseInt(document.getElementById('filter-max-price').value, 10) || Infinity;
+
+    const filtered = allProperties.filter(row => {
+      const matchesKeyword =
+        !keyword ||
+        row.title.toLowerCase().includes(keyword) ||
+        row.location.toLowerCase().includes(keyword) ||
+        row.description.toLowerCase().includes(keyword);
+
+      const matchesType = !type || row.property_type === type;
+      const matchesBedrooms = !bedrooms || row.bedrooms >= parseInt(bedrooms, 10);
+      const matchesBathrooms = !bathrooms || row.bathrooms >= parseInt(bathrooms, 10);
+      const matchesMinPrice = row.price >= minPrice;
+      const matchesMaxPrice = row.price <= maxPrice;
+
+      return (
+        matchesKeyword &&
+        matchesType &&
+        matchesBedrooms &&
+        matchesBathrooms &&
+        matchesMinPrice &&
+        matchesMaxPrice
+      );
+    });
+
+    renderProperties(filtered);
+  }
+});
+
+// --- ADD THESE LINES TO LOAD EVERYTHING ON PAGE LOAD ---
+loadPartials();
+loadProperties();
   </script>
 </body>
 
