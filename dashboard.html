@@ -1,287 +1,569 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard</title>
-    <style>
-    /* Sidebar Styles */
-    section {
-        margin-bottom: 20px;
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        transition: box-shadow 0.3s ease;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard</title>
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', 'Nunito Sans', Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
     }
-
-    section:hover {
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    .header-bottom {
+      background: #fff;
+      box-shadow: 0 4px 16px 0 rgba(250,91,61,0.10);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
-    .sidebar {
-        height: 100%;
-        width: 250px;
-        position: fixed;
-        top: 0;
-        left: 0;
-        background-color: #fff2f0;
-        padding-top: 20px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        transition: box-shadow 0.3s ease;
+    .header-bottom .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 72px;
+      gap: 24px;
     }
-    .sidebar:hover {
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
     }
-
-    .sidebar h2 {
-        color: black;
-        text-align: center;
+    .logo img {
+      height: 48px;
+      border-radius: 12px;
     }
-
-    .sidebar ul {
-        list-style-type: none;
-        padding: 0;
+    .logo span {
+      font-weight: 700;
+      font-size: 1.2em;
+      color: #fa5b3d;
+      letter-spacing: 1px;
     }
-
-    .sidebar li {
-        padding: 10px;
-        transition: background-color 0.3s, color 0.3s;
+    .navbar-list {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
     }
-
-    .sidebar li:hover {
-        background-color: #fa5b3d;
-        color: white;
+    .navbar-link {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 1.08em;
+      color: #fa5b3d;
+      background: #f7f9fb;
+      border-radius: 8px;
+      padding: 10px 22px;
+      font-weight: 500;
+      text-decoration: none;
+      box-shadow: 0 2px 8px #fa5b3d22;
+      border: 1.5px solid #fa5b3d22;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
     }
-
-    .sidebar a {
-        text-decoration: none;
-        color: black;
-        display: block;
-        transition: color 0.3s;
+    .navbar-link:hover, .navbar-link.active {
+      background: #fa5b3d;
+      color: #fff;
+      box-shadow: 0 4px 16px #fa5b3d33;
     }
-    .sidebar a:hover {
-    color: white;
+    #logout-btn {
+      background: #fa5b3d;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 22px;
+      font-size: 1em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-left: 18px;
     }
-
-    /* Content Styles */
-    .content {
-        margin-left: 250px;
-        padding: 20px;
+    #logout-btn:hover {
+      background: #fff;
+      color: #fa5b3d;
+      border: 1px solid #fa5b3d;
     }
-
+    .dashboard-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2px 32px 24px 32px;
+      background: #fff;
+      border-radius: 22px;
+      box-shadow: 0 8px 32px rgba(250,91,61,0.10), 0 2px 8px rgba(0,0,0,0.04);
+      position: relative;
+    }
+    .dashboard-header {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 18px;
+    }
+    .dashboard-header img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #fa5b3d;
+      background: #f7f9fb;
+    }
+    .dashboard-header .user-details {
+      flex: 1;
+    }
+    .dashboard-header .user-details .username {
+      font-size: 1.5em;
+      font-weight: 700;
+      color: #fa5b3d;
+      letter-spacing: 0.5px;
+    }
+    .dashboard-header .user-details .email {
+      color: #666;
+      font-size: 1.1em;
+      margin-top: 2px;
+    }
+    .dashboard-header .user-details .phone {
+      color: #888;
+      font-size: 1em;
+      margin-top: 2px;
+    }
+    .dashboard-sections {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      margin-top: 24px;
+      width: 100%;
+    }
     .card {
-        background-color:#f0f7ff;
-        margin-bottom: 20px;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background: #f7f9fb;
+      border-radius: 18px;
+      box-shadow:
+        0 8px 32px rgba(250,91,61,0.13),
+        0 2px 8px rgba(0,0,0,0.06),
+        0 4px 24px 0 rgba(31, 38, 135, 0.08),
+        8px 8px 24px #e3e9f7,
+        -8px -8px 24px #ffffff;
+      padding: 32px 28px 24px 28px;
+      margin-bottom: 0;
+      min-width: 0;
+      max-width: 100%;
+      width: 100%;
+      transition: box-shadow 0.2s;
     }
-    .card img {
-        width: 100px;
-        height: auto;
-        display: block;
-        margin-bottom: 10px;
-        border-radius: 50%;
+    .card:hover {
+      box-shadow:
+        0 12px 36px rgba(250,91,61,0.18),
+        0 4px 16px rgba(0,0,0,0.10);
+    }
+    .card h2 {
+      text-align: center;
+      margin-top: 0;
+      color: #fa5b3d;
+      font-size: 1.3em;
+      letter-spacing: 0.5px;
     }
     .welcome-text {
-        font-weight: bold;
-        font-size: 30px;
-        color: brown;
-        text-align: center;
+      font-size: 2.2em;
+      color: #b05a2b;
+      margin-bottom: 0.5em;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-align: center;
     }
-    button{
-        margin-top: 10px;
-        float: bottom;
-        width: 80%;
-        background-color:#fa5b3d;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        padding: 12px 24px;
-        font-size: 18px;
-        cursor: pointer;
-        text-align: center;
-        transition: background-color 0.3s, color 0.3s;
+    .property-counts {
+      font-size: 1.1em;
+      color: #333;
+      margin: 8px 0;
     }
-    button:hover{
-        background-color: white;
-        color: #333;
-    }
-    .card button {
-        width: 100%;
-        background-color:#fa5b3d;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        padding: 12px 24px;
-        font-size: 18px;
-        cursor: pointer;
-        text-align: center;
-        transition: background-color 0.3s, color 0.3s;
-    }
-    .card button:hover {
-        background-color: white;
-        color: #333;
-    }
-    .success-message {
-        color: green; 
-        font-size: 14px;
-        margin-bottom: 5px; 
-    }
-    .error-message {
-        color: red;
-        font-size: 14px;
-        margin-bottom: 5px; 
-    }
+    /* ...existing code... */
+.property-list {
+  margin-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px 32px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  /* Allow stacking of rent and sale sections side by side */
+  flex-direction: row;
+}
+
+.property-list h3 {
+  width: 100%;
+  text-align: center;
+  color: #fa5b3d;
+  margin-bottom: 8px;
+  margin-top: 0;
+  font-size: 1.15em;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.property-item {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px #fa5b3d22;
+  padding: 16px;
+  width: 300px;
+  min-width: 220px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transition: box-shadow 0.2s;
+  margin-bottom: 12px;
+}
+
+.property-item img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  background: #eee;
+}
+
+.property-item .property-title {
+  font-weight: 600;
+  color: #fa5b3d;
+  font-size: 1.1em;
+  margin-bottom: 4px;
+}
+
+.property-item .property-location {
+  color: #555;
+  font-size: 0.98em;
+  margin-bottom: 4px;
+}
+
+.property-item .property-price {
+  color: #1ca97c;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.property-item .property-type {
+  color: #b05a2b;
+  font-size: 0.95em;
+  margin-bottom: 4px;
+}
+
+.property-item .property-status {
+  color: #888;
+  font-size: 0.95em;
+  margin-bottom: 4px;
+}
+
+/* Responsive grid for 3 items per row */
+@media (min-width: 900px) {
+  .property-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px 32px;
+  }
+  .property-item {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+  .property-list h3 {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Tablet: 2 per row */
+@media (max-width: 899px) and (min-width: 600px) {
+  .property-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 18px;
+  }
+  .property-item {
+    width: 100%;
+  }
+  .property-list h3 {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Mobile: 1 per row */
+@media (max-width: 599px) {
+  .property-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .property-item {
+    width: 100%;
+  }
+}
+
+/* Style the View More Properties button */
+.view-more-btn {
+  display: block;
+  margin: 32px auto 0 auto;
+  background: #fa5b3d;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 40px;
+  font-size: 1.15em;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 0 2px 8px #fa5b3d22;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  width: fit-content;
+  letter-spacing: 0.5px;
+}
+
+.view-more-btn:hover,
+.view-more-btn:focus {
+  background: #fff;
+  color: #fa5b3d;
+  border: 2px solid #fa5b3d;
+  box-shadow: 0 4px 16px #fa5b3d33;
+}
+/* ...existing code... */
+    .success-message { color: #1ca97c; font-weight: 500;}
+    .error-message { color: #e74c3c; font-weight: 500;}
     .form-group {
-        margin-bottom: 15px;
+      margin-bottom: 16px;
     }
-
     .form-group label {
-        display: block;
-        margin-bottom: 5px;
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+      color: #333;
     }
-
-    .form-group input, .form-group textarea {
-        width: 100%;
-        padding: 8px;
-        box-sizing: border-box;
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+      font-size: 1em;
+      background: #fff;
+      box-sizing: border-box;
+      margin-bottom: 2px;
     }
-    .user-info {
-        display: flex; /* Make user info section a flexbox */
-        align-items: center; /* Align image and details horizontally */
-        margin-bottom: 10px; /* Add some spacing */
+    .form-group input[type="file"] {
+      padding: 4px;
+      background: none;
+      border: none;
     }
-
-    .user-info img {
-        width: 50px; /* Set image width */
-        height: 50px; /* Set image height */
-        border-radius: 50%; /* Make image circular */
-        margin-right: 10px; /* Add margin between image and details */
+    .card button[type="submit"], .card button, button {
+      width: 100%;
+      text-align: center;
+      margin-top: 8px;
+      background: #fa5b3d;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 0;
+      font-size: 1.1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
     }
-
-    .user-details {
-        display: flex; /* Make user details a flexbox */
-        flex-direction: column; /* Arrange details vertically */
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+    .card button[type="submit"]:hover, .card button:hover, button:hover {
+      background: #fff;
+      color: #fa5b3d;
+      border: 1px solid #fa5b3d;
     }
-
-    .username,
-    .email {
-        font-weight: bold; /* Make username and email bold */
-        margin-bottom: 5px; /* Add some spacing */
+    .property-list {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      justify-content: flex-start;
     }
-
-    /* Media Queries for Responsive Design */
-    /* For screens smaller than 768px (tablets) */
-    @media only screen and (max-width: 768px) {
-    .sidebar {
-        width: 100%; /* Sidebar takes up full width */
-        position: relative; /* Remove fixed positioning */
-        height: auto; /* Remove fixed height */
+    .property-item {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px #fa5b3d22;
+      padding: 16px;
+      width: 300px;
+      min-width: 220px;
+      max-width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      transition: box-shadow 0.2s;
     }
-
-    .content {
-        margin-left: 0; /* Remove left margin */
+    .property-item img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      background: #eee;
     }
-
-    .card button {
-        width: 100%; /* Buttons take up full width */
-    }}
-    /* For screens smaller than 576px (phones) */
-    @media only screen and (max-width: 576px) {
-    .sidebar {
-        padding-top: 10px; /* Adjust padding */
+    .property-item .property-title {
+      font-weight: 600;
+      color: #fa5b3d;
+      font-size: 1.1em;
+      margin-bottom: 4px;
     }
-
-    .card button {
-        font-size: 16px; /* Adjust font size for smaller screens */
-    }}
-
-</style>
+    .property-item .property-location {
+      color: #555;
+      font-size: 0.98em;
+      margin-bottom: 4px;
+    }
+    .property-item .property-price {
+      color: #1ca97c;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .property-item .property-type {
+      color: #b05a2b;
+      font-size: 0.95em;
+      margin-bottom: 4px;
+    }
+    .property-item .property-status {
+      color: #888;
+      font-size: 0.95em;
+      margin-bottom: 4px;
+    }
+    @media (max-width: 1100px) {
+      .dashboard-container { padding: 12px; }
+      .dashboard-sections { gap: 16px; }
+      .card { padding: 18px 10px; }
+      .property-list { gap: 10px; }
+      .property-item { width: 100%; }
+    }
+    @media (max-width: 900px) {
+      .dashboard-sections { gap: 18px; }
+      .card { padding: 12px 6px; }
+      .property-list { flex-direction: column; }
+    }
+    .hide-until-auth { visibility: hidden; }
+    .show-dashboard { visibility: visible; }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-
-<body>
-    <div class="sidebar">
-    <h2>Dashboard</h2><br>
-    <div class="user-info" id="user-info">
-      <!-- User avatar, username, email will be filled by JS -->
+<body class="hide-until-auth">
+  <!-- HEADER -->
+  <header class="header" data-header>
+    <div class="header-bottom">
+      <div class="container">
+        <a href="./index.html" class="logo">
+          <img src="./assets/images/logo1.jpg" alt="Logo">
+          <span>User Dashboard</span>
+        </a>
+        <nav class="navbar" data-navbar>
+          <ul class="navbar-list">
+            <li>
+              <a href="#welcome" class="navbar-link active"><i class="fa-solid fa-house"></i> Home</a>
+            </li>
+            <li>
+              <a href="#listed-properties" class="navbar-link"><i class="fa-solid fa-building"></i> Listed Properties</a>
+            </li>
+            <li>
+              <a href="#update-information" class="navbar-link"><i class="fa-solid fa-user-pen"></i> Update Info</a>
+            </li>
+            <li>
+              <a href="#reviews" class="navbar-link"><i class="fa-sharp fa-solid fa-star-sharp"></i> Write a Review</a>
+            </li>
+            <li>
+              <a href="./php/reports.html" class="navbar-link"><i class="fa-regular fa-file-lines"></i> Reports</a>
+            </li>
+          </ul>
+        </nav>
+        <button id="logout-btn" class="navbar-link" style="background:#fa5b3d;color:#fff;border:none;border-radius:8px;padding:10px 22px;font-size:1em;display:flex;align-items:center;gap:8px;cursor:pointer;transition:background 0.2s;">
+          <i class="fa-solid fa-right-from-bracket"></i> Logout
+        </button>
+      </div>
     </div>
-    <ul>
-      <li><i class="fa-solid fa-house"></i><a href="./index.html"><strong>Home</strong></a></li>
-      <li><i class="fa-solid fa-building"></i><a href="#listed-properties"><strong>Listed Properties</strong></a></li> 
-      <li><i class="fa-sharp fa-solid fa-pen-to-square"></i><a href="#update-information"><strong>Update Information</strong></a></li>
-      <li><i class="fa-sharp fa-solid fa-star-sharp"></i><a href="#reviews"><strong>Write a Review</strong></a></li>
-      <li><i class="fa-regular fa-file-lines"></i><a href="./php/reports.html"><strong>Reports</strong></a></li>
-    </ul>
-    <br><br>
-    <button id="logout-btn"><span>Logout</span></button>
+  </header>
+
+  <div class="dashboard-container">
+    <div class="dashboard-header" id="dashboard-header">
+      <!-- User info will be loaded here -->
+    </div>
+    <div class="dashboard-sections">
+      <section id="welcome" class="card">
+        <div class="welcome-text" id="welcome-text">Welcome!</div>
+        <div>This is your personal dashboard where you can update your details and view your reports.</div>
+      </section>
+      <section id="listed-properties" class="card">
+        <h2>Listed Properties</h2>
+        <div class="property-counts">
+          <p id="rent-count"></p>
+          <p id="sale-count"></p>
+          <p id="total-count"></p>
+        </div>
+        <div class="property-list" id="property-list">
+          <!-- Properties will be loaded here -->
+        </div>
+        <a href="properties.html" class="view-more-btn">View More Properties</a>
+      </section>
+      <section id="update-information" class="card">
+        <h2>Update Your Information</h2>
+        <div id="update-message"></div>
+        <form id="update-form" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="full_name">Full Name:</label>
+            <input type="text" id="full_name" name="full_name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" autocomplete="on">
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number:</label>
+            <input type="text" id="phone" name="phone" autocomplete="on">
+          </div>
+          <div class="form-group">
+            <label for="avatar_url">Upload Profile Picture:</label>
+            <input type="file" id="avatar_url" name="avatar_url">
+          </div>
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+          </div>
+          <button type="submit" id="update">Update Information</button>
+        </form>
+      </section>
+      <section id="reviews" class="card">
+        <h2>Write a Review</h2>
+        <form id="reviewForm">
+          <div class="form-group">
+            <label for="review-username">Name:</label>
+            <input type="text" id="review-username" name="username" required>
+          </div>
+          <div class="form-group">
+            <label for="rating">Rating:</label>
+            <input type="number" id="rating" name="rating" step="0.1" min="1" max="5" required>
+          </div>
+          <div class="form-group">
+            <label for="review">Review:</label>
+            <textarea id="review" name="review" rows="4" required></textarea>
+          </div>
+          <button type="submit">Submit Review</button>
+        </form>
+      </section>
+    </div>
   </div>
-  <div class="content">
-    <section id="welcome" class="card">
-      <p class="welcome-text" id="welcome-text">Welcome!</p>
-      <p>This is your personal dashboard where you can update your details and view your reports.</p>
-    </section>
-
-    <section id="listed-properties" class="card">
-      <h2>Listed Properties</h2>
-      <p id="rent-count">Properties for Rent: ...</p>
-      <p id="sale-count">Properties for Sale: ...</p>
-      <p id="total-count">Total Properties: ...</p>
-      <button onclick="window.location.href='./properties.html'"><span>View All Properties</span></button>
-    </section>
-
-    <section id="update-information" class="card">
-      <h2>Update Your Information</h2>
-      <div id="update-message"></div>
-      <form id="update-form" enctype="multipart/form-data">
-        <div class="form-group">
-          <label for="full_name">Full Name:</label>
-          <input type="text" id="full_name" name="full_name" required>
-        </div>
-        <div class="form-group">
-          <label for="email">Email:</label>
-          <input type="email" id="email" name="email" autocomplete="on">
-        </div>
-        <div class="form-group">
-          <label for="phone">Phone Number:</label>
-          <input type="text" id="phone" name="phone" autocomplete="on">
-        </div>
-        <div class="form-group">
-          <label for="avatar_url">Upload Profile Picture:</label>
-          <input type="file" id="avatar_url" name="avatar_url">
-        </div>
-        <div class="form-group">
-          <label for="password">Password:</label>
-          <input type="password" id="password" name="password">
-        </div>
-        <button type="submit" id="update">Update Information</button>
-      </form>
-    </section>
-
-    <section id="reviews" class="card">
-      <h2>Write a Review</h2>
-      <form id="reviewForm">
-        <div class="form-group">
-          <label for="review-username">Name:</label>
-          <input type="text" id="review-username" name="username" required>
-        </div>
-        <div class="form-group">
-          <label for="rating">Rating:</label>
-          <input type="number" id="rating" name="rating" step="0.1" min="1" max="5" required>
-        </div>
-        <div class="form-group">
-          <label for="review">Review:</label>
-          <textarea id="review" name="review" rows="4" required></textarea>
-        </div>
-        <button type="submit">Submit Review</button>
-      </form>
-    </section>
-  </div>
-
+  <div id="footer"></div>
+  <script>
+    // Dynamically load the footer.html
+    fetch('./php/components/footer.html')
+      .then(res => res.text())
+      .then(html => { document.getElementById('footer').innerHTML = html; });
+  </script>
   <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
@@ -301,51 +583,61 @@
         return null;
       }
       user = data.user;
+      document.body.classList.add('show-dashboard');
+      document.body.classList.remove('hide-until-auth');
       return user;
     }
 
     // --- LOAD USER PROFILE ---
     async function loadUserProfile() {
-      const { data, error } = await supabase
+      let { data, error } = await supabase
         .from('users')
         .select('*')
-        .eq('id', user.id)
+        .or(`id.eq.${user.id},user_id.eq.${user.id}`)
         .single();
 
-      if (error || !data) {
-        document.getElementById('welcome-text').textContent = 'Welcome!';
-        return;
+      let displayName = user.user_metadata?.full_name || user.user_metadata?.username || user.email || '';
+      let avatarUrl = './assets/images/default-avatar.png';
+      let email = user.email;
+      let phone = '';
+
+      if (data) {
+        displayName = data.username || data.full_name || data.email || displayName;
+        avatarUrl = data.avatar_url || avatarUrl;
+        email = data.email || email;
+        phone = data.phone || '';
       }
 
-      document.getElementById('user-info').innerHTML = `
-        <img src="${data.avatar_url || './assets/images/default-avatar.png'}" alt="User Image">
+      document.getElementById('dashboard-header').innerHTML = `
+        <img src="${avatarUrl}" alt="User Image">
         <div class="user-details">
-          <div class="username">${data.username || ''}</div>
-          <div class="email">${data.email || user.email}</div>
+          <div class="username">${displayName}</div>
+          <div class="email">${email}</div>
+          <div class="phone">${phone}</div>
         </div>
       `;
-      document.getElementById('welcome-text').textContent = `Welcome, ${data.username || user.email}!`;
+      document.getElementById('welcome-text').textContent = `Welcome back, ${displayName}:`;
 
-      document.getElementById('full_name').value = data.full_name || '';
-      document.getElementById('email').value = data.email || user.email;
-      document.getElementById('phone').value = data.phone || '';
+      document.getElementById('full_name').value = data?.full_name || '';
+      document.getElementById('email').value = email;
+      document.getElementById('phone').value = phone;
     }
 
-    // --- LOAD PROPERTY COUNTS ---
-    async function loadPropertyCounts() {
-      // Rent
+    // --- LOAD PROPERTY COUNTS & LIST ---
+    async function loadPropertyCountsAndList() {
+      // Counts for rent, sale, total
       const { count: rent_count } = await supabase
         .from('properties')
         .select('*', { count: 'exact', head: true })
         .eq('property_type', 'rent')
         .eq('status', 'For Rent');
-      // Sale
+
       const { count: sale_count } = await supabase
         .from('properties')
         .select('*', { count: 'exact', head: true })
         .eq('property_type', 'buy')
         .eq('status', 'For Sale');
-      // Total
+
       const { count: total_count } = await supabase
         .from('properties')
         .select('*', { count: 'exact', head: true });
@@ -353,6 +645,69 @@
       document.getElementById('rent-count').textContent = `Properties for Rent: ${rent_count ?? 0}`;
       document.getElementById('sale-count').textContent = `Properties for Sale: ${sale_count ?? 0}`;
       document.getElementById('total-count').textContent = `Total Properties: ${total_count ?? 0}`;
+
+      // Get 3 most recent for rent and 3 for sale
+      const { data: rentProps } = await supabase
+        .from('properties')
+        .select('*')
+        .eq('property_type', 'rent')
+        .eq('status', 'For Rent')
+        .order('created_at', { ascending: false })
+        .limit(3);
+
+      const { data: saleProps } = await supabase
+        .from('properties')
+        .select('*')
+        .eq('property_type', 'buy')
+        .eq('status', 'For Sale')
+        .order('created_at', { ascending: false })
+        .limit(3);
+
+      const propertyList = document.getElementById('property-list');
+      propertyList.innerHTML = '';
+
+      if ((!rentProps || rentProps.length === 0) && (!saleProps || saleProps.length === 0)) {
+        propertyList.innerHTML = '<div>No properties found.</div>';
+        return;
+      }
+
+      if (rentProps && rentProps.length > 0) {
+        propertyList.innerHTML += `<h3>Recent For Rent</h3>`;
+        rentProps.forEach(prop => {
+          propertyList.innerHTML += `
+            <div class="property-item">
+              <img src="${prop.image_url || 'https://placehold.co/300x160'}" alt="Property Image">
+              <div class="property-title">${prop.title || 'No Title'}</div>
+              <div class="property-location"><i class="fa-solid fa-location-dot"></i> ${prop.location || ''}</div>
+              <div class="property-price">₦${prop.price ? Number(prop.price).toLocaleString() : 'N/A'}</div>
+              <div class="property-type">Type: ${prop.property_type || ''}</div>
+              <div class="property-status">Status: ${prop.status || ''}</div>
+              <div>Bedrooms: ${prop.bedrooms ?? '-'}, Bathrooms: ${prop.bathrooms ?? '-'}</div>
+              <div>Sq Ft: ${prop.square_ft ?? '-'}</div>
+              <div>Keyword: ${prop.keyword || ''}</div>
+            </div>
+          `;
+        });
+      }
+
+      if (saleProps && saleProps.length > 0) {
+        propertyList.innerHTML += `<h3>Recent For Sale</h3>`;
+        saleProps.forEach(prop => {
+          propertyList.innerHTML += `
+            <div class="property-item">
+              <img src="${prop.image_url || 'https://placehold.co/300x160'}" alt="Property Image">
+              <div class="property-title">${prop.title || 'No Title'}</div>
+              <div class="property-location"><i class="fa-solid fa-location-dot"></i> ${prop.location || ''}</div>
+              <div class="property-price">₦${prop.price ? Number(prop.price).toLocaleString() : 'N/A'}</div>
+              <div class="property-type">Type: ${prop.property_type || ''}</div>
+              <div class="property-status">Status: ${prop.status || ''}</div>
+              <div>Bedrooms: ${prop.bedrooms ?? '-'}, Bathrooms: ${prop.bathrooms ?? '-'}</div>
+              <div>Sq Ft: ${prop.square_ft ?? '-'}</div>
+              <div>Keyword: ${prop.keyword || ''}</div>
+            </div>
+          `;
+        });
+      }
     }
 
     // --- UPDATE USER INFO ---
@@ -403,7 +758,7 @@
       const { error } = await supabase
         .from('users')
         .update(updates)
-        .eq('id', user.id);
+        .or(`id.eq.${user.id},user_id.eq.${user.id}`);
 
       if (error) {
         showUpdateMessage('Failed to update profile: ' + error.message, true);
@@ -455,55 +810,9 @@
     checkAuth().then(authUser => {
       if (!authUser) return;
       loadUserProfile();
-      loadPropertyCounts();
+      loadPropertyCountsAndList();
     });
   </script>
-
-    <!--js for validating the settings form-->
-    <script>
-        function validateSettingsForm() {
-        var email = document.getElementById("email").value;
-        var phone = document.getElementById("phone").value;
-        var password = document.getElementById("password").value;
-
-        var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        var phonePattern = /^[0-9]{10}$/;
-        var passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
-        // Validate Email
-        if (!emailPattern.test(email)) {
-            alert('Please enter a valid email address.');
-            return false;
-        }
-
-        // Validate Phone Number
-        if (!phonePattern.test(phone)) {
-            alert('Phone number must be exactly 10 digits and contain only numbers.');
-            return false;
-        }
-
-        // Validate Password
-        if (!passwordPattern.test(password)) {
-            alert('Password must contain at least 8 characters, including uppercase, lowercase, a number, and a special character.');
-            return false;
-        }
-
-        // All validations passed
-        return true;
-    }
-    document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('reviewForm');
-
-    form.addEventListener('submit', function(event) {
-        const rating = parseFloat(document.getElementById('rating').value);
-        if (rating < 1 || rating > 5) {
-            alert('Rating must be between 1 and 5.');
-            event.preventDefault();
-        }
-    });
-    });
-
-    </script>
-    <script src="https://kit.fontawesome.com/43e53da9a6.js" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/43e53da9a6.js" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -349,42 +349,88 @@ button[type="submit"]:hover, .btn:hover {
   </footer>
 
   <script type="module">
-  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-  const supabase = createClient(
-    'https://kcluzpyfsejzzznmisqd.supabase.co',
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtjbHV6cHlmc2Vqenp6bm1pc3FkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg1NDQwMzksImV4cCI6MjA2NDEyMDAzOX0.aTrgRN-5zCgoOV6A8XcI0eUPmkoTmUlvRDPndCSW-Xk'
-  );
+const supabase = createClient(
+  'https://kcluzpyfsejzzznmisqd.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtjbHV6cHlmc2Vqenp6bm1pc3FkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg1NDQwMzksImV4cCI6MjA2NDEyMDAzOX0.aTrgRN-5zCgoOV6A8XcI0eUPmkoTmUlvRDPndCSW-Xk'
+);
 
-  import { initHeader } from './assets/js/header.js';
-  import { initNavbarMenu } from './assets/js/script.js';
+import { initHeader } from './assets/js/header.js';
+import { initNavbarMenu } from './assets/js/script.js';
 
-  // Initialize header/profile dropdown
-  initHeader();
-  // Initialize navbar/menu button logic
-  initNavbarMenu();
+// Initialize header/profile dropdown
+initHeader();
+initNavbarMenu();
 
-  const form = document.getElementById("login-form");
-  const messageDiv = document.getElementById("login-message");
+const form = document.getElementById("login-form");
+const messageDiv = document.getElementById("login-message");
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    messageDiv.textContent = "Logging in...";
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  messageDiv.textContent = "Logging in...";
 
-    const email = form.email.value;
-    const password = form.password.value;
+  const email = form.email.value;
+  const password = form.password.value;
 
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
-    if (error) {
-      messageDiv.innerHTML = `<p class="error-message">${error.message}</p>`;
-    } else {
-      messageDiv.innerHTML = `<p class="success-message">Login successful! Redirecting...</p>`;
-      setTimeout(() => {
-        window.location.href = "index.html"; // or dashboard.html
-      }, 1500);
+  if (error) {
+    messageDiv.innerHTML = `<p class="error-message">${error.message}</p>`;
+    return;
+  }
+
+  // Get Supabase Auth user id (UUID)
+  const authId = data.user.id;
+  // Debug: log authId and email
+  console.log("Auth ID:", authId, "Email:", email);
+
+  // Try to fetch user by auth_id
+  let { data: userData, error: userError } = await supabase
+    .from('users')
+    .select('user_id, role')
+    .eq('auth_id', authId)
+    .maybeSingle();
+
+  // If not found, try by email as fallback (for legacy users)
+  if (!userData) {
+    const fallback = await supabase
+      .from('users')
+      .select('user_id, role')
+      .eq('email', email)
+      .maybeSingle();
+    userData = fallback.data;
+    userError = fallback.error;
+    if (userData && !userData.auth_id) {
+      // Optionally update the user row to set the auth_id for future logins
+      await supabase.from('users').update({ auth_id: authId }).eq('user_id', userData.user_id);
     }
-  });
+  }
+
+  if (userError || !userData) {
+    messageDiv.innerHTML = `<p class="error-message">Unable to determine user role. Please contact support.</p>`;
+    return;
+  }
+
+  // Insert login activity
+  await supabase.from('activities').insert([{
+    activity_description: 'User logged in',
+    user_id: userData.user_id
+  }]);
+
+  // Redirect based on role
+  let redirectUrl = "index.html";
+  if (userData.role === "admin") {
+    redirectUrl = "admin_panel.html";
+  } else if (userData.role === "owner") {
+    redirectUrl = "propowner_dashboard.html";
+  }
+
+  messageDiv.innerHTML = `<p class="success-message">Login successful! Redirecting...</p>`;
+  setTimeout(() => {
+    window.location.href = redirectUrl;
+  }, 1200);
+});
 </script>
 
   <!-- custom js link-->

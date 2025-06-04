@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Property Owner Dashboard</title>
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', 'Nunito Sans', Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    .header-bottom {
+      background: #fff;
+      box-shadow: 0 4px 16px 0 rgba(250,91,61,0.10);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-bottom .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 72px;
+      gap: 24px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .logo img {
+      height: 48px;
+      border-radius: 12px;
+    }
+    .logo span {
+      font-weight: 700;
+      font-size: 1.2em;
+      color: #fa5b3d;
+      letter-spacing: 1px;
+    }
+    .navbar-list {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .navbar-link {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 1.08em;
+      color: #fa5b3d;
+      background: #f7f9fb;
+      border-radius: 8px;
+      padding: 10px 22px;
+      font-weight: 500;
+      text-decoration: none;
+      box-shadow: 0 2px 8px #fa5b3d22;
+      border: 1.5px solid #fa5b3d22;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+    .navbar-link:hover, .navbar-link.active {
+      background: #fa5b3d;
+      color: #fff;
+      box-shadow: 0 4px 16px #fa5b3d33;
+    }
+    #logout-btn {
+      background: #fa5b3d;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 22px;
+      font-size: 1em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-left: 18px;
+    }
+    #logout-btn:hover {
+      background: #fff;
+      color: #fa5b3d;
+      border: 1px solid #fa5b3d;
+    }
+    .dashboard-container {
+      max-width: 1200px;
+      margin: 2px auto 0 auto;
+      padding: 2px 32px 24px 32px;
+      background: #fff;
+      border-radius: 22px;
+      box-shadow: 0 8px 32px rgba(250,91,61,0.10), 0 2px 8px rgba(0,0,0,0.04);
+      position: relative;
+    }
+    .dashboard-header {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 18px;
+    }
+    .dashboard-header img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #fa5b3d;
+      background: #f7f9fb;
+    }
+    .dashboard-header .user-details {
+      flex: 1;
+    }
+    .dashboard-header .user-details .username {
+      font-size: 1.5em;
+      font-weight: 700;
+      color: #fa5b3d;
+      letter-spacing: 0.5px;
+    }
+    .dashboard-header .user-details .email {
+      color: #666;
+      font-size: 1.1em;
+      margin-top: 2px;
+    }
+    .dashboard-header .user-details .phone {
+      color: #888;
+      font-size: 1em;
+      margin-top: 2px;
+    }
+    .dashboard-sections {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      margin-top: 24px;
+      width: 100%;
+    }
+    .card {
+      background: #f7f9fb;
+      border-radius: 18px;
+      box-shadow:
+        0 8px 32px rgba(250,91,61,0.13),
+        0 2px 8px rgba(0,0,0,0.06),
+        0 4px 24px 0 rgba(31, 38, 135, 0.08),
+        8px 8px 24px #e3e9f7,
+        -8px -8px 24px #ffffff;
+      padding: 32px 28px 24px 28px;
+      margin-bottom: 0;
+      min-width: 0;
+      max-width: 100%;
+      width: 100%;
+      transition: box-shadow 0.2s;
+    }
+    .card:hover {
+      box-shadow:
+        0 12px 36px rgba(250,91,61,0.18),
+        0 4px 16px rgba(0,0,0,0.10);
+    }
+    .card h2 {
+      text-align: center;
+      margin-top: 0;
+      color: #fa5b3d;
+      font-size: 1.3em;
+      letter-spacing: 0.5px;
+    }
+    .welcome-text {
+      font-size: 2.2em;
+      color: #b05a2b;
+      margin-bottom: 0.5em;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .property-counts {
+      font-size: 1.1em;
+      color: #333;
+      margin: 8px 0;
+    }
+    .success-message { color: #1ca97c; font-weight: 500;}
+    .error-message { color: #e74c3c; font-weight: 500;}
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+      color: #333;
+    }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+      font-size: 1em;
+      background: #fff;
+      box-sizing: border-box;
+      margin-bottom: 2px;
+    }
+    .form-group input[type="file"] {
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    .card button[type="submit"] {
+      width: 100%;
+      text-align: center;
+      margin-top: 8px;
+      background: #fa5b3d;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 0;
+      font-size: 1.1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .card button[type="submit"]:hover {
+      background: #fff;
+      color: #fa5b3d;
+      border: 1px solid #fa5b3d;
+    }
+    @media (max-width: 1100px) {
+      .dashboard-container { padding: 12px; }
+      .dashboard-sections { gap: 16px; }
+      .card { padding: 18px 10px; }
+    }
+    @media (max-width: 900px) {
+      .dashboard-sections { gap: 18px; }
+      .card { padding: 12px 6px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header" data-header>
+    <div class="overlay" data-overlay></div>
+    <div class="header-bottom">
+      <div class="container">
+        <a href="./index.html" class="logo">
+          <img src="./assets/images/logo1.jpg" alt="KREPM">
+          <span>PropertyOwner Dashboard</span>
+        </a>
+        <nav class="navbar" data-navbar>
+          <ul class="navbar-list">
+            <li>
+              <a href="#welcome" class="navbar-link active"><i class="fa-solid fa-house"></i> Home</a>
+            </li>
+            <li>
+              <a href="#listed-properties" class="navbar-link"><i class="fa-solid fa-building"></i> Listed Properties</a>
+            </li>
+            <li>
+              <a href="#update-information" class="navbar-link"><i class="fa-solid fa-user-pen"></i> Update Info</a>
+            </li>
+            <li>
+              <a href="#add-properties" class="navbar-link"><i class="fa-solid fa-plus"></i> Add Property</a>
+            </li>
+            <li>
+              <a href="#reports" class="navbar-link"><i class="fa-regular fa-file-lines"></i> Reports</a>
+            </li>
+          </ul>
+        </nav>
+        <button id="logout-btn" class="navbar-link" style="background:#fa5b3d;color:#fff;border:none;border-radius:8px;padding:10px 22px;font-size:1em;display:flex;align-items:center;gap:8px;cursor:pointer;transition:background 0.2s;">
+          <i class="fa-solid fa-right-from-bracket"></i> Logout
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="dashboard-container">
+    <div class="dashboard-header" id="dashboard-header">
+      <!-- User info will be loaded here -->
+    </div>
+    <div class="dashboard-sections">
+      <section id="welcome" class="card">
+        <div class="welcome-text" id="welcome-text">Welcome!</div>
+        <div>This is your personal dashboard where you can update your details and view your reports.</div>
+      </section>
+      <section id="listed-properties" class="card">
+        <h2>Listed Properties</h2>
+        <div class="property-counts">
+          <p id="rent-count"></p>
+          <p id="sale-count"></p>
+          <p id="total-count"></p>
+        </div>
+        <a href="properties.html" class="dashboard-nav-link" style="margin-top:18px;display:inline-block;background:#fa5b3d;color:#fff;padding:10px 24px;border-radius:6px;text-decoration:none;">View All Properties</a>
+      </section>
+    </div>
+    <div class="dashboard-sections">
+      <section id="update-information" class="card">
+        <h2>Update Your Information</h2>
+        <div id="update-message"></div>
+        <form id="update-form" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="full_name">Full Name:</label>
+            <input type="text" id="full_name" name="full_name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" autocomplete="on">
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number:</label>
+            <input type="text" id="phone" name="phone" autocomplete="on">
+          </div>
+          <div class="form-group">
+            <label for="avatar_url">Upload Profile Picture:</label>
+            <input type="file" id="avatar_url" name="avatar_url">
+          </div>
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+          </div>
+          <button type="submit" id="update">Update Information</button>
+        </form>
+      </section>
+      <section id="add-properties" class="card">
+        <h2>Add Property</h2>
+        <form id="add-property-form" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
+          </div>
+          <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" required>
+          </div>
+          <div class="form-group">
+            <label for="status">Status:</label>
+            <select id="status" name="status" required>
+              <option value="For Sale">For Sale</option>
+              <option value="For Rent">For Rent</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="price">Price:</label>
+            <input type="number" id="price" name="price" required>
+          </div>
+          <div class="form-group">
+            <label for="bedrooms">Bedrooms:</label>
+            <input type="number" id="bedrooms" name="bedrooms" required>
+          </div>
+          <div class="form-group">
+            <label for="bathrooms">Bathrooms:</label>
+            <input type="number" id="bathrooms" name="bathrooms" required>
+          </div>
+          <div class="form-group">
+            <label for="square_ft">Square Ft:</label>
+            <input type="number" id="square_ft" name="square_ft" required>
+          </div>
+          <div class="form-group">
+            <label for="property_type">Type:</label>
+            <select id="property_type" name="property_type" required>
+              <option value="rent">Rent</option>
+              <option value="buy">Sale</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="image">Image:</label>
+            <input type="file" id="image" name="image" accept="image/*" required>
+          </div>
+          <div class="form-group">
+            <label for="keyword">Keyword(s):</label>
+            <input type="text" id="keyword" name="keyword" required>
+          </div>
+          <button type="submit" name="submit">Add Property</button>
+          <div id="add-property-message"></div>
+        </form>
+      </section>
+    </div>
+  </div>
+
+  <div id="footer"></div>
+  <script>
+    // Dynamically load the footer.html
+    fetch('./php/components/footer.html')
+      .then(res => res.text())
+      .then(html => { document.getElementById('footer').innerHTML = html; });
+  </script>
+
+  <script src="https://kit.fontawesome.com/43e53da9a6.js" crossorigin="anonymous"></script>
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+    const supabase = createClient(
+      'https://kcluzpyfsejzzznmisqd.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtjbHV6cHlmc2Vqenp6bm1pc3FkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg1NDQwMzksImV4cCI6MjA2NDEyMDAzOX0.aTrgRN-5zCgoOV6A8XcI0eUPmkoTmUlvRDPndCSW-Xk'
+    );
+
+    // --- AUTH CHECK ---
+    async function checkAuth() {
+      const { data, error } = await supabase.auth.getUser();
+      if (error || !data.user) {
+        window.location.href = 'login.html';
+        return null;
+      }
+      return data.user;
+    }
+
+    // --- LOAD USER INFO ---
+    async function loadUserInfo(userId) {
+      // Try both 'id' and 'user_id'
+      let { data, error } = await supabase
+        .from('users')
+        .select('*')
+        .or(`id.eq.${userId},user_id.eq.${userId}`)
+        .single();
+
+      if (error || !data) {
+        document.getElementById('dashboard-header').innerHTML = '<div class="error-message">User not found.</div>';
+        document.getElementById('welcome-text').textContent = 'Welcome!';
+        return null;
+      }
+      // Use username, or fallback to full_name or email
+      const displayName = data.username || data.full_name || data.email || '';
+      document.getElementById('dashboard-header').innerHTML = `
+        <img src="${data.avatar_url || 'https://placehold.co/80x80'}" alt="User Image">
+        <div class="user-details">
+          <div class="username">${displayName}</div>
+          <div class="email">${data.email || ''}</div>
+          <div class="phone">${data.phone || ''}</div>
+        </div>
+      `;
+      document.getElementById('welcome-text').textContent = `Welcome back, ${displayName}:`;
+      // Fill update form
+      document.getElementById('full_name').value = data.full_name || '';
+      document.getElementById('email').value = data.email || '';
+      document.getElementById('phone').value = data.phone || '';
+      return data;
+    }
+
+    // --- LOAD PROPERTY COUNTS ---
+    async function loadPropertyCounts(userId) {
+      const { count: rentCount } = await supabase
+        .from('properties')
+        .select('*', { count: 'exact', head: true })
+        .eq('property_type', 'rent')
+        .eq('status', 'For Rent')
+        .eq('owner_id', userId);
+
+      const { count: saleCount } = await supabase
+        .from('properties')
+        .select('*', { count: 'exact', head: true })
+        .eq('property_type', 'buy')
+        .eq('status', 'For Sale')
+        .eq('owner_id', userId);
+
+      const { count: totalCount } = await supabase
+        .from('properties')
+        .select('*', { count: 'exact', head: true })
+        .eq('owner_id', userId);
+
+      document.getElementById('rent-count').textContent = `Properties for Rent: ${rentCount ?? 0}`;
+      document.getElementById('sale-count').textContent = `Properties for Sale: ${saleCount ?? 0}`;
+      document.getElementById('total-count').textContent = `Total Properties: ${totalCount ?? 0}`;
+    }
+
+    // --- UPDATE USER INFO ---
+    document.getElementById('update-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const messageDiv = document.getElementById('update-message');
+      messageDiv.textContent = 'Updating...';
+
+      const full_name = document.getElementById('full_name').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+      const password = document.getElementById('password').value;
+      const avatarFile = document.getElementById('avatar_url').files[0];
+
+      // Get current user
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        messageDiv.innerHTML = '<span class="error-message">Not logged in.</span>';
+        return;
+      }
+
+      // Upload avatar if provided
+      let avatar_url = null;
+      if (avatarFile) {
+        const fileExt = avatarFile.name.split('.').pop();
+        const filePath = `avatars/${user.id}.${fileExt}`;
+        let { error: uploadError } = await supabase.storage
+          .from('avatars')
+          .upload(filePath, avatarFile, { upsert: true });
+        if (!uploadError) {
+          const { data: publicUrl } = supabase.storage.from('avatars').getPublicUrl(filePath);
+          avatar_url = publicUrl.publicUrl;
+        }
+      }
+
+      // Update user info in users table
+      const updates = {
+        full_name,
+        email,
+        phone,
+      };
+      if (avatar_url) updates.avatar_url = avatar_url;
+
+      // Try both 'id' and 'user_id' for update
+      let { error: updateError } = await supabase
+        .from('users')
+        .update(updates)
+        .or(`id.eq.${user.id},user_id.eq.${user.id}`);
+
+      // Update email/password in auth if changed
+      if (email && email !== user.email) {
+        await supabase.auth.updateUser({ email });
+      }
+      if (password) {
+        await supabase.auth.updateUser({ password });
+      }
+
+      if (updateError) {
+        messageDiv.innerHTML = `<span class="error-message">Update failed.</span>`;
+      } else {
+        messageDiv.innerHTML = `<span class="success-message">Information updated successfully!</span>`;
+        await loadUserInfo(user.id);
+      }
+    });
+
+    // --- ADD PROPERTY LOGIC ---
+    document.getElementById('add-property-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const formData = new FormData(form);
+      const messageDiv = document.getElementById('add-property-message');
+      messageDiv.textContent = "Adding property...";
+
+      // Get current user (owner)
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        messageDiv.textContent = "Not logged in.";
+        return;
+      }
+
+      // Upload image to Supabase Storage
+      const imageFile = formData.get('image');
+      let image_url = '';
+      if (imageFile && imageFile.size > 0) {
+        const fileExt = imageFile.name.split('.').pop();
+        const fileName = `${user.id}_${Date.now()}.${fileExt}`;
+        const { data, error: uploadError } = await supabase.storage
+          .from('property-images')
+          .upload(fileName, imageFile, { cacheControl: '3600', upsert: false });
+        if (uploadError) {
+          messageDiv.textContent = 'Image upload failed: ' + uploadError.message;
+          return;
+        }
+        image_url = supabase.storage.from('property-images').getPublicUrl(fileName).data.publicUrl;
+      }
+
+      // Insert property (make sure your properties table has an owner_id column)
+      const { error } = await supabase.from('properties').insert([{
+        title: formData.get('title'),
+        description: formData.get('description'),
+        location: formData.get('location'),
+        status: formData.get('status'),
+        price: formData.get('price'),
+        bedrooms: formData.get('bedrooms'),
+        bathrooms: formData.get('bathrooms'),
+        square_ft: formData.get('square_ft'),
+        property_type: formData.get('property_type'),
+        keyword: formData.get('keyword'),
+        image_url,
+        owner_id: user.id
+      }]);
+      if (error) {
+        messageDiv.textContent = 'Error adding property: ' + error.message;
+        return;
+      }
+      form.reset();
+      messageDiv.textContent = "Property added successfully!";
+      await loadPropertyCounts(user.id);
+    });
+
+    // --- LOGOUT ---
+    document.getElementById('logout-btn').addEventListener('click', async () => {
+      await supabase.auth.signOut();
+      window.location.href = 'login.html';
+    });
+
+    // --- INIT ---
+    checkAuth().then(async user => {
+      if (!user) return;
+      await loadUserInfo(user.id);
+      await loadPropertyCounts(user.id);
+    });
+  </script>
+</body>
+</html>

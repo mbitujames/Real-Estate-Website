@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>KREPM Reports</title>
+        <link rel="stylesheet" href="../assets/css/style.css">
+        <link rel="stylesheet" href="../assets/css/reports.css">
+        <style>
+        .navbar-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        }
+
+        .navbar-list .dropdown {
+            position: relative;
+        }
+
+        .navbar-list .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            min-width: 200px;
+        }
+
+        .navbar-list .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .navbar-list .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .navbar-list .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .navbar-list .dropdown:hover > a {
+            background-color: #ddd;
+        }
+
+        /* Responsive table */
+        @media screen and (max-width: 768px) {
+        table {
+            overflow-x: auto;
+            display: block;
+            white-space: nowrap;
+        }
+        }
+        
+        </style>
+        <!-- google font link-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <header class="header" data-header>
+            <div class="overlay" data-overlay></div>
+            <div class="header-top">
+                <div class="container">
+                    <ul class="header-top-list">
+                        <li>
+                            <a href="krepmestates@gmail.com" class="header-top-link">
+                            <ion-icon name="mail-outline"></ion-icon>
+                            <span>krepmestates@gmail.com</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="header-top-link">
+                                <ion-icon name="location-outline"></ion-icon>
+                                <address>4th Floor, One Tana Towers, Kitale</address>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="wrapper">
+                        <ul class="header-top-social-list">
+                            <li> <a href="https://www.facebook.com/MbituJames" class="header-top-social-link" target="_blank">
+                            <ion-icon name="logo-facebook"></ion-icon>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://x.com/mbituke?t=mv9XXsRlVtVuec1vDPbUbQ&s=09" class="header-top-social-link" target="_blank">
+                                <ion-icon name="logo-twitter"></ion-icon>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.instagram.com/mbitu?igsh=MWs3bG53cHhwYWNpOA==" class="header-top-social-link" target="_blank">
+                                <ion-icon name="logo-instagram"></ion-icon>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://pin.it/2fseiKYde" class="header-top-social-link" target="_blank">
+                                <ion-icon name="logo-pinterest"></ion-icon>
+                            </a>
+                        </li>
+                    </ul>
+                
+                    </div>
+                </div>
+            </div>
+            <div class="header-bottom">
+                <div class="container">
+                    <a href="../index.html" class="logo">
+                    <img src="../assets/images/logo1.jpg" alt="KREPM">
+                    </a>
+                    <nav class="navbar" data-navbar>
+                        <div class="navbar-top">
+                            <a href="../index.html" class="logo">
+                                <img src="../assets/images/logo1.jpg" alt="KREPM">
+                            </a>
+
+                            <button class="nav-close-btn" data-nav-close-btn aria-label="Close Menu">
+                                <ion-icon name="close-outline"></ion-icon>
+                            </button>
+                        </div>
+
+                        <div class="navbar-bottom">
+                            <ul class="navbar-list">
+                                <li>
+                                    <a href="../index.html" class="navbar-link" data-nav-link>Home</a>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="navbar-link" data-nav-link>User Reports</a>
+                                    <ul class="dropdown-content">
+                                        <li><a href="#active-user-reports">Active User Reports</a></li>
+                                        <li><a href="#user-search-report">User Search Report</a></li>
+                                        <li><a href="#user-activities-report">User Activities Report</a></li>
+                                        <li><a href="#user-feedback-report">User Feedback Report</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="navbar-link" data-nav-link>Property Reports</a>
+                                    <ul class="dropdown-content">
+                                        <li><a href="#property-inventory-report">Property Inventory Report</a></li>
+                                        <li><a href="#property-views-report">Property Views Report</a></li>
+                                        <li><a href="#property-reservation-reports">Property Reservation Reports</a></li>
+                                        <li><a href="#property-demand-report">Property Demand Reports</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="navbar-link" data-nav-link>Payment Reports</a>
+                                    <ul class="dropdown-content">
+                                        <li><a href="#sales-performance-report">Sales Performance Report</a></li>
+                                        <li><a href="#payment-status-report">Payment Status Report</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="../dashboard.html" class="navbar-link" data-nav-link>Dashboard</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                    <div class="header-bottom-actions">
+                <div class="dropdown">
+                    <button class="header-bottom-actions-btn" aria-label="reports" id="dropdown-btn">
+                        <ion-icon name="newspaper-outline"></ion-icon>
+                        <span>Reports</span>
+                    </button>
+                </div>
+
+                    <button class="header-bottom-actions-btn" data-nav-open-btn aria-label="Open Menu">
+                        <ion-icon name="menu-outline"></ion-icon>
+                        <span>Menu</span>
+                    </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main>
+            <h2>KITALE REAL ESTATE MANAGEMENT SYSTEM - REPORTS</h2>
+            <section id="user-reports">
+            <h3>USER REPORTS</h3>
+            <div id="active-user-reports"></div>
+            <div id="user-search-report"></div>
+            <div id="user-activities-report"></div>
+            <div id="user-feedback-report"></div>
+            </section>
+            <section id="property-reports">
+            <h3>PROPERTY LISTINGS REPORTS</h3>
+            <div id="property-inventory-report"></div>
+            <div id="property-views-report"></div>
+            <div id="featured-properties-report"></div>
+            <div id="most-expensive-properties-report"></div>
+            <div id="property-reservation-reports"></div>
+            <div id="property-demand-report"></div>
+            </section>
+            <section id="payment-reports">
+            <h3>PAYMENTS REPORTS</h3>
+            <div id="sales-performance-report"></div>
+            <div id="payment-status-report"></div>
+            </section>
+            <div id="action-buttons" style="text-align: center; margin-top: 20px;">
+            <button onclick="downloadAsPDF()">Download as PDF</button>
+            <button onclick="printPage()">Print Page</button>
+            </div>
+        </main>
+        <!-- #FOOTER-->
+         <div id="footer-placeholder"></div>
+         <script type="module">
+            import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+            // Supabase Setup
+            const supabase = createClient(
+            'https://kcluzpyfsejzzznmisqd.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtjbHV6cHlmc2Vqenp6bm1pc3FkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg1NDQwMzksImV4cCI6MjA2NDEyMDAzOX0.aTrgRN-5zCgoOV6A8XcI0eUPmkoTmUlvRDPndCSW-Xk'
+            );
+
+            // load footer
+            fetch('../php/components/footer.html')
+            .then(res => res.text())
+            .then(html => {
+            document.getElementById('footer-placeholder').innerHTML = html;
+            });
+
+            // --- AUTH CHECK ---
+            async function checkAuth() {
+            const { data, error } = await supabase.auth.getUser();
+            if (error || !data.user) {
+                window.location.href = '../signup.html';
+                return null;
+            }
+            return data.user;
+            }
+
+            // --- USER REPORTS ---
+            async function loadUserReports() {
+            // Active Users
+            const { data: activeUsers } = await supabase.from('users').select('*').eq('is_active', true);
+            // Inactive Users
+            const { data: inactiveUsers } = await supabase.from('users').select('*').eq('is_active', false);
+
+            let html = `<h4>Active Users</h4><table><thead>
+                <tr><th>User ID</th><th>Username</th><th>Email</th><th>Phone</th></tr></thead><tbody>`;
+            if (activeUsers && activeUsers.length) {
+                activeUsers.forEach(u => {
+                html += `<tr><td>${u.id}</td><td>${u.full_name || u.username || ''}</td><td>${u.email}</td><td>${u.phone || ''}</td></tr>`;
+                });
+            } else {
+                html += `<tr><td colspan="4">No active users found.</td></tr>`;
+            }
+            html += `</tbody></table><h4>Inactive Users</h4><table><thead>
+                <tr><th>User ID</th><th>Username</th><th>Email</th><th>Phone</th></tr></thead><tbody>`;
+            if (inactiveUsers && inactiveUsers.length) {
+                inactiveUsers.forEach(u => {
+                html += `<tr><td>${u.id}</td><td>${u.full_name || u.username || ''}</td><td>${u.email}</td><td>${u.phone || ''}</td></tr>`;
+                });
+            } else {
+                html += `<tr><td colspan="4">No inactive users found.</td></tr>`;
+            }
+            html += `</tbody></table>`;
+            document.getElementById('active-user-reports').innerHTML = html;
+            }
+
+            async function loadUserSearchReport() {
+            // Top 10 most searched properties
+            const { data, error } = await supabase
+                .from('search')
+                .select('property_id, properties(title, location, price)')
+                .order('search_id', { ascending: false });
+
+            // Aggregate search counts
+            const counts = {};
+            if (data) {
+                data.forEach(s => {
+                if (!counts[s.property_id]) {
+                    counts[s.property_id] = { ...s.properties, count: 0 };
+                }
+                counts[s.property_id].count++;
+                });
+            }
+            const sorted = Object.entries(counts).sort((a, b) => b[1].count - a[1].count).slice(0, 10);
+
+            let html = `<h4>User Search Report</h4><table><tr><th>Title</th><th>Location</th><th>Price</th><th>Search Count</th></tr>`;
+            if (sorted.length) {
+                sorted.forEach(([id, p]) => {
+                html += `<tr><td>${p.title}</td><td>${p.location}</td><td>Ksh. ${p.price}</td><td>${p.count}</td></tr>`;
+                });
+            } else {
+                html += `<tr><td colspan="4">No search history found.</td></tr>`;
+            }
+            html += `</table>`;
+            document.getElementById('user-search-report').innerHTML = html;
+            }
+
+            async function loadUserActivitiesReport() {
+            const { data, error } = await supabase
+                .from('activities')
+                .select('activity_id, activity_description, activity_date, user_id, users(username)')
+                .order('activity_date', { ascending: false })
+                .limit(15);
+
+            let html = `<h4>User Activities Report</h4><table><tr><th>Activity ID</th><th>Username</th><th>Description</th><th>Date</th></tr>`;
+            if (data && data.length) {
+                data.forEach(a => {
+                html += `<tr><td>${a.activity_id}</td><td>${a.users?.username || ''}</td><td>${a.activity_description}</td><td>${a.activity_date}</td></tr>`;
+                });
+            } else {
+                html += `<tr><td colspan="4">No activities found.</td></tr>`;
+            }
+            html += `</table>`;
+            document.getElementById('user-activities-report').innerHTML = html;
+            }
+
+            async function loadUserFeedbackReport() {
+            const { data, error } = await supabase
+                .from('testimonials')
+                .select('*')
+                .order('rating', { ascending: false });
+
+            let html = `<h4>User Feedback Report</h4><table class="feedback-table"><thead>
+                <tr><th>User</th><th>Rating</th><th>Review</th></tr></thead><tbody>`;
+            if (data && data.length) {
+                data.forEach(row => {
+                html += `<tr><td>${row.username}</td><td>${Number(row.rating).toFixed(1)} out of 5</td><td>${row.review}</td></tr>`;
+                });
+            } else {
+                html += `<tr><td colspan="3">No user feedback available yet.</td></tr>`;
+            }
+            html += `</tbody></table>`;
+            document.getElementById('user-feedback-report').innerHTML = html;
+            }
+
+            // --- PROPERTY REPORTS ---
+            async function loadPropertyInventoryReport() {
+            // Total count
+            const { count: total_count } = await supabase
+                .from('properties')
+                .select('*', { count: 'exact', head: true })
+                .in('status', ['For Rent', 'For Sale']);
+
+            // For Rent
+            const { data: rent } = await supabase
+                .from('properties')
+                .select('*')
+                .eq('property_type', 'rent')
+                .eq('status', 'For Rent');
+            // For Sale
+            const { data: sale } = await supabase
+                .from('properties')
+                .select('*')
+                .eq('property_type', 'buy')
+                .eq('status', 'For Sale');
+
+            let html = `<h4>Property Inventory Report</h4>
+                <strong><p>Total Properties: ${total_count ?? 0}</p></strong>
+                <h4>Properties For Rent</h4>
+                <table class="property-table"><thead>
+                <tr><th>ID</th><th>Title</th><th>Location</th><th>Status</th><th>Price</th><th>Bedrooms</th><th>Bathrooms</th><th>Sq Ft</th><th>Type</th><th>Availability</th></tr>
+                </thead><tbody>`;
+            if (rent && rent.length) {
+                rent.forEach(row => {
+                html += `<tr>
+                    <td>${row.property_id}</td><td>${row.title}</td><td>${row.location}</td><td>${row.status}</td>
+                    <td>${row.price}</td><td>${row.bedrooms}</td><td>${row.bathrooms}</td><td>${row.square_ft}</td>
+                    <td>${row.property_type}</td><td>${row.availability}</td>
+                </tr>`;
+                });
+            } else {
+                html += `<tr><td colspan="10">No properties available for Rent.</td></tr>`;
+            }
+            html += `</tbody></table>
+                <h4>Properties For Sale</h4>
+                <table class="property-table"><thead>
+                <tr><th>ID</th><th>Title</th><th>Location</th><th>Status</th><th>Price</th><th>Bedrooms</th><th>Bathrooms</th><th>Sq Ft</th><th>Type</th><th>Availability</th></tr>
+                </thead><tbody>`;
+            if (sale && sale.length) {
+                sale.forEach(row => {
+                html += `<tr>
+                    <td>${row.property_id}</td><td>${row.title}</td><td>${row.location}</td><td>${row.status}</td>
+                    <td>${row.price}</td><td>${row.bedrooms}</td><td>${row.bathrooms}</td><td>${row.square_ft}</td>
+                    <td>${row.property_type}</td><td>${row.availability}</td>
+                </tr>`;
+                });
+            } else {
+                html += `<tr><td colspan="10">No properties available for Sale.</td></tr>`;
+            }
+            html += `</tbody></table>`;
+            document.getElementById('property-inventory-report').innerHTML = html;
+            }
+
+            async function loadPropertyViewsReport() {
+            // Top 10 most popular properties by search count
+            const { data, error } = await supabase
+                .from('search')
+                .select('property_id, properties(title, location, status, price, bedrooms, bathrooms, square_ft, property_type)')
+                .order('search_id', { ascending: false });
+
+            // Aggregate search counts
+            const counts = {};
+            if (data) {
+                data.forEach(s => {
+                if (!counts[s.property_id]) {
+                    counts[s.property_id] = { ...s.properties, count: 0 };
+                }
+                counts[s.property_id].count++;
+                });
+            }
+            const sorted = Object.entries(counts).sort((a, b) => b[1].count - a[1].count).slice(0, 10);
+
+            let html = `<h4>Top 10 Most Popular Properties</h4><table>
+                <tr><th>Property ID</th><th>Title</th><th>Location</th><th>Status</th><th>Price</th><th>Bedrooms</th><th>Bathrooms</th><th>Square Feet</th><th>Property Type</th><th>Search Count</th></tr>`;
+            if (sorted.length) {
+                sorted.forEach(([id, p]) => {
+                html += `<tr>
+                    <td>${id}</td><td>${p.title}</td><td>${p.location}</td><td>${p.status}</td><td>${p.price}</td>
+                    <td>${p.bedrooms}</td><td>${p.bathrooms}</td><td>${p.square_ft}</td><td>${p.property_type}</td><td>${p.count}</td>
+                </tr>`;
+                });
+            } else {
+                html += `<tr><td colspan="10">No properties found.</td></tr>`;
+            }
+            html += `</table>`;
+            document.getElementById('property-views-report').innerHTML = html;
+            }
+
+            async function loadFeaturedPropertiesReport() {
+            const { data, error } = await supabase
+                .from('properties')
+                .select('*')
+                .eq('featured', true);
+
+            let html = `<h4>Featured Properties</h4><table>
+                <tr><th>Property ID</th><th>Title</th><th>Location</th><th>Status</th><th>Price</th><th>Bedrooms</th><th>Bathrooms</th><th>Square Feet</th><th>Property Type</th><th>Availability</th><th>Featured</th></tr>`;
+            if (data && data.length) {
+                data.forEach(row => {
+                html += `<tr>
+                    <td>${row.property_id}</td><td>${row.title}</td><td>${row.location}</td><td>${row.status}</td>
+                    <td>${row.price}</td><td>${row.bedrooms}</td><td>${row.bathrooms}</td><td>${row.square_ft}</td>
+                    <td>${row.property_type}</td><td>${row.availability}</td><td>${row.featured}</td>
+                </tr>`;
+                });
+            } else {
+                html += `<tr><td colspan="11">No featured properties found.</td></tr>`;
+            }
+            html += `</table>`;
+            document.getElementById('featured-properties-report').innerHTML = html;
+            }
+
+            async function loadMostExpensivePropertiesReport() {
+            // For Rent
+            const { data: rent } = await supabase
+                .from('properties')
+                .select('*')
+                .eq('status', 'For Rent')
+                .order('price', { ascending: false })
+                .limit(5);
+            // For Sale
+            const { data: sale } = await supabase
+                .from('properties')
+                .select('*')
+                .eq('status', 'For Sale')
+                .order('price', { ascending: false })
+                .limit(5);
+
+            let html = `<h4>Most Expensive Properties</h4>
+                <h4>For Rent</h4>
+                <table class="property-table"><thead>
+                <tr><th>Property ID</th><th>Title</th><th>Location</th><th>Price</th><th>Bedrooms</th><th>Bathrooms</th><th>Sq Ft</th><th>Type</th><th>Availability</th></tr>
+                </thead><tbody>`;
+            if (rent && rent.length) {
+                rent.forEach(row => {
+                html += `<tr>
+                    <td>${row.property_id}</td><td>${row.title}</td><td>${row.location}</td><td>${row.price}</td>
+                    <td>${row.bedrooms}</td><td>${row.bathrooms}</td><td>${row.square_ft}</td><td>${row.property_type}</td><td>${row.availability}</td>
+                </tr>`;
+                });
+            } else {
+                html += `<tr><td colspan="9">No properties available for Rent.</td></tr>`;
+            }
+            html += `</tbody></table>
+                <h4>For Sale</h4>
+                <table class="property-table"><thead>
+                <tr><th>Property ID</th><th>Title</th><th>Location</th><th>Price</th><th>Bedrooms</th><th>Bathrooms</th><th>Sq Ft</th><th>Type</th><th>Availability</th></tr>
+                </thead><tbody>`;
+            if (sale && sale.length) {
+                sale.forEach(row => {
+                html += `<tr>
+                    <td>${row.property_id}</td><td>${row.title}</td><td>${row.location}</td><td>${row.price}</td>
+                    <td>${row.bedrooms}</td><td>${row.bathrooms}</td><td>${row.square_ft}</td><td>${row.property_type}</td><td>${row.availability}</td>
+                </tr>`;
+                });
+            } else {
+                html += `<tr><td colspan="9">No properties available for Sale.</td></tr>`;
+            }
+            html += `</tbody></table>`;
+            document.getElementById('most-expensive-properties-report').innerHTML = html;
+            }
+
+            async function loadPropertyReservationReports() {
+            // For Rent
+            const { data: rent } = await supabase
+                .from('properties')
+                .select('property_id, title, location, price, bedrooms, bathrooms, square_ft, property_type, payments(payment_date, payment_status)')
+                .eq('status', 'For Rent');
+            // For Sale
+            const { data: sale } = await supabase
+                .from('properties')
+                .select('property_id, title, location, price, bedrooms, bathrooms, square_ft, property_type, payments(payment_date, payment_status)')
+                .eq('status', 'For Sale');
+
+            function renderTable(rows) {
+                let html = '';
+                rows.forEach(row => {
+                if (row.payments && row.payments.length) {
+                    row.payments.forEach(p => {
+                    if (p.payment_status === 'reserved') {
+                        html += `<tr>
+                        <td>${row.property_id}</td><td>${row.title}</td><td>${row.location}</td><td>${row.price}</td>
+                        <td>${row.bedrooms}</td><td>${row.bathrooms}</td><td>${row.square_ft}</td><td>${row.property_type}</td><td>${p.payment_date}</td>
+                        </tr>`;
+                    }
+                    });
+                }
+                });
+                return html;
+            }
+
+            let html = `<h4>Property Reservation Reports</h4>
+                <h4>For Rent</h4>
+                <table><tr>
+                <th>Property ID</th><th>Title</th><th>Location</th><th>Price</th><th>Bedrooms</th><th>Bathrooms</th><th>Square Feet</th><th>Property Type</th><th>Reservation Date</th>
+                </tr>`;
+            html += rent ? renderTable(rent) : `<tr><td colspan="9">No reservations found.</td></tr>`;
+            html += `</table><h4>For Sale</h4>
+                <table><tr>
+                <th>Property ID</th><th>Title</th><th>Location</th><th>Price</th><th>Bedrooms</th><th>Bathrooms</th><th>Square Feet</th><th>Property Type</th><th>Reservation Date</th>
+                </tr>`;
+            html += sale ? renderTable(sale) : `<tr><td colspan="9">No reservations found.</td></tr>`;
+            html += `</table>`;
+            document.getElementById('property-reservation-reports').innerHTML = html;
+            }
+
+            async function loadPropertyDemandReport() {
+            // Aggregate demand by location
+            const { data: searches } = await supabase.from('search').select('location');
+            const { data: issued } = await supabase.from('issuedproperties').select('property_id');
+            const { data: properties } = await supabase.from('properties').select('property_id, location');
+
+            // Count searches and issued by location
+            const searchCounts = {};
+            if (searches) {
+                searches.forEach(s => {
+                if (!searchCounts[s.location]) searchCounts[s.location] = { search: 0, issued: 0 };
+                searchCounts[s.location].search++;
+                });
+            }
+            if (issued && properties) {
+                issued.forEach(i => {
+                const prop = properties.find(p => p.property_id === i.property_id);
+                if (prop) {
+                    if (!searchCounts[prop.location]) searchCounts[prop.location] = { search: 0, issued: 0 };
+                    searchCounts[prop.location].issued++;
+                }
+                });
+            }
+            // Convert to array and sort by total demand
+            const arr = Object.entries(searchCounts).map(([location, c]) => ({
+                location,
+                search_count: c.search,
+                issued_count: c.issued,
+                total_demand: c.search + c.issued
+            })).sort((a, b) => b.total_demand - a.total_demand).slice(0, 5);
+
+            let html = `<h4>Property Demand Report</h4><h4>Locations with the Most Demand</h4>
+                <table class="report-table"><tr>
+                <th>Location</th><th>Search Count</th><th>Issued Count</th><th>Total Demand</th>
+                </tr>`;
+            if (arr.length) {
+                arr.forEach(row => {
+                html += `<tr>
+                    <td>${row.location}</td><td>${row.search_count}</td><td>${row.issued_count}</td><td>${row.total_demand}</td>
+                </tr>`;
+                });
+            } else {
+                html += `<tr><td colspan="4">No data found</td></tr>`;
+            }
+            html += `</table>`;
+            document.getElementById('property-demand-report').innerHTML = html;
+            }
+
+            // --- PAYMENT REPORTS ---
+            async function loadSalesPerformanceReport() {
+            // Weekly, Monthly, Yearly
+            async function getSalesData(interval) {
+                const since = new Date();
+                if (interval === 'WEEK') since.setDate(since.getDate() - 7);
+                if (interval === 'MONTH') since.setMonth(since.getMonth() - 1);
+                if (interval === 'YEAR') since.setFullYear(since.getFullYear() - 1);
+
+                const { data } = await supabase
+                .from('payments')
+                .select('*, issuedproperties(issue_id, property_id, user_id, date_taken, agent_id)')
+                .eq('payment_status', 'successful')
+                .gte('payment_date', since.toISOString());
+
+                return data || [];
+            }
+
+            function renderTable(rows) {
+                let html = '';
+                let totalSales = 0, totalSalesAmount = 0;
+                rows.forEach(row => {
+                html += `<tr>
+                    <td>${row.issuedproperties?.issue_id || ''}</td>
+                    <td>${row.property_id}</td>
+                    <td>${row.user_id}</td>
+                    <td>${row.issuedproperties?.date_taken || ''}</td>
+                    <td>${row.issuedproperties?.agent_id || ''}</td>
+                    <td>${row.payment_amount}</td>
+                    <td>${row.payment_date}</td>
+                    <td>${row.payment_status}</td>
+                </tr>`;
+                totalSales++;
+                totalSalesAmount += Number(row.payment_amount);
+                });
+                const avgSalesAmount = totalSales ? totalSalesAmount / totalSales : 0;
+                html += `<tr class="totals-row">
+                <td colspan="5">Totals</td>
+                <td>${totalSales}</td>
+                <td>${totalSalesAmount.toFixed(2)}</td>
+                <td>${avgSalesAmount.toFixed(2)}</td>
+                </tr>`;
+                return html;
+            }
+
+            let html = `<h4>Sales Performance Report</h4>
+                <h4>Weekly Report</h4>
+                <table class="report-table"><tr>
+                <th>Issue ID</th><th>Property ID</th><th>User ID</th><th>Date Taken</th><th>Agent ID</th>
+                <th>Payment Amount</th><th>Payment Date</th><th>Payment Status</th>
+                </tr>`;
+            html += renderTable(await getSalesData('WEEK'));
+            html += `</table><h4>Monthly Report</h4>
+                <table class="report-table"><tr>
+                <th>Issue ID</th><th>Property ID</th><th>User ID</th><th>Date Taken</th><th>Agent ID</th>
+                <th>Payment Amount</th><th>Payment Date</th><th>Payment Status</th>
+                </tr>`;
+            html += renderTable(await getSalesData('MONTH'));
+            html += `</table><h4>Yearly Report</h4>
+                <table class="report-table"><tr>
+                <th>Issue ID</th><th>Property ID</th><th>User ID</th><th>Date Taken</th><th>Agent ID</th>
+                <th>Payment Amount</th><th>Payment Date</th><th>Payment Status</th>
+                </tr>`;
+            html += renderTable(await getSalesData('YEAR'));
+            html += `</table>`;
+            document.getElementById('sales-performance-report').innerHTML = html;
+            }
+
+            async function loadPaymentStatusReport() {
+            // Successful
+            const { data: successful } = await supabase
+                .from('payments')
+                .select('*')
+                .eq('payment_status', 'successful')
+                .order('payment_date', { ascending: false });
+            // Pending
+            const { data: pending } = await supabase
+                .from('payments')
+                .select('*')
+                .eq('payment_status', 'pending')
+                .order('payment_date', { ascending: false });
+
+            let html = `<h4>Payment Status Report</h4>
+                <h4>Successful Payments</h4>
+                <table class="payment-table"><thead>
+                <tr><th>Payment ID</th><th>Property ID</th><th>User ID</th><th>Payment Amount</th><th>Payment Date</th></tr>
+                </thead><tbody>`;
+            if (successful && successful.length) {
+                successful.forEach(row => {
+                html += `<tr>
+                    <td>${row.payment_id}</td><td>${row.property_id}</td><td>${row.user_id}</td>
+                    <td>${row.payment_amount}</td><td>${row.payment_date}</td>
+                </tr>`;
+                });
+            } else {
+                html += `<tr><td colspan="5">No successful payments found.</td></tr>`;
+            }
+            html += `</tbody></table>
+                <h4>Pending Payments</h4>
+                <table class="payment-table"><thead>
+                <tr><th>Payment ID</th><th>Property ID</th><th>User ID</th><th>Payment Amount</th><th>Payment Date</th></tr>
+                </thead><tbody>`;
+            if (pending && pending.length) {
+                pending.forEach(row => {
+                html += `<tr>
+                    <td>${row.payment_id}</td><td>${row.property_id}</td><td>${row.user_id}</td>
+                    <td>${row.payment_amount}</td><td>${row.payment_date}</td>
+                </tr>`;
+                });
+            } else {
+                html += `<tr><td colspan="5">No pending payments found.</td></tr>`;
+            }
+            html += `</tbody></table>`;
+            document.getElementById('payment-status-report').innerHTML = html;
+            }
+
+            // --- INIT ---
+            checkAuth().then(async user => {
+            if (!user) return;
+            await loadUserReports();
+            await loadUserSearchReport();
+            await loadUserActivitiesReport();
+            await loadUserFeedbackReport();
+            await loadPropertyInventoryReport();
+            await loadPropertyViewsReport();
+            await loadFeaturedPropertiesReport();
+            await loadMostExpensivePropertiesReport();
+            await loadPropertyReservationReports();
+            await loadPropertyDemandReport();
+            await loadSalesPerformanceReport();
+            await loadPaymentStatusReport();
+            });
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+        <script>
+        function downloadAsPDF() {
+            const { jsPDF } = window.jspdf;
+            html2canvas(document.body).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF();
+                const imgProps= pdf.getImageProperties(imgData);
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                pdf.save('report.pdf');
+            });
+        }
+        function printPage() {
+        window.print();
+        }
+        </script>
+        <!-- custom js link-->
+        <script src="../assets/js/script.js"></script>
+        <!-- ionicon link-->
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    </body>
+</html>

@@ -254,7 +254,6 @@
           <input type="email" id="email" name="email" required maxlength="50" placeholder="Enter your email" class="box" autocomplete="on">
           <label for="user_type">User Type</label>
           <select name="user_type" id="user_type">
-            <option value="admin">Admin</option>
             <option value="user">User</option>
             <option value="owner">Property Owner</option>
           </select>
@@ -369,39 +368,9 @@
     );
 
     import { initHeader } from './assets/js/header.js';
-  initHeader();
+    initHeader();
 
-    // Profile dropdown logic
-  document.addEventListener('DOMContentLoaded', function() {
-    const dropdownBtn = document.getElementById('dropdown-btn');
-    const dropdownContent = document.getElementById('dropdown-content');
-    if (dropdownBtn && dropdownContent) {
-      dropdownBtn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        dropdownContent.classList.toggle('show');
-      });
-      document.addEventListener('click', function(e) {
-        if (!dropdownContent.contains(e.target) && e.target !== dropdownBtn) {
-          dropdownContent.classList.remove('show');
-        }
-      });
-    }
-
-    // Menu button logic (if you want to open/close a nav menu)
-    const navOpenBtn = document.querySelector('[data-nav-open-btn]');
-    const navCloseBtn = document.querySelector('[data-nav-close-btn]');
-    const navbar = document.querySelector('.navbar');
-    if (navOpenBtn && navbar) {
-      navOpenBtn.addEventListener('click', function() {
-        navbar.classList.add('active');
-      });
-    }
-    if (navCloseBtn && navbar) {
-      navCloseBtn.addEventListener('click', function() {
-        navbar.classList.remove('active');
-      });
-    }
-  });
+    // ...profile dropdown/menu logic...
 
     const signupForm = document.getElementById('signup-form');
     const signupMessage = document.getElementById('signup-message');
@@ -452,14 +421,39 @@
         return;
       }
 
-      // Insert user profile into a 'profiles' table (optional, if you have one)
-      // await supabase.from('profiles').insert([{ id: data.user.id, username, full_name, phone, user_type }]);
+      // Insert user into 'users' table (let user_id auto-increment, store auth_id)
+      const auth_id = data.user?.id || data.session?.user?.id;
+      if (auth_id) {
+        const { error: insertError, data: userInsertData } = await supabase.from('users').insert([{
+          auth_id, // UUID from Supabase Auth
+          username,
+          full_name,
+          phone,
+          email,
+          role: user_type,
+          password // You may want to store a hash or leave this blank if using only Supabase Auth
+        }]).select('user_id'); // Get the auto-generated user_id
+
+        if (insertError) {
+          signupMessage.textContent = "Signup failed (DB): " + insertError.message;
+          signupMessage.className = "error-message";
+          return;
+        }
+
+        // Insert into activities table
+        const user_id = userInsertData?.[0]?.user_id;
+        if (user_id) {
+          await supabase.from('activities').insert([{
+            activity_description: 'Account created',
+            user_id: user_id
+          }]);
+        }
+      }
 
       signupMessage.textContent = "Sign Up Successful! Please check your email to verify your account.";
       signupMessage.className = "success-message";
       signupForm.reset();
 
-      // Optionally redirect after a delay
       setTimeout(() => {
         window.location.href = "login.html";
       }, 2500);
