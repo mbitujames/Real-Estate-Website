@@ -33,17 +33,14 @@
       backdrop-filter: blur(6px);
       z-index: 1;
     }
-    /* Align navbar and header actions to the right */
     .header-bottom .container {
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
-
     .navbar {
       margin-left: auto;
     }
-
     .header-bottom-actions {
       display: flex;
       align-items: center;
@@ -51,18 +48,16 @@
       margin-left: 24px;
     }
     .dropdown-content {
-  display: none;
-  /* ...other styles... */
-}
-.dropdown-content.show {
-  display: block;
-}
-.navbar.active {
-  /* Show the navbar when active (add your own styles as needed) */
-  left: 0;
-  opacity: 1;
-  pointer-events: auto;
-}
+      display: none;
+    }
+    .dropdown-content.show {
+      display: block;
+    }
+    .navbar.active {
+      left: 0;
+      opacity: 1;
+      pointer-events: auto;
+    }
     .form-container {
       position: relative;
       z-index: 2;
@@ -95,7 +90,47 @@
       color: #22223b;
       font-weight: 500;
     }
-    input[type="text"], input[type="email"], input[type="password"], input[type="tel"], select {
+    .input-group {
+      position: relative;
+      width: 100%;
+      margin-bottom: 22px;
+    }
+    .input-group input {
+      width: 100%;
+      padding: 14px 40px 14px 16px;
+      border: none;
+      border-radius: 14px;
+      background: #f0f4ff;
+      box-shadow:
+        4px 4px 12px #e3e9f7,
+        -4px -4px 12px #ffffff,
+        inset 2px 2px 6px #e3e9f7,
+        inset -2px -2px 6px #ffffff;
+      font-size: 1rem;
+      color: #22223b;
+      outline: none;
+      transition: box-shadow 0.2s;
+    }
+    .input-group input:focus {
+      box-shadow:
+        0 0 0 2px #a5b4fc,
+        4px 4px 12px #e3e9f7,
+        -4px -4px 12px #ffffff;
+    }
+    .toggle-password {
+      position: absolute;
+      top: 50%;
+      right: 12px;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2em;
+      color: #888;
+      z-index: 2;
+      padding: 0 4px;
+    }
+    input[type="text"], input[type="email"], input[type="tel"], select {
       width: 100%;
       padding: 14px 16px;
       margin-bottom: 22px;
@@ -112,7 +147,7 @@
       outline: none;
       transition: box-shadow 0.2s;
     }
-    input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="tel"]:focus, select:focus {
+    input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, select:focus {
       box-shadow:
         0 0 0 2px #a5b4fc,
         4px 4px 12px #e3e9f7,
@@ -249,7 +284,7 @@
           <label for="full_name">Full name</label>
           <input type="text" id="full_name" name="full_name" required maxlength="50" placeholder="Enter your full name" class="box">
           <label for="phone">Phone Number</label>
-          <input type="tel" id="phone" name="phone" required maxlength="10" placeholder="Enter your phone number" class="box" autocomplete="on">
+          <input type="tel" id="phone" name="phone" required maxlength="15" placeholder="Enter your phone number" class="box" autocomplete="on">
           <label for="email">Email</label>
           <input type="email" id="email" name="email" required maxlength="50" placeholder="Enter your email" class="box" autocomplete="on">
           <label for="user_type">User Type</label>
@@ -258,9 +293,19 @@
             <option value="owner">Property Owner</option>
           </select>
           <label for="password">Password</label>
-          <input type="password" id="password" name="password" required maxlength="50" placeholder="Enter your password" class="box">
+          <div class="input-group">
+            <input type="password" id="password" name="password" required maxlength="50" placeholder="Enter your password" class="box">
+            <button type="button" class="toggle-password" id="toggle-password" tabindex="-1" aria-label="Show password">
+              <ion-icon name="eye-outline"></ion-icon>
+            </button>
+          </div>
           <label for="cpassword">Confirm Password</label>
-          <input type="password" id="cpassword" name="cpassword" required maxlength="50" placeholder="Confirm your password" class="box">
+          <div class="input-group">
+            <input type="password" id="cpassword" name="cpassword" required maxlength="50" placeholder="Confirm your password" class="box">
+            <button type="button" class="toggle-password" id="toggle-cpassword" tabindex="-1" aria-label="Show confirm password">
+              <ion-icon name="eye-outline"></ion-icon>
+            </button>
+          </div>
           <div id="password-requirements" style="display: none; color: red;"></div>
           <p>already have an account? <a href="./login.html">Login now</a></p><br>
           <button type="submit" class="btn">Sign Up</button>
@@ -370,15 +415,51 @@
     import { initHeader } from './assets/js/header.js';
     initHeader();
 
-    // ...profile dropdown/menu logic...
+    // Password show/hide logic
+    const passwordInput = document.getElementById('password');
+    const cpasswordInput = document.getElementById('cpassword');
+    const togglePasswordBtn = document.getElementById('toggle-password');
+    const toggleCPasswordBtn = document.getElementById('toggle-cpassword');
+
+    togglePasswordBtn.addEventListener('click', () => {
+      const type = passwordInput.type === 'password' ? 'text' : 'password';
+      passwordInput.type = type;
+      togglePasswordBtn.innerHTML = `<ion-icon name="${type === 'password' ? 'eye-outline' : 'eye-off-outline'}"></ion-icon>`;
+    });
+
+    toggleCPasswordBtn.addEventListener('click', () => {
+      const type = cpasswordInput.type === 'password' ? 'text' : 'password';
+      cpasswordInput.type = type;
+      toggleCPasswordBtn.innerHTML = `<ion-icon name="${type === 'password' ? 'eye-outline' : 'eye-off-outline'}"></ion-icon>`;
+    });
+
+    // Validation helpers
+    function validateEmail(email) {
+      return /^[\w-.]+@([\w-]+\.)+[\w-]{2,}$/.test(email);
+    }
+    function validatePhone(phone) {
+      return /^\d{10}$/.test(phone);
+    }
+    function validateUsername(username) {
+      return /^[a-zA-Z0-9_]{3,50}$/.test(username);
+    }
+    function validateFullName(name) {
+      return /^[a-zA-Z\s.'-]{2,50}$/.test(name);
+    }
+    function validatePassword(password) {
+      // At least 8 chars, 1 uppercase, 1 lowercase, 1 number, 1 special char
+      return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(password);
+    }
 
     const signupForm = document.getElementById('signup-form');
     const signupMessage = document.getElementById('signup-message');
+    const passwordRequirements = document.getElementById('password-requirements');
 
     signupForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       signupMessage.textContent = '';
       signupMessage.className = '';
+      passwordRequirements.style.display = 'none';
 
       // Get form values
       const username = document.getElementById('username').value.trim();
@@ -386,17 +467,52 @@
       const phone = document.getElementById('phone').value.trim();
       const email = document.getElementById('email').value.trim();
       const user_type = document.getElementById('user_type').value;
-      const password = document.getElementById('password').value;
-      const cpassword = document.getElementById('cpassword').value;
+      const password = passwordInput.value;
+      const cpassword = cpasswordInput.value;
 
-      // Password validation
-      if (password !== cpassword) {
-        signupMessage.textContent = "Passwords do not match.";
+      // Username validation
+      if (!validateUsername(username)) {
+        signupMessage.textContent = "Username must be 3-50 characters, letters, numbers, or underscores only.";
         signupMessage.className = "error-message";
         return;
       }
-      if (password.length < 6) {
-        signupMessage.textContent = "Password must be at least 6 characters.";
+      // Full name validation
+      if (!validateFullName(full_name)) {
+        signupMessage.textContent = "Please enter a valid full name (letters and spaces only, min 2 chars).";
+        signupMessage.className = "error-message";
+        return;
+      }
+      // Phone validation
+      if (!validatePhone(phone)) {
+        signupMessage.textContent = "Please enter a valid phone number (10 digits).";
+        signupMessage.className = "error-message";
+        return;
+      }
+      // Email validation
+      if (!validateEmail(email)) {
+        signupMessage.textContent = "Please enter a valid email address.";
+        signupMessage.className = "error-message";
+        return;
+      }
+      // Password validation
+      if (!validatePassword(password)) {
+        passwordRequirements.style.display = 'block';
+        passwordRequirements.innerHTML = `
+          Password must be at least 8 characters and include:<br>
+          - 1 uppercase letter<br>
+          - 1 lowercase letter<br>
+          - 1 number<br>
+          - 1 special character
+        `;
+        signupMessage.textContent = "";
+        signupMessage.className = "";
+        return;
+      } else {
+        passwordRequirements.style.display = 'none';
+      }
+      // Confirm password
+      if (password !== cpassword) {
+        signupMessage.textContent = "Passwords do not match.";
         signupMessage.className = "error-message";
         return;
       }
@@ -425,14 +541,14 @@
       const auth_id = data.user?.id || data.session?.user?.id;
       if (auth_id) {
         const { error: insertError, data: userInsertData } = await supabase.from('users').insert([{
-          auth_id, // UUID from Supabase Auth
+          auth_id,
           username,
           full_name,
           phone,
           email,
           role: user_type,
-          password // You may want to store a hash or leave this blank if using only Supabase Auth
-        }]).select('user_id'); // Get the auto-generated user_id
+          password
+        }]).select('user_id');
 
         if (insertError) {
           signupMessage.textContent = "Signup failed (DB): " + insertError.message;

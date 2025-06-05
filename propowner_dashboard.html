@@ -22,10 +22,12 @@
       position: sticky;
       top: 0;
       z-index: 100;
+  
     }
     .header-bottom .container {
       display: flex;
       align-items: center;
+      flex-wrap: wrap;
       justify-content: space-between;
       max-width: 1200px;
       margin: 0 auto;
@@ -90,6 +92,11 @@
       cursor: pointer;
       transition: background 0.2s;
       margin-left: 18px;
+      max-width: 100%;      /* <-- add this */
+      box-sizing: border-box;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     #logout-btn:hover {
       background: #fff;
@@ -232,15 +239,118 @@
       color: #fa5b3d;
       border: 1px solid #fa5b3d;
     }
-    @media (max-width: 1100px) {
-      .dashboard-container { padding: 12px; }
-      .dashboard-sections { gap: 16px; }
-      .card { padding: 18px 10px; }
-    }
-    @media (max-width: 900px) {
-      .dashboard-sections { gap: 18px; }
-      .card { padding: 12px 6px; }
-    }
+    /* Desktop (large screens, 1200px and up) */
+@media (min-width: 1200px) {
+  .dashboard-container {
+    max-width: 1200px;
+    padding: 32px 48px 32px 48px;
+  }
+  .header-bottom .container {
+    max-width: 1200px;
+    padding: 0 32px;
+  }
+}
+
+/* Laptop/Tablet landscape (900px - 1199px) */
+@media (max-width: 1199px) and (min-width: 900px) {
+  .dashboard-container {
+    max-width: 1000px;
+    padding: 18px 16px;
+  }
+  .header-bottom .container {
+    max-width: 1000px;
+    padding: 0 16px;
+  }
+  .card {
+    padding: 18px 10px;
+  }
+}
+
+/* Tablet portrait (600px - 899px) */
+@media (max-width: 899px) and (min-width: 600px) {
+  .dashboard-container {
+    max-width: 98vw;
+    padding: 12px 6px;
+  }
+  .header-bottom .container {
+    max-width: 98vw;
+    padding: 0 8px;
+  }
+  .dashboard-sections {
+    gap: 18px;
+  }
+  .card {
+    padding: 12px 6px;
+  }
+  .navbar-list {
+    gap: 10px;
+  }
+}
+
+/* Mobile (up to 599px) */
+@media (max-width: 599px) {
+  .dashboard-container {
+    max-width: 100vw;
+    padding: 4px 2px;
+  }
+  .header-bottom .container {
+    flex-direction: column;
+    align-items: stretch;
+    height: auto;
+    gap: 8px;
+    padding: 8px;
+    max-width: 100vw;
+  }
+  .logo {
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+  .navbar-list {
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+  }
+  #logout-btn {
+    width: 100%;
+    margin-left: 0;
+    justify-content: center;
+    font-size: 0.98em;
+    padding: 10px 0;
+  }
+  .card {
+    padding: 8px 2px;
+  }
+  .dashboard-header {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+  .dashboard-header img {
+    margin: 0 auto;
+  }
+}
+
+/* Extra: Make property cards responsive */
+@media (max-width: 900px) {
+  .property-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px 10px;
+  }
+  .property-item {
+    width: 100%;
+  }
+}
+@media (max-width: 599px) {
+  .property-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .property-item {
+    width: 100%;
+  }
+}
   </style>
 </head>
 <body>
@@ -268,7 +378,7 @@
               <a href="#add-properties" class="navbar-link"><i class="fa-solid fa-plus"></i> Add Property</a>
             </li>
             <li>
-              <a href="#reports" class="navbar-link"><i class="fa-regular fa-file-lines"></i> Reports</a>
+              <a href="./php/reports.html" class="navbar-link"><i class="fa-regular fa-file-lines"></i> Reports</a>
             </li>
           </ul>
         </nav>
@@ -396,211 +506,286 @@
 
   <script src="https://kit.fontawesome.com/43e53da9a6.js" crossorigin="anonymous"></script>
   <script type="module">
-    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-    const supabase = createClient(
-      'https://kcluzpyfsejzzznmisqd.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtjbHV6cHlmc2Vqenp6bm1pc3FkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg1NDQwMzksImV4cCI6MjA2NDEyMDAzOX0.aTrgRN-5zCgoOV6A8XcI0eUPmkoTmUlvRDPndCSW-Xk'
-    );
+  const supabase = createClient(
+    'https://kcluzpyfsejzzznmisqd.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtjbHV6cHlmc2Vqenp6bm1pc3FkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg1NDQwMzksImV4cCI6MjA2NDEyMDAzOX0.aTrgRN-5zCgoOV6A8XcI0eUPmkoTmUlvRDPndCSW-Xk'
+  );
 
-    // --- AUTH CHECK ---
-    async function checkAuth() {
-      const { data, error } = await supabase.auth.getUser();
-      if (error || !data.user) {
-        window.location.href = 'login.html';
-        return null;
-      }
-      return data.user;
-    }
-
-    // --- LOAD USER INFO ---
-    async function loadUserInfo(userId) {
-      // Try both 'id' and 'user_id'
-      let { data, error } = await supabase
-        .from('users')
-        .select('*')
-        .or(`id.eq.${userId},user_id.eq.${userId}`)
-        .single();
-
-      if (error || !data) {
-        document.getElementById('dashboard-header').innerHTML = '<div class="error-message">User not found.</div>';
-        document.getElementById('welcome-text').textContent = 'Welcome!';
-        return null;
-      }
-      // Use username, or fallback to full_name or email
-      const displayName = data.username || data.full_name || data.email || '';
-      document.getElementById('dashboard-header').innerHTML = `
-        <img src="${data.avatar_url || 'https://placehold.co/80x80'}" alt="User Image">
-        <div class="user-details">
-          <div class="username">${displayName}</div>
-          <div class="email">${data.email || ''}</div>
-          <div class="phone">${data.phone || ''}</div>
-        </div>
-      `;
-      document.getElementById('welcome-text').textContent = `Welcome back, ${displayName}:`;
-      // Fill update form
-      document.getElementById('full_name').value = data.full_name || '';
-      document.getElementById('email').value = data.email || '';
-      document.getElementById('phone').value = data.phone || '';
-      return data;
-    }
-
-    // --- LOAD PROPERTY COUNTS ---
-    async function loadPropertyCounts(userId) {
-      const { count: rentCount } = await supabase
-        .from('properties')
-        .select('*', { count: 'exact', head: true })
-        .eq('property_type', 'rent')
-        .eq('status', 'For Rent')
-        .eq('owner_id', userId);
-
-      const { count: saleCount } = await supabase
-        .from('properties')
-        .select('*', { count: 'exact', head: true })
-        .eq('property_type', 'buy')
-        .eq('status', 'For Sale')
-        .eq('owner_id', userId);
-
-      const { count: totalCount } = await supabase
-        .from('properties')
-        .select('*', { count: 'exact', head: true })
-        .eq('owner_id', userId);
-
-      document.getElementById('rent-count').textContent = `Properties for Rent: ${rentCount ?? 0}`;
-      document.getElementById('sale-count').textContent = `Properties for Sale: ${saleCount ?? 0}`;
-      document.getElementById('total-count').textContent = `Total Properties: ${totalCount ?? 0}`;
-    }
-
-    // --- UPDATE USER INFO ---
-    document.getElementById('update-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const messageDiv = document.getElementById('update-message');
-      messageDiv.textContent = 'Updating...';
-
-      const full_name = document.getElementById('full_name').value;
-      const email = document.getElementById('email').value;
-      const phone = document.getElementById('phone').value;
-      const password = document.getElementById('password').value;
-      const avatarFile = document.getElementById('avatar_url').files[0];
-
-      // Get current user
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        messageDiv.innerHTML = '<span class="error-message">Not logged in.</span>';
-        return;
-      }
-
-      // Upload avatar if provided
-      let avatar_url = null;
-      if (avatarFile) {
-        const fileExt = avatarFile.name.split('.').pop();
-        const filePath = `avatars/${user.id}.${fileExt}`;
-        let { error: uploadError } = await supabase.storage
-          .from('avatars')
-          .upload(filePath, avatarFile, { upsert: true });
-        if (!uploadError) {
-          const { data: publicUrl } = supabase.storage.from('avatars').getPublicUrl(filePath);
-          avatar_url = publicUrl.publicUrl;
-        }
-      }
-
-      // Update user info in users table
-      const updates = {
-        full_name,
-        email,
-        phone,
-      };
-      if (avatar_url) updates.avatar_url = avatar_url;
-
-      // Try both 'id' and 'user_id' for update
-      let { error: updateError } = await supabase
-        .from('users')
-        .update(updates)
-        .or(`id.eq.${user.id},user_id.eq.${user.id}`);
-
-      // Update email/password in auth if changed
-      if (email && email !== user.email) {
-        await supabase.auth.updateUser({ email });
-      }
-      if (password) {
-        await supabase.auth.updateUser({ password });
-      }
-
-      if (updateError) {
-        messageDiv.innerHTML = `<span class="error-message">Update failed.</span>`;
-      } else {
-        messageDiv.innerHTML = `<span class="success-message">Information updated successfully!</span>`;
-        await loadUserInfo(user.id);
-      }
-    });
-
-    // --- ADD PROPERTY LOGIC ---
-    document.getElementById('add-property-form').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const form = e.target;
-      const formData = new FormData(form);
-      const messageDiv = document.getElementById('add-property-message');
-      messageDiv.textContent = "Adding property...";
-
-      // Get current user (owner)
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        messageDiv.textContent = "Not logged in.";
-        return;
-      }
-
-      // Upload image to Supabase Storage
-      const imageFile = formData.get('image');
-      let image_url = '';
-      if (imageFile && imageFile.size > 0) {
-        const fileExt = imageFile.name.split('.').pop();
-        const fileName = `${user.id}_${Date.now()}.${fileExt}`;
-        const { data, error: uploadError } = await supabase.storage
-          .from('property-images')
-          .upload(fileName, imageFile, { cacheControl: '3600', upsert: false });
-        if (uploadError) {
-          messageDiv.textContent = 'Image upload failed: ' + uploadError.message;
-          return;
-        }
-        image_url = supabase.storage.from('property-images').getPublicUrl(fileName).data.publicUrl;
-      }
-
-      // Insert property (make sure your properties table has an owner_id column)
-      const { error } = await supabase.from('properties').insert([{
-        title: formData.get('title'),
-        description: formData.get('description'),
-        location: formData.get('location'),
-        status: formData.get('status'),
-        price: formData.get('price'),
-        bedrooms: formData.get('bedrooms'),
-        bathrooms: formData.get('bathrooms'),
-        square_ft: formData.get('square_ft'),
-        property_type: formData.get('property_type'),
-        keyword: formData.get('keyword'),
-        image_url,
-        owner_id: user.id
-      }]);
-      if (error) {
-        messageDiv.textContent = 'Error adding property: ' + error.message;
-        return;
-      }
-      form.reset();
-      messageDiv.textContent = "Property added successfully!";
-      await loadPropertyCounts(user.id);
-    });
-
-    // --- LOGOUT ---
-    document.getElementById('logout-btn').addEventListener('click', async () => {
-      await supabase.auth.signOut();
+  // --- AUTH CHECK ---
+  async function checkAuth() {
+    const { data, error } = await supabase.auth.getUser();
+    if (error || !data.user) {
       window.location.href = 'login.html';
-    });
+      return null;
+    }
+    return data.user;
+  }
 
-    // --- INIT ---
-    checkAuth().then(async user => {
-      if (!user) return;
+  // --- LOAD USER INFO ---
+  async function loadUserInfo(userId) {
+    let { data, error } = await supabase
+      .from('users')
+      .select('*')
+      .or(`id.eq.${userId},user_id.eq.${userId}`)
+      .single();
+
+    if (error || !data) {
+      document.getElementById('dashboard-header').innerHTML = '<div class="error-message">User not found.</div>';
+      document.getElementById('welcome-text').textContent = 'Welcome!';
+      return null;
+    }
+    const displayName = data.username || data.full_name || data.email || '';
+    document.getElementById('dashboard-header').innerHTML = `
+      <img src="${data.avatar_url || 'https://placehold.co/80x80'}" alt="User Image">
+      <div class="user-details">
+        <div class="username">${displayName}</div>
+        <div class="email">${data.email || ''}</div>
+        <div class="phone">${data.phone || ''}</div>
+      </div>
+    `;
+    document.getElementById('welcome-text').textContent = `Welcome back, ${displayName}:`;
+    document.getElementById('full_name').value = data.full_name || '';
+    document.getElementById('email').value = data.email || '';
+    document.getElementById('phone').value = data.phone || '';
+    return data;
+  }
+
+  // --- LOAD PROPERTY COUNTS ---
+  async function loadPropertyCounts(userId) {
+    const { count: rentCount } = await supabase
+      .from('properties')
+      .select('*', { count: 'exact', head: true })
+      .eq('property_type', 'rent')
+      .eq('status', 'For Rent')
+      .eq('owner_id', userId);
+
+    const { count: saleCount } = await supabase
+      .from('properties')
+      .select('*', { count: 'exact', head: true })
+      .eq('property_type', 'buy')
+      .eq('status', 'For Sale')
+      .eq('owner_id', userId);
+
+    const { count: totalCount } = await supabase
+      .from('properties')
+      .select('*', { count: 'exact', head: true })
+      .eq('owner_id', userId);
+
+    document.getElementById('rent-count').textContent = `Properties for Rent: ${rentCount ?? 0}`;
+    document.getElementById('sale-count').textContent = `Properties for Sale: ${saleCount ?? 0}`;
+    document.getElementById('total-count').textContent = `Total Properties: ${totalCount ?? 0}`;
+  }
+
+  // --- UPDATE USER INFO ---
+  document.getElementById('update-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const messageDiv = document.getElementById('update-message');
+    messageDiv.textContent = 'Updating...';
+
+    // Validation
+    const full_name = document.getElementById('full_name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const password = document.getElementById('password').value;
+    const avatarFile = document.getElementById('avatar_url').files[0];
+
+    if (!full_name || full_name.length < 2) {
+      messageDiv.innerHTML = '<span class="error-message">Please enter a valid full name (at least 2 characters).</span>';
+      return;
+    }
+    if (email && !/^[\w-.]+@([\w-]+\.)+[\w-]{2,}$/.test(email)) {
+      messageDiv.innerHTML = '<span class="error-message">Please enter a valid email address.</span>';
+      return;
+    }
+    if (phone && !/^[\d+\-\s()]{7,}$/.test(phone)) {
+      messageDiv.innerHTML = '<span class="error-message">Please enter a valid phone number.</span>';
+      return;
+    }
+    if (password && !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(password)) {
+      messageDiv.innerHTML = '<span class="error-message">Password must be at least 8 characters, include uppercase, lowercase, number, and special character.</span>';
+      return;
+    }
+    if (avatarFile && !avatarFile.type.startsWith('image/')) {
+      messageDiv.innerHTML = '<span class="error-message">Profile picture must be an image file.</span>';
+      return;
+    }
+
+    // Get current user
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      messageDiv.innerHTML = '<span class="error-message">Not logged in.</span>';
+      return;
+    }
+
+    // Upload avatar if provided
+    let avatar_url = null;
+    if (avatarFile) {
+      const fileExt = avatarFile.name.split('.').pop();
+      const filePath = `avatars/${user.id}.${fileExt}`;
+      let { error: uploadError } = await supabase.storage
+        .from('avatars')
+        .upload(filePath, avatarFile, { upsert: true });
+      if (!uploadError) {
+        const { data: publicUrl } = supabase.storage.from('avatars').getPublicUrl(filePath);
+        avatar_url = publicUrl.publicUrl;
+      }
+    }
+
+    // Update user info in users table
+    const updates = {
+      full_name,
+      email,
+      phone,
+    };
+    if (avatar_url) updates.avatar_url = avatar_url;
+
+    let { error: updateError } = await supabase
+      .from('users')
+      .update(updates)
+      .or(`id.eq.${user.id},user_id.eq.${user.id}`);
+
+    // Update email/password in auth if changed
+    if (email && email !== user.email) {
+      await supabase.auth.updateUser({ email });
+    }
+    if (password) {
+      await supabase.auth.updateUser({ password });
+    }
+
+    if (updateError) {
+      messageDiv.innerHTML = `<span class="error-message">Update failed.</span>`;
+    } else {
+      messageDiv.innerHTML = `<span class="success-message">Information updated successfully!</span>`;
       await loadUserInfo(user.id);
-      await loadPropertyCounts(user.id);
-    });
-  </script>
+    }
+  });
+
+  // --- ADD PROPERTY LOGIC ---
+  document.getElementById('add-property-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+    const messageDiv = document.getElementById('add-property-message');
+    messageDiv.textContent = "Adding property...";
+
+    // Validation
+    const title = formData.get('title').trim();
+    const description = formData.get('description').trim();
+    const location = formData.get('location').trim();
+    const status = formData.get('status');
+    const price = formData.get('price');
+    const bedrooms = formData.get('bedrooms');
+    const bathrooms = formData.get('bathrooms');
+    const square_ft = formData.get('square_ft');
+    const property_type = formData.get('property_type');
+    const keyword = formData.get('keyword').trim();
+    const imageFile = formData.get('image');
+
+    if (!title || title.length < 3) {
+      messageDiv.textContent = "Please enter a valid title (at least 3 characters).";
+      return;
+    }
+    if (!description || description.length < 10) {
+      messageDiv.textContent = "Please enter a valid description (at least 10 characters).";
+      return;
+    }
+    if (!location || location.length < 3) {
+      messageDiv.textContent = "Please enter a valid location.";
+      return;
+    }
+    if (!status || (status !== "For Sale" && status !== "For Rent")) {
+      messageDiv.textContent = "Please select a valid status.";
+      return;
+    }
+    if (!price || isNaN(price) || Number(price) <= 0) {
+      messageDiv.textContent = "Please enter a valid price.";
+      return;
+    }
+    if (!bedrooms || isNaN(bedrooms) || Number(bedrooms) < 0) {
+      messageDiv.textContent = "Please enter a valid number of bedrooms.";
+      return;
+    }
+    if (!bathrooms || isNaN(bathrooms) || Number(bathrooms) < 0) {
+      messageDiv.textContent = "Please enter a valid number of bathrooms.";
+      return;
+    }
+    if (!square_ft || isNaN(square_ft) || Number(square_ft) <= 0) {
+      messageDiv.textContent = "Please enter a valid square footage.";
+      return;
+    }
+    if (!property_type || (property_type !== "rent" && property_type !== "buy")) {
+      messageDiv.textContent = "Please select a valid property type.";
+      return;
+    }
+    if (!keyword || keyword.length < 2) {
+      messageDiv.textContent = "Please enter at least one keyword.";
+      return;
+    }
+    if (!imageFile || !imageFile.type.startsWith('image/')) {
+      messageDiv.textContent = "Please upload a valid image file.";
+      return;
+    }
+
+    // Get current user (owner)
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      messageDiv.textContent = "Not logged in.";
+      return;
+    }
+
+    // Upload image to Supabase Storage
+    let image_url = '';
+    if (imageFile && imageFile.size > 0) {
+      const fileExt = imageFile.name.split('.').pop();
+      const fileName = `${user.id}_${Date.now()}.${fileExt}`;
+      const { data, error: uploadError } = await supabase.storage
+        .from('property-images')
+        .upload(fileName, imageFile, { cacheControl: '3600', upsert: false });
+      if (uploadError) {
+        messageDiv.textContent = 'Image upload failed: ' + uploadError.message;
+        return;
+      }
+      image_url = supabase.storage.from('property-images').getPublicUrl(fileName).data.publicUrl;
+    }
+
+    // Insert property
+    const { error } = await supabase.from('properties').insert([{
+      title,
+      description,
+      location,
+      status,
+      price,
+      bedrooms,
+      bathrooms,
+      square_ft,
+      property_type,
+      keyword,
+      image_url,
+      owner_id: user.id
+    }]);
+    if (error) {
+      messageDiv.textContent = 'Error adding property: ' + error.message;
+      return;
+    }
+    form.reset();
+    messageDiv.textContent = "Property added successfully!";
+    await loadPropertyCounts(user.id);
+  });
+
+  // --- LOGOUT ---
+  document.getElementById('logout-btn').addEventListener('click', async () => {
+    await supabase.auth.signOut();
+    window.location.href = 'login.html';
+  });
+
+  // --- INIT ---
+  checkAuth().then(async user => {
+    if (!user) return;
+    await loadUserInfo(user.id);
+    await loadPropertyCounts(user.id);
+  });
+</script>
 </body>
 </html>

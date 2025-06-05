@@ -8,149 +8,183 @@
   <title>Login</title>
   <style>
     body {
-  font-family: 'Poppins', 'Nunito Sans', Arial, sans-serif;
-  background: #f4f4f4;
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-}
-
-.login-section {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-image: url('./assets/images/hero-banner.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  position: relative;
-}
-
-.login-section::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(255,255,255,0.35);
-  backdrop-filter: blur(6px);
-  z-index: 1;
-}
-
-.form-container {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  max-width: 420px;
-  margin: 0 auto;
-  padding: 2.5rem 2rem;
-  border-radius: 24px;
-  background: rgba(255,255,255,0.25);
-  box-shadow:
-    0 8px 32px 0 rgba(31, 38, 135, 0.18),
-    8px 8px 24px #e3e9f7,
-    -8px -8px 24px #ffffff;
-  backdrop-filter: blur(18px);
-  border: 1.5px solid rgba(255,255,255,0.25);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-h2 {
-  text-align: center;
-  margin-bottom: 24px;
-  color: #22223b;
-  letter-spacing: 1px;
-  text-shadow: 0 2px 8px rgba(31,38,135,0.08);
-}
-
-label {
-  display: block;
-  margin-bottom: 7px;
-  color: #22223b;
-  font-weight: 500;
-}
-
-input[type="email"], input[type="password"], select {
-  width: 100%;
-  padding: 14px 16px;
-  margin-bottom: 22px;
-  border: none;
-  border-radius: 14px;
-  background: #f0f4ff;
-  box-shadow:
-    4px 4px 12px #e3e9f7,
-    -4px -4px 12px #ffffff,
-    inset 2px 2px 6px #e3e9f7,
-    inset -2px -2px 6px #ffffff;
-  font-size: 1rem;
-  color: #22223b;
-  outline: none;
-  transition: box-shadow 0.2s;
-}
-
-input[type="email"]:focus, input[type="password"]:focus, select:focus {
-  box-shadow:
-    0 0 0 2px #a5b4fc,
-    4px 4px 12px #e3e9f7,
-    -4px -4px 12px #ffffff;
-}
-
-
-a {
-  color: #6366f1;
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.2s;
-}
-
-a:hover {
-  color: #06d6a0;
-}
-
-button[type="submit"], .btn {
-  width: 100%;
-  padding: 14px 0;
-  border: none;
-  border-radius: 16px;
-  background: var(--orange-soda, #fa5b3d);
-  color: var(--white, #fff);
-  font-family: var(--ff-poppins, 'Poppins', Arial, sans-serif);
-  font-size: 1.1rem;
-  font-weight: bold;
-  box-shadow:
-    0 4px 16px 0 rgba(250,91,61,0.10),
-    4px 4px 12px #e3e9f7,
-    -4px -4px 12px #ffffff;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: background 0.2s, box-shadow 0.2s, color 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  letter-spacing: 1px;
-}
-
-button[type="submit"]:hover, .btn:hover {
-  background: var(--white, #fff);
-  color: var(--orange-soda, #fa5b3d);
-  border-color: var(--orange-soda, #fa5b3d);
-}
-
-@media screen and (max-width: 600px) {
-  .form-container {
-    padding: 1.2rem 0.5rem;
-    border-radius: 16px;
-  }
-}
+      font-family: 'Poppins', 'Nunito Sans', Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    .login-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-image: url('./assets/images/hero-banner.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      position: relative;
+    }
+    .login-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.35);
+      backdrop-filter: blur(6px);
+      z-index: 1;
+    }
+    .form-container {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.25);
+      box-shadow:
+        0 8px 32px 0 rgba(31, 38, 135, 0.18),
+        8px 8px 24px #e3e9f7,
+        -8px -8px 24px #ffffff;
+      backdrop-filter: blur(18px);
+      border: 1.5px solid rgba(255,255,255,0.25);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 24px;
+      color: #22223b;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 8px rgba(31,38,135,0.08);
+    }
+    label {
+      display: block;
+      margin-bottom: 7px;
+      color: #22223b;
+      font-weight: 500;
+    }
+    .input-group {
+      position: relative;
+      width: 100%;
+      margin-bottom: 22px;
+    }
+    .input-group input {
+      width: 100%;
+      padding: 14px 40px 14px 16px;
+      border: none;
+      border-radius: 14px;
+      background: #f0f4ff;
+      box-shadow:
+        4px 4px 12px #e3e9f7,
+        -4px -4px 12px #ffffff,
+        inset 2px 2px 6px #e3e9f7,
+        inset -2px -2px 6px #ffffff;
+      font-size: 1rem;
+      color: #22223b;
+      outline: none;
+      transition: box-shadow 0.2s;
+    }
+    .input-group input:focus {
+      box-shadow:
+        0 0 0 2px #a5b4fc,
+        4px 4px 12px #e3e9f7,
+        -4px -4px 12px #ffffff;
+    }
+    .toggle-password {
+      position: absolute;
+      top: 50%;
+      right: 12px;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2em;
+      color: #888;
+      z-index: 2;
+      padding: 0 4px;
+    }
+    input[type="email"], select {
+      width: 100%;
+      padding: 14px 16px;
+      margin-bottom: 22px;
+      border: none;
+      border-radius: 14px;
+      background: #f0f4ff;
+      box-shadow:
+        4px 4px 12px #e3e9f7,
+        -4px -4px 12px #ffffff,
+        inset 2px 2px 6px #e3e9f7,
+        inset -2px -2px 6px #ffffff;
+      font-size: 1rem;
+      color: #22223b;
+      outline: none;
+      transition: box-shadow 0.2s;
+    }
+    input[type="email"]:focus, select:focus {
+      box-shadow:
+        0 0 0 2px #a5b4fc,
+        4px 4px 12px #e3e9f7,
+        -4px -4px 12px #ffffff;
+    }
+    a {
+      color: #6366f1;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    a:hover {
+      color: #06d6a0;
+    }
+    button[type="submit"], .btn {
+      width: 100%;
+      padding: 14px 0;
+      border: none;
+      border-radius: 16px;
+      background: var(--orange-soda, #fa5b3d);
+      color: var(--white, #fff);
+      font-family: var(--ff-poppins, 'Poppins', Arial, sans-serif);
+      font-size: 1.1rem;
+      font-weight: bold;
+      box-shadow:
+        0 4px 16px 0 rgba(250,91,61,0.10),
+        4px 4px 12px #e3e9f7,
+        -4px -4px 12px #ffffff;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+    button[type="submit"]:hover, .btn:hover {
+      background: var(--white, #fff);
+      color: var(--orange-soda, #fa5b3d);
+      border-color: var(--orange-soda, #fa5b3d);
+    }
+    .error-message {
+      color: #d90429;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 10px;
+    }
+    .success-message {
+      color: #06d6a0;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 10px;
+    }
+    @media screen and (max-width: 600px) {
+      .form-container {
+        padding: 1.2rem 0.5rem;
+        border-radius: 16px;
+      }
+    }
   </style>
-
-  <!-- favicon-->
-  <!-- custom css link-->
   <link rel="stylesheet" href="./assets/css/style.css">
-
-  <!-- google font link-->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -159,58 +193,46 @@ button[type="submit"]:hover, .btn:hover {
 </head>
 
 <body>
-
   <!-- #HEADER-->
-
   <header class="header" data-header>
-
     <div class="overlay" data-overlay></div>
-
     <div class="header-bottom">
       <div class="container">
-
         <a href="./index.html" class="logo">
           <img src="./assets/images/logo1.jpg" alt="KREPM">
         </a>
-
         <nav class="navbar" data-navbar>
           <div class="navbar-top">
             <a href="./index.html" class="logo">
               <img src="./assets/images/logo1.jpg" alt="KREPM">
             </a>
-
             <button class="nav-close-btn" data-nav-close-btn aria-label="Close Menu">
               <ion-icon name="close-outline"></ion-icon>
             </button>
           </div>
-
           <div class="navbar-bottom">
-            <ul class="navbar-list">
+            <ul class="navbar-list" id="navbar-list">
               <li>
-                <a href="./index.html" class="navbar-link" data-nav-link>Home</a>
+                <a href="#" class="navbar-link" id="home-link" data-nav-link>Home</a>
               </li>
               <li>
                 <a href="./signup.html" class="navbar-link" data-nav-link>Sign Up</a>
               </li>
-
             </ul>
           </div>
-
         </nav>
-
         <div class="header-bottom-actions">
           <div class="dropdown">
             <button class="header-bottom-actions-btn" aria-label="Profile" id="dropdown-btn">
               <ion-icon name="person-outline"></ion-icon>
               <span>Profile</span>
             </button>
-        
             <div id="dropdown-content" class="dropdown-content">
               <a href="./login.html">Login</a>
               <a href="./signup.html">Signup</a>
+              <a href="#" id="dashboard-link" style="display:none;">Dashboard</a>
             </div>
           </div>
-
           <button class="header-bottom-actions-btn" data-nav-open-btn aria-label="Open Menu">
             <ion-icon name="menu-outline"></ion-icon>
             <span>Menu</span>
@@ -218,42 +240,40 @@ button[type="submit"]:hover, .btn:hover {
         </div>
       </div>
     </div>
-
   </header>
-  <!--main-->
   <main>
-  <!--sign in section-->
-  <div class="login-section">
-    <section class="form-container">
-      <form id="login-form" autocomplete="on">
-        <h2>Welcome back!</h2>
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required maxlength="50" placeholder="Enter your email" class="box" autocomplete="on">
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" required maxlength="50" placeholder="Enter your password" class="box">
-        <br>
-        <p>don't have an account? <a href="./signup.html">register new</a></p><br>
-        <button type="submit">Log in</button>
-        <div id="login-message"></div>
-      </form>
-    </section>
-  </div>
-</main>
-
-<!-- #FOOTER-->
-<footer class="footer">
+    <div class="login-section">
+      <section class="form-container">
+        <form id="login-form" autocomplete="on">
+          <h2>Welcome back!</h2>
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required maxlength="50" placeholder="Enter your email" class="box" autocomplete="on">
+          <label for="password">Password</label>
+          <div class="input-group">
+            <input type="password" id="password" name="password" required maxlength="50" placeholder="Enter your password" class="box">
+            <button type="button" class="toggle-password" id="toggle-password" tabindex="-1" aria-label="Show password">
+              <ion-icon name="eye-outline"></ion-icon>
+            </button>
+          </div>
+          <br>
+          <p>don't have an account? <a href="./signup.html">register new</a></p><br>
+          <button type="submit">Log in</button>
+          <div id="login-message"></div>
+        </form>
+      </section>
+    </div>
+  </main>
+  <footer class="footer">
     <div class="footer-top">
       <div class="container">
         <div class="footer-brand">
           <a href="./index.html" class="logo">
             <img src="./assets/images/favicon.ico" alt="KREPM logo">
-            <p >Kitale Real Estate & Property Management </p>
+            <p>Kitale Real Estate & Property Management </p>
           </a>
-
           <p class="section-text">
             Feel free to explore our website and contact us for any inquiries or assistance.
           </p>
-
           <ul class="contact-list">
             <li>
               <a href="./index.html" class="contact-link">
@@ -261,36 +281,30 @@ button[type="submit"]:hover, .btn:hover {
                 <address>4th Floor, One Tana Towers, Kitale</address>
               </a>
             </li>
-
             <li>
               <a href="tel:+254716519766" class="contact-link">
                 <ion-icon name="call-outline"></ion-icon>
                 <span>+254716519766</span>
               </a>
             </li>
-
             <li>
               <a href="mailto:mbitumutonga@gmail.com" class="contact-link" target="_blank">
                 <ion-icon name="mail-outline"></ion-icon>
                 <span>mbitumutonga@gmail.com</span>
               </a>
             </li>
-
           </ul>
-
           <ul class="social-list">
             <li>
               <a href="https://www.facebook.com/MbituJames" class="social-link" target="_blank">
                 <ion-icon name="logo-facebook"></ion-icon>
               </a>
             </li>
-
             <li>
               <a href="https://x.com/mbituke?t=mv9XXsRlVtVuec1vDPbUbQ&s=09" class="social-link" target="_blank">
                 <ion-icon name="logo-twitter"></ion-icon>
               </a>
             </li>
-
             <li>
               <a href="https://www.linkedin.com/in/mbitujames/" class="social-link" target="_blank">
                 <ion-icon name="logo-linkedin"></ion-icon>
@@ -298,31 +312,24 @@ button[type="submit"]:hover, .btn:hover {
             </li>
           </ul>
         </div>
-
         <div class="footer-link-box">
           <ul class="footer-list">
             <li>
               <p class="footer-list-title">Company</p>
             </li>
-
             <li>
               <a href="./index.html#about" class="footer-link">About Us</a>
             </li>
-
             <li>
               <a href="./index.html#reviews" class="footer-link">Reviews</a>
             </li>
-
             <li>
               <a href="/properties.html" class="footer-link">Properties</a>
             </li>
-
             <li>
               <a href="./index.html#contact" class="footer-link">Contact us</a>
             </li>
-
           </ul>
-
           <ul class="footer-list">
             <li>
               <p class="footer-list-title">Services</p>
@@ -330,7 +337,6 @@ button[type="submit"]:hover, .btn:hover {
             <li>
               <a href="./login.html" class="footer-link">Login</a>
             </li>
-
             <li>
               <a href="./admin_panel.php" class="footer-link">My account</a>
             </li>
@@ -338,7 +344,6 @@ button[type="submit"]:hover, .btn:hover {
         </div>
       </div>
     </div>
-
     <div class="footer-bottom">
       <div class="container">
         <p class="copyright">
@@ -347,99 +352,188 @@ button[type="submit"]:hover, .btn:hover {
       </div>
     </div>
   </footer>
-
   <script type="module">
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-const supabase = createClient(
-  'https://kcluzpyfsejzzznmisqd.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtjbHV6cHlmc2Vqenp6bm1pc3FkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg1NDQwMzksImV4cCI6MjA2NDEyMDAzOX0.aTrgRN-5zCgoOV6A8XcI0eUPmkoTmUlvRDPndCSW-Xk'
-);
+    const supabase = createClient(
+      'https://kcluzpyfsejzzznmisqd.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtjbHV6cHlmc2Vqenp6bm1pc3FkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg1NDQwMzksImV4cCI6MjA2NDEyMDAzOX0.aTrgRN-5zCgoOV6A8XcI0eUPmkoTmUlvRDPndCSW-Xk'
+    );
 
-import { initHeader } from './assets/js/header.js';
-import { initNavbarMenu } from './assets/js/script.js';
+    import { initHeader } from './assets/js/header.js';
+    import { initNavbarMenu } from './assets/js/script.js';
 
-// Initialize header/profile dropdown
-initHeader();
-initNavbarMenu();
+    // Initialize header/profile dropdown
+    initHeader();
+    initNavbarMenu();
 
-const form = document.getElementById("login-form");
-const messageDiv = document.getElementById("login-message");
+    // Password show/hide logic
+    const passwordInput = document.getElementById('password');
+    const togglePasswordBtn = document.getElementById('toggle-password');
+    togglePasswordBtn.addEventListener('click', () => {
+      const type = passwordInput.type === 'password' ? 'text' : 'password';
+      passwordInput.type = type;
+      togglePasswordBtn.innerHTML = `<ion-icon name="${type === 'password' ? 'eye-outline' : 'eye-off-outline'}"></ion-icon>`;
+    });
 
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  messageDiv.textContent = "Logging in...";
-
-  const email = form.email.value;
-  const password = form.password.value;
-
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-
-  if (error) {
-    messageDiv.innerHTML = `<p class="error-message">${error.message}</p>`;
-    return;
-  }
-
-  // Get Supabase Auth user id (UUID)
-  const authId = data.user.id;
-  // Debug: log authId and email
-  console.log("Auth ID:", authId, "Email:", email);
-
-  // Try to fetch user by auth_id
-  let { data: userData, error: userError } = await supabase
-    .from('users')
-    .select('user_id, role')
-    .eq('auth_id', authId)
-    .maybeSingle();
-
-  // If not found, try by email as fallback (for legacy users)
-  if (!userData) {
-    const fallback = await supabase
-      .from('users')
-      .select('user_id, role')
-      .eq('email', email)
-      .maybeSingle();
-    userData = fallback.data;
-    userError = fallback.error;
-    if (userData && !userData.auth_id) {
-      // Optionally update the user row to set the auth_id for future logins
-      await supabase.from('users').update({ auth_id: authId }).eq('user_id', userData.user_id);
+    // Validation helpers
+    function validateEmail(email) {
+      return /^[\w-.]+@([\w-]+\.)+[\w-]{2,}$/.test(email);
     }
-  }
+    function validatePassword(password) {
+      return password.length >= 8;
+    }
 
-  if (userError || !userData) {
-    messageDiv.innerHTML = `<p class="error-message">Unable to determine user role. Please contact support.</p>`;
-    return;
-  }
+    // Store user role in sessionStorage after login
+    let userRole = null;
 
-  // Insert login activity
-  await supabase.from('activities').insert([{
-    activity_description: 'User logged in',
-    user_id: userData.user_id
-  }]);
+    const form = document.getElementById("login-form");
+    const messageDiv = document.getElementById("login-message");
+    const dashboardLink = document.getElementById("dashboard-link");
+    const homeLink = document.getElementById("home-link");
 
-  // Redirect based on role
-  let redirectUrl = "index.html";
-  if (userData.role === "admin") {
-    redirectUrl = "admin_panel.html";
-  } else if (userData.role === "owner") {
-    redirectUrl = "propowner_dashboard.html";
-  }
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      messageDiv.textContent = "Logging in...";
 
-  messageDiv.innerHTML = `<p class="success-message">Login successful! Redirecting...</p>`;
-  setTimeout(() => {
-    window.location.href = redirectUrl;
-  }, 1200);
-});
-</script>
+      const email = form.email.value.trim();
+      const password = form.password.value;
 
-  <!-- custom js link-->
+      // Input validation
+      if (!validateEmail(email)) {
+        messageDiv.innerHTML = `<p class="error-message">Please enter a valid email address.</p>`;
+        return;
+      }
+      if (!validatePassword(password)) {
+        messageDiv.innerHTML = `<p class="error-message">Password must be at least 8 characters.</p>`;
+        return;
+      }
+
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+      if (error) {
+        messageDiv.innerHTML = `<p class="error-message">${error.message}</p>`;
+        return;
+      }
+
+      // Get Supabase Auth user id (UUID)
+      const authId = data.user.id;
+
+      // Try to fetch user by auth_id
+      let { data: userData, error: userError } = await supabase
+        .from('users')
+        .select('user_id, role')
+        .eq('auth_id', authId)
+        .maybeSingle();
+
+      // If not found, try by email as fallback (for legacy users)
+      if (!userData) {
+        const fallback = await supabase
+          .from('users')
+          .select('user_id, role')
+          .eq('email', email)
+          .maybeSingle();
+        userData = fallback.data;
+        userError = fallback.error;
+        if (userData && !userData.auth_id) {
+          await supabase.from('users').update({ auth_id: authId }).eq('user_id', userData.user_id);
+        }
+      }
+
+      if (userError || !userData) {
+        messageDiv.innerHTML = `<p class="error-message">Unable to determine user role. Please contact support.</p>`;
+        return;
+      }
+
+      // Insert login activity
+      await supabase.from('activities').insert([{
+        activity_description: 'User logged in',
+        user_id: userData.user_id
+      }]);
+
+      // Store role in sessionStorage for navigation logic
+      userRole = userData.role;
+      sessionStorage.setItem('userRole', userRole);
+
+      // Set dashboard link and home link for this session
+      setDashboardAndHomeLinks(userRole);
+
+      // Redirect based on role
+      let redirectUrl = "index.html";
+      if (userRole === "admin") {
+        redirectUrl = "admin_panel.html";
+      } else if (userRole === "owner") {
+        redirectUrl = "propowner_dashboard.html";
+      } else if (userRole === "user") {
+        redirectUrl = "user_dashboard.html";
+      }
+
+      messageDiv.innerHTML = `<p class="success-message">Login successful! Redirecting...</p>`;
+      setTimeout(() => {
+        window.location.href = redirectUrl;
+      }, 1200);
+    });
+
+    // Set dashboard and home links based on role
+    function setDashboardAndHomeLinks(role) {
+      if (!role) {
+        dashboardLink.style.display = "none";
+        homeLink.setAttribute("href", "index.html");
+        return;
+      }
+      dashboardLink.style.display = "block";
+      if (role === "admin") {
+        dashboardLink.textContent = "Admin Dashboard";
+        dashboardLink.setAttribute("href", "admin_panel.html");
+        homeLink.setAttribute("href", "admin_panel.html");
+      } else if (role === "owner") {
+        dashboardLink.textContent = "Owner Dashboard";
+        dashboardLink.setAttribute("href", "propowner_dashboard.html");
+        homeLink.setAttribute("href", "propowner_dashboard.html");
+      } else {
+        dashboardLink.textContent = "User Dashboard";
+        dashboardLink.setAttribute("href", "user_dashboard.html");
+        homeLink.setAttribute("href", "user_dashboard.html");
+      }
+    }
+
+    // On page load, set dashboard/home links if already logged in
+    document.addEventListener("DOMContentLoaded", () => {
+      const storedRole = sessionStorage.getItem('userRole');
+      setDashboardAndHomeLinks(storedRole);
+    });
+
+    // Dashboard link click: go to correct dashboard
+    dashboardLink.addEventListener("click", function (e) {
+      e.preventDefault();
+      const role = sessionStorage.getItem('userRole');
+      if (role === "admin") {
+        window.location.href = "admin_panel.html";
+      } else if (role === "owner") {
+        window.location.href = "propowner_dashboard.html";
+      } else {
+        window.location.href = "user_dashboard.html";
+      }
+    });
+
+    // Home link click: go to correct dashboard if logged in
+    homeLink.addEventListener("click", function (e) {
+      const role = sessionStorage.getItem('userRole');
+      if (role === "admin") {
+        e.preventDefault();
+        window.location.href = "admin_panel.html";
+      } else if (role === "owner") {
+        e.preventDefault();
+        window.location.href = "propowner_dashboard.html";
+      } else if (role === "user") {
+        e.preventDefault();
+        window.location.href = "user_dashboard.html";
+      }
+      // else, default to index.html
+    });
+  </script>
   <script src="./assets/js/script.js"></script>
-
-  <!-- ionicon link-->
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-
 </body>
-
 </html>
